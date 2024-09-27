@@ -1,0 +1,86 @@
+/* Add your other styles here */
+
+.image-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.large-card {
+    height: 700px!important; /* Fixed height for large cards */
+}
+
+.small-card {
+    height: 550px!important; /* Fixed height for small cards */
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the container */
+    transition: transform 0.3s ease;
+}
+
+.card-title {
+    font-family: 'Dotum';
+    font-size: 75px!important;
+    color: white!important;
+    text-shadow: 0px 0px 20px lightgray;
+    font-weight: bold;
+    display: none;
+    z-index: 2;
+}
+
+.image-card:hover img {
+    transform: scale(1.1); /* Zoom in the image slightly */
+    filter: blur(3px); /* Blur the image */
+    filter: brightness(70%);
+}
+
+.image-card:hover {
+    filter: none; /* Remove blur from the card */
+}
+
+.image-card:hover .card-title {
+    display: block;
+    z-index: 2;
+}
+
+.custom-container {
+    margin-top: -15px; /* Adjust padding-top to bring closer to navbar */
+    padding-left: 30px!important;
+    padding-right: 30px!important;
+}
+
+.instagram-carousel {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.instagram-carousel a {
+    margin: 10px;
+}
+
+.instagram-carousel img {
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+    object-fit: cover;
+}
+
+/* Fade-out effect */
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,194 @@
+@font-face {
+    font-family: 'Dotum';
+    src: url('../../assets/fonts/dotum.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'UniversCnBold';
+    src: url('../../assets/fonts/UniversCnBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.startup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's on top of all other content */
+    opacity: 1;
+    transition: opacity 0.5s ease; /* Only opacity transition */
+    animation: backgroundFade 3s ease forwards; /* Background color transition */
+    animation-delay: 2s;
+}
+
+@keyframes backgroundFade {
+    0% {
+        background-color: rgba(255, 255, 255, 1);
+    }
+    100% {
+        background-color: #203c79;
+    }
+}
+
+.startup-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.full-page-logo {
+    position: absolute;
+    width: 60%; /* Adjust width as needed */
+    height: 60%; /* Adjust height as needed */
+    opacity: 0;
+    background-size: contain; /* Ensure the entire logo is visible */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center center; /* Center the image */
+    z-index: -1;
+    animation: fadeInLogo 3s forwards 2s; /* Fade in logo after delay */
+}
+
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.1; /* Adjust opacity as needed */
+    }
+}
+
+.leaders-text {
+    font-family: Dotum;
+    font-size: 7rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+}
+
+@keyframes zoomOut {
+    from {
+        opacity: 0;
+        transform: scale(4);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.leaders-text span.zoom-out {
+    animation: zoomOut 0.2s forwards;
+}
+
+.leaders-text span {
+    display: inline-block;
+    opacity: 0;
+    margin-right: -25px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.leaders-text span.fade-in {
+    animation: fadeIn 0.5s forwards;
+}
+
+.leaders-text span.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.leaders-text span.delay-2 {
+    animation-delay: 0.2s;
+}
+
+.leaders-text span.delay-3 {
+    animation-delay: 0.3s;
+}
+
+/* Add more delay classes as needed */
+
+.logo-fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 1.33s;
+}
+
+.lambda-text {
+    letter-spacing: .06em;
+    font-size: 4.3rem;
+    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.5), -1px -1px 15px rgba(255, 255, 255, 0.5);
+    transform: translateY(-30%);
+    font-weight: bold;
+}
+
+.since-text {
+    font-family: 'Dotum';
+    font-size: 2rem;
+    color: #333;
+    margin-top: 10px; /* Space between Beta Eta Chapter and Since 2016 */
+    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.5), -1px -1px 15px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 2.3s;
+    text-align: center;
+    transform: translateY(-60%);
+    font-weight: bold;
+}
+
+.since-text-bottom {
+    font-family: 'Dotum';
+    font-size: 2.5rem;
+    color: #333;
+    position: absolute;
+    bottom: 20px; /* Position it at the bottom */
+    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 2s;
+    text-align: center;
+    width: 100%; /* Ensure it is centered */
+    font-weight: bold;
+}
+
+/* Beta Eta Chapter in old location */
+.chapter-text {
+    font-family: 'Dotum';
+    font-size: 3.5rem; /* Adjust size if needed */
+    color: #333;
+    margin-left: 25px;
+    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 1.8s;
+    word-spacing: -1rem;
+}
+
+.logo {
+    font-family: 'UniversCnBold';
+    font-size: 4rem; /* Adjust size if needed */
+    color: #333;
+    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 1.8s;
+    transform: translateY(1%);
+}
+
+.logo-since-container {
+    display: flex;
+    align-items: flex-end; /* Align items to the bottom */
+    justify-content: center;
+}

@@ -1,0 +1,491 @@
+@font-face {
+    font-family: 'EdoSZ';
+    src: url('../../assets/fonts/edosz.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Main container for the page */
+.brothers-page {
+    width: 100%;
+    padding: 40px;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden; /* Hide horizontal scroll */
+}
+
+.title-strip {
+    width: 100vw; /* Full viewport width */
+    margin-left: calc(-50vw + 50%); /* Center it */
+    background-color: #333; /* Dark background color */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-family: 'Dotum', sans-serif;
+}
+
+.legacy-title-container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: transparent !important;
+    transform: translateY(-20px);
+    margin-top: -20px;
+}
+
+.blue-strip1 {
+    position: absolute;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(to right, #203c79, #203c79af, #203c79);
+    background-size: 200% auto;
+    animation: shimmer 4s infinite;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
+}
+
+/* Keyframes for fade out and fade in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Apply the fade-in effect to the title */
+.legacy-title.fade-in {
+    animation: fadeIn .5s forwards;
+}
+
+.title-strip h1 {
+    margin: 0;
+    font-size: 3rem;
+}
+
+/* Filter container */
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Wrapping the label and select into one box */
+.filter-box {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #203c79e0 50%, #f0f8ff 50%);
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 360px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.filter-box label {
+    font-size: 1.2rem;
+    font-family: 'Dotum', sans-serif;
+    color: white;
+    margin-right: auto;
+    z-index: 2;
+    padding-left: 10px;
+    letter-spacing: 0.07em;
+    font-weight: bold;
+}
+
+.filter-box select {
+    font-size: .95rem;
+    font-family: 'Dotum', sans-serif;
+    color: #203c79;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    margin-left: auto;
+    padding-right: 10px;
+    position: relative;
+    appearance: none;
+    text-align: right;
+    letter-spacing: 0.07em;
+    transition: transform .5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.filter-box select::after {
+    content: '▼';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: #203c793d;
+    pointer-events: none;
+}
+
+.filter-box select:hover {
+    color: #203c795c;
+    transform: scale3d(1.2, 1.2, 1.2);
+}
+
+.filter-box select:focus {
+    outline: none;
+}
+
+/* Color box for headshots */
+.color-box-headshots {
+    background-color: transparent;
+    margin-bottom: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headshot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.popup {
+
+    background-color: #20375af1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.headshot-card:hover .popup {
+    opacity: 1;
+    visibility: visible;
+    height: 452px;
+}
+
+/* Popup content styling */
+.popup-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    z-index: 100;
+}
+
+/* Right sliding popup */
+.popup-right {
+    position: fixed;
+    top: 50.1%;
+    left: 97.30%; /* Initially hide the popup outside the headshot */
+    transform: translateX(-10px) translateY(-50%); /* Slightly offscreen to the right */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Animate transform and opacity */
+    opacity: 0; /* Initially hidden */
+    z-index: 100;
+}
+
+/* Left sliding popup */
+.popup-left {
+    position: absolute;
+    top: 50.1%;
+    right: 97.30%; /* Initially hide the popup outside the headshot */
+    transform: translateX(10px) translateY(-50%); /* Slightly offscreen to the left */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Animate transform and opacity */
+    opacity: 0; /* Initially hidden */
+}
+
+.headshot-card:hover .popup-right {
+    transform: translateX(10px) translateY(-50%); /* Slide into view */
+    opacity: 1; /* Fade in */
+}
+
+.headshot-card:hover .popup-left {
+    transform: translateX(-10px) translateY(-50%); /* Slide into view */
+    opacity: 1; /* Fade in */
+}
+
+.popup-info {
+    text-align: left;
+    padding: 10px;
+}
+
+.popup-info h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-family: 'Dotum', sans-serif;
+    letter-spacing: 0.08rem;
+}
+
+.popup-info p {
+    font-size: 0.9rem;
+    color: #ffffff;
+    font-family: 'Dotum', sans-serif;
+    letter-spacing: 0.08rem;
+}
+
+.popup-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.popup-link:hover {
+    text-decoration: underline;
+}
+
+/* Headshot card */
+.headshot-card {
+    background-color: #ffffffeb;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.headshot-card:hover {
+    transform: scale(1.2);
+    z-index: 2;
+}
+
+.headshot-card img {
+    width: 100%;
+    height: auto;
+}
+
+.headshot-card h3 {
+    margin-top: 15px;
+    margin-bottom: -2px;
+    font-family: 'Dotum', sans-serif;
+    letter-spacing: 0.08rem;
+    font-size: 2.2rem;
+}
+
+.headshot-card p {
+    font-size: 0.9rem;
+    letter-spacing: 0.08rem;
+}
+
+/* Timeline container with 3D perspective */
+.timeline-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 40px 0;
+    max-width: 100%;
+    white-space: nowrap;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* 3D ribbon or pipe for the timeline */
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(135deg, #203c79, #92aed8);
+    transform: translateZ(-10px);
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* Adjust individual timeline entries */
+.timeline-entry {
+    position: relative;
+    margin: 0 20px;
+    z-index: 2;
+}
+
+.timeline-section {
+    font-family: 'Dotum', sans-serif;
+    margin-bottom: 60px;
+}
+
+.timeline-title h2 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+/* Timeline markers with 3D depth */
+.timeline-marker {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff84;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    transform: translateZ(30px) translateY(19px);
+}
+
+.timeline-title {
+    font-family: 'Dotum', sans-serif;
+    text-align: center;
+    margin-bottom: -40px;
+    margin-top: 60px;
+}
+
+/* Timeline year label */
+.timeline-year {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #333;
+    white-space: nowrap;
+}
+
+/* Timeline popup with shadow for depth */
+.timeline-popup {
+    position: absolute;
+    bottom: 300%;
+    left: 25%;
+    width: 800px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 10;
+    transition: transform 0.3s ease;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    flex-direction: row;
+    background-color: #a4b0c4ec;
+    pointer-events: none;
+    
+}
+
+@media (max-width: 600px) {
+    .timeline-popup {
+        width: 100%;
+        left: 0;
+        right: 0;
+        transform: translateX(0) translateY(20px);
+    }
+}
+
+.popup-column {
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.timeline-image {
+    width: 100%;
+    margin-top: 10px;
+    object-fit: cover;
+}
+
+.timeline-marker:hover .timeline-popup {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.timeline-marker:hover {
+    animation: pulse1 .5s ease;
+}
+
+@keyframes pulse1 {
+    0% {
+        opacity: 50%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.timeline-marker:hover {
+    font-weight: bold;
+}
+
+.timeline-popup h3 {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 38px;
+}
+
+.timeline-popup h4 {
+    margin-bottom: -2px;
+}
+
+.timeline-popup p {
+    margin: 5px 0;
+    line-height: 0.8;
+}
+
+.timeline-image {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Footer */
+.footer {
+    margin-left: calc(-50vw + 50%);
+    width: 100%;
+    background-color: #172b56;
+    color: white;
+    padding: 35px 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 50vh 0 50vh #172b56;
+    box-sizing: border-box;
+    font-family: 'Dotum', sans-serif;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    letter-spacing: .15rem;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+html, body {
+    width: 100%!important;
+    height: 100%;
+    margin: 0px!important;
+    padding: 0px!important;
+    overflow-x: hidden!important;
+}
+
+.footer-nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    list-style: none;
+    padding: 0;
+    margin-top: 60px;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
