@@ -2,6 +2,7 @@ import './Legacy.scss'
 import NavBarNew from '../components/navbar/NavBarNew'
 import LegacyHero from '../components/legacy/LegacyHero'
 import Parallax from '../components/legacy/Parallax'
+import Philanthropy from '../components/legacy/Philanthropy'
 
 function Legacy() {
 
@@ -17,11 +18,7 @@ function Legacy() {
 
         <section id="Portfolio"><Parallax type="portfolio"/></section>
 
-        <section>Portfolio1</section>
-
-        <section>Portfolio2</section>
-
-        <section>Portfolio3</section>
+        <Philanthropy />
 
         <section id="Contact">Contact</section>
     </div>

@@ -1,8 +1,13 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #76777c;
     color: lightgray;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 * {
@@ -14,4 +19,5 @@ body {
 section {
     height: 100vh;
     scroll-snap-align: center;
+    width: 100vw;
 }
