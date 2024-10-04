@@ -18,7 +18,7 @@ function Legacy() {
 
         <section id="Portfolio"><Parallax type="portfolio"/></section>
 
-        <Philanthropy />
+        <section id="Portfolio"><Philanthropy /></section>
 
         <section id="Contact">Contact</section>
     </div>

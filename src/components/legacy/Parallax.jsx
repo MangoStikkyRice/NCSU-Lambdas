@@ -33,8 +33,8 @@ function Parallax({ type }) {
         )
         .fromTo(
           textRef.current,
-          { yPercent: -130, opacity: .2 },
-          { yPercent: 130, ease: 'none', force3D: true, opacity: 3 },
+          { yPercent: -100, color: "#ffffff" },
+          { yPercent: 30, ease: 'none', force3D: true, color: "#949494" },
           0
         );
 

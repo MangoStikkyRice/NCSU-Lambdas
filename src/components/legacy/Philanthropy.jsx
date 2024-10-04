@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react'; 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Philanthropy.scss';
@@ -32,14 +32,45 @@ const items = [
 ];
 
 const Single = ({ item }) => {
+    const ref = useRef();
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const element = ref.current;
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: element,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+            },
+        });
+
+        tl.fromTo(
+            element.querySelector('.imageContainer'),
+            { y: 300, ease: 'power1.inOut' },
+            { y: -300, ease: 'power1.out' },
+        );
+
+        return () => {
+            tl.scrollTrigger.kill();
+        };
+    }, []);
+
     return (
-        <section className="single-item">
-            <h2>{item.title}</h2>
-            <img src={item.img} alt="" />
-            <div className='textContainer'>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
-                <button>DEMO</button>
+        <section ref={ref}>
+            <div className="container">
+                <div className="wrapper">
+                    <div className="imageContainer">
+                        <img src={item.img} alt="" />
+                    </div>
+                    <div className="textContainer">
+                        <h2>{item.title}</h2>
+                        <p>{item.desc}</p>
+                        <button>DEMO</button>
+                    </div>
+                </div>
             </div>
         </section>
     );
@@ -105,7 +136,7 @@ function Philanthropy() {
     return (
         <div className="philanthropy" ref={philanthropyRef}>
             <div className="progress">
-                <h1>WORK</h1>
+                <h1>Featured Works</h1>
                 <div ref={progressBarRef} className="progressBar"></div>
             </div>
             {items.map(item => (
