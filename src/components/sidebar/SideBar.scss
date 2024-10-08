@@ -1,3 +1,5 @@
+/* SideBar.scss */
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -5,17 +7,24 @@
     justify-content: center;
     background-color: white;
     color: black;
-    z-index: 2;
-    .bg {
+    z-index: 4;
 
+    .bg {
         position: fixed;
         top: 0;
         left: 0;
         bottom: 0;
         width: 400px;
-        background: #bcbdc2;
+        background: linear-gradient(to right, rgb(75, 75, 75) 0%, rgba(5, 5, 5, 0) 100%);
+        backdrop-filter: blur(4px);  
+        mask-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 1) 0%,   /* Fully opaque at the start */
+            rgba(0, 0, 0, 1) 90%,  /* Fully opaque near the end */
+            rgba(0, 0, 0, 0) 100%   /* Fully transparent at the end */
+        );
 
-        .links{
+        .links {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -23,15 +32,47 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
 
             a {
+                position: relative; /* Establishes containing block for pseudo-element */
+                display: inline-block; /* Allows width and height adjustments */
                 font-size: 40px;
+                text-decoration: none;
+                color: rgb(255, 255, 255);
+                text-shadow: rgb(0, 0, 0) 1px 0 12px;
+                padding: 10px 20px; /* Adds space around text */
+                overflow: hidden; /* Prevents pseudo-element overflow */
+
+                /* Pseudo-element for the gray strip */
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 50%; /* Vertically centers the strip */
+                    left: 0;
+                    width: 100%;
+                    height: 90%; /* Thickness of the strip */
+                    background: linear-gradient(to right, transparent 0%, #31445ef5 50%, transparent 100%); /* Semi-transparent gray */
+                    transform: translateY(-50%) scaleX(0); /* Hidden by default */
+                    transition: transform 0.3s ease; /* Smooth transition */
+                    z-index: -1; /* Places strip behind the text */
+                    border-radius: 4px; /* Optional: Rounded corners */
+                }
+
+                /* Hover effect to reveal the gray strip */
+                &:hover::before {
+                    transform: translateY(-50%) scaleX(1); /* Reveals the strip */
+                }
+
+                /* Active state to keep the strip visible */
+                &.active::before {
+                    transform: translateY(-50%) scaleX(1); /* Keeps the strip visible */
+                }
             }
         }
     }
-    button {
 
+    button {
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -41,5 +82,34 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        .bg {
+            width: 100%; /* Full width on smaller screens */
+
+            .links {
+                gap: 10px;
+
+                a {
+                    font-size: 24px; /* Smaller font on mobile */
+                    padding: 8px 16px; /* Adjust padding */
+                    
+                    &::before {
+                        height: 20%; /* Thinner strip on mobile */
+                    }
+                }
+            }
+        }
+
+        button {
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+        }
     }
 }

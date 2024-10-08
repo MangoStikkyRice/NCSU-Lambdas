@@ -1,4 +1,5 @@
 import './LegacyHero.scss'
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import HeroIMG from '../../assets/images/lo.png'
 import Hero from '../../assets/images/LegacyHero.png'
 import ScrollDown from '../../assets/images/scrolldown.png'
@@ -33,7 +34,7 @@ const sliderVariants = {
         x: 0
     },
     animate: {
-        x: "-340%",
+        x: "-180%",
         transition: {
             repeat: Infinity,
             repeatType:"mirror",
@@ -51,30 +52,52 @@ const imageVariants = {
         transition: {
             duration: 1,
             delay: 1,
-            ease: [0.7, 0, .8, 0]
         }
     }
 }
 
 function LegacyHero() {
+    const navigate = useNavigate(); // Initialize navigate
+
+    const handleButtonClick = (path) => {
+        navigate(path);
+    }
     return (
-        <div className="legacy-hero">
+        <div id="top" className="legacy-hero">
             <div className='legacy-hero-wrapper'>
                 <motion.div className="textContainer" variants={textVariants} initial="initial" animate="animate">
                     <motion.h2 variants={textVariants}>Legacy</motion.h2>
                     <motion.h1 variants={textVariants}>History & Constitution</motion.h1>
                     <motion.div variants={textVariants} className="buttons">
-                        <motion.button variants={textVariants}>News</motion.button>
-                        <motion.button variants={textVariants}>Contact</motion.button>
+                        <motion.a 
+                            variants={textVariants} 
+                            href={`#Services`}
+                            aria-label="Jump to Constitution"
+                        >
+                            Jump to Constitution
+                        </motion.a>
+                        <motion.a
+                            variants={textVariants} 
+                            href={`https://lambdaphiepsilon.com/giving-tuesday-2023/`}
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="International News"
+                        >
+                            International News
+                        </motion.a>
                     </motion.div>
-                    <motion.img variants={textVariants} animate="scrollButton" src={ScrollDown} alt="" />
+                    <motion.img 
+                        variants={textVariants} 
+                        animate="scrollButton" 
+                        src={ScrollDown} 
+                        alt="Scroll Down Indicator" 
+                    />
                 </motion.div>
             </div>
             <motion.div className='slidingTextContainer' variants={sliderVariants} initial="initial" animate="animate">
                 Lambda Phi Epsilon
             </motion.div>
             <motion.div className="imageContainer" variants={imageVariants} initial="initial" animate="animate">
-                <img src={Hero} alt="" />
+                <img src={Hero} alt="Hero" />
             </motion.div>
         </div>
     )

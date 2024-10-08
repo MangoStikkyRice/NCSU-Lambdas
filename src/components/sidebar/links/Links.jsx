@@ -1,4 +1,4 @@
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const variants = {
     open: {
@@ -27,23 +27,30 @@ const itemVariants = {
     }
 }
 function Links() {
-
+    // Array of items with `name` and `link` fields
     const items = [
-        "Top",
-        "Services",
-        "Portfolio",
-        "Contact"
-    ]
+        { name: "Home", link: "/" },
+        { name: "Recruitment", link: "/recruitment" },
+        { name: "Legacy", link: "/legacy" },
+        { name: "Brothers", link: "/brothers" },
+        { name: "Media", link: "/media" }
+    ];
 
     return (
         <motion.div className='links' variants={variants}>
             {items.map((item) => (
-            <motion.a href={`#${item}`} key={item} variants={itemVariants} whileHover={{scale:1.1}} whileTap={{scale:0.95}}>
-                {item}
-            </motion.a>
-        ))}
+                <motion.a
+                    href={item.link} // Use the link from the object
+                    key={item.name}
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    {item.name} {/* Display the name from the object */}
+                </motion.a>
+            ))}
         </motion.div>
-    )
+    );
 }
 
 export default Links;

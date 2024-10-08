@@ -13,7 +13,7 @@ function ToggleButton({ setOpen }) {
                 {/** Draws the hamburger lines in the SideBar button. */}
                 <motion.path
                     strokeWidth="3"
-                    stroke="black"
+                    stroke="rgb(20, 20, 20)"
                     strokeLinecap="round"
                     initial={{ d: "M 2 2.5 L 20 2.5" }}
                     variants={{
@@ -22,7 +22,7 @@ function ToggleButton({ setOpen }) {
                     }} />
                 <motion.path
                     strokeWidth="3"
-                    stroke="black"
+                    stroke="rgb(20, 20, 20)"
                     strokeLinecap="round"
                     d="M 2 9.423 L 20 9.423"
                     variants={{
@@ -31,7 +31,7 @@ function ToggleButton({ setOpen }) {
                     }} />
                 <motion.path
                     strokeWidth="3"
-                    stroke="black"
+                    stroke="rgb(20, 20, 20)"
                     strokeLinecap="round"
                     initial={{ d: "M 2 16.346 L 20 16.346" }}
                     variants={{

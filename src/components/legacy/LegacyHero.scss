@@ -30,7 +30,11 @@
             }
 
             .buttons {
-                button {
+                display: flex; /* Ensure buttons are aligned properly */
+
+                a {
+                    position: relative; /* Enable z-index */
+                    z-index: 3; /* Higher than slidingTextContainer */
                     padding: 20px;
                     border: 1px solid black;
                     border-radius: 10px;
@@ -39,7 +43,14 @@
                     margin-right: 20px;
                     cursor: pointer;
                     font-weight: 300;
-                    z-index: 1;
+                    transition: border 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+                    text-decoration: none;
+
+                    &:hover {
+                        border: 1px solid #203c797c;
+                        background-color: #203c797c;
+                        color: white;
+                    }
                 }
             }
 
@@ -50,16 +61,18 @@
     }
 
     .imageContainer {
-        height: auto;
+        height: 1000px;
         position: absolute;
-        right: 0;
+        right: -100px;
         bottom: 0;
         display: flex;
+        overflow: hidden;
     }
 
     .imageContainer img {
-        width: 130vh;
+        width: auto;
         transition: opacity 0.5s ease;
+        opacity: 50%;
     }
 
     @media (max-width: 1200px) {  /* You can adjust 768px to the width you need */
@@ -70,11 +83,13 @@
 
     .slidingTextContainer {
         position: absolute;
-        font-size: 50vh;
+        font-size: 40vh;
         bottom: -120px;
         white-space: nowrap;
-        color: #76777c2f;
+        color: rgba(0, 0, 0, 0.075);
         width: 50%;
         font-weight: bold;
+        z-index: 2;
+        cursor:default;
     }
 }

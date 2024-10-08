@@ -21,7 +21,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* Ensure it's on top of all other content */
+    z-index: 1001; /* Ensure it's on top of all other content */
     opacity: 1;
     transition: opacity 0.5s ease; /* Only opacity transition */
     animation: backgroundFade 3s ease forwards; /* Background color transition */

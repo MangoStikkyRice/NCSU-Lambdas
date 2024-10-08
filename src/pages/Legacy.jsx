@@ -3,25 +3,29 @@ import NavBarNew from '../components/navbar/NavBarNew'
 import LegacyHero from '../components/legacy/LegacyHero'
 import Parallax from '../components/legacy/Parallax'
 import Philanthropy from '../components/legacy/Philanthropy'
+import Info from '../components/legacy/Info'
 
 function Legacy() {
+    return (
+        <div className='example-page'>
+            <section id="Top" className="full-height">
+                <NavBarNew />
+                <LegacyHero />
+            </section>
 
-    return <div>
-        <section id="Top">
-            <NavBarNew />
-            <LegacyHero />
-        </section>
+            <section id="Contact" className="full-height">
+                <Info />
+            </section>
 
-        <section id="Services"><Parallax type="services"/></section>
+            <section id="Philanthropy" className="fuck">
+                <Philanthropy />
+            </section>
 
-        <section>Services</section>
-
-        <section id="Portfolio"><Parallax type="portfolio"/></section>
-
-        <section id="Portfolio"><Philanthropy /></section>
-
-        <section id="Contact">Contact</section>
-    </div>
+            <section id="Services" className="full-height">
+                <Parallax type="services" />
+            </section>
+        </div>
+    );
 }
 
 export default Legacy;

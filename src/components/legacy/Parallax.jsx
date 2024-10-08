@@ -28,13 +28,13 @@ function Parallax({ type }) {
       mainTimeline
         .fromTo(
           lightRef.current,
-          { xPercent: -10, opacity: 0 },
-          { xPercent: 10, opacity: .8, ease: 'none', force3D: true }
+          { xPercent: -10 },
+          { xPercent: 0, ease: 'none', force3D: true }
         )
         .fromTo(
           textRef.current,
-          { yPercent: -100, color: "#ffffff" },
-          { yPercent: 30, ease: 'none', force3D: true, color: "#949494" },
+          { yPercent: -100 },
+          { yPercent: 30, ease: 'none', force3D: true },
           0
         );
 
@@ -64,7 +64,7 @@ function Parallax({ type }) {
   return (
     <div className="parallax" ref={parallaxRef}>
       <h1 ref={textRef}>
-        {type === 'services' ? 'Be the Match' : 'Our Values'}
+        {type === 'services' ? 'The Constitution'  : 'Explore the Legacy'}
       </h1>
       <div className="city" ref={cityRef}></div>
       <div className="sky" ref={skyRef}></div>

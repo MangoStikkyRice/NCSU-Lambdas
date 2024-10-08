@@ -1,86 +1,199 @@
-/* Add your other styles here */
+/* Home.css */
 
+/* Reset box-sizing for consistency */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* General Layout */
+#home {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    overflow-y: hidden; /* Prevent overflow */
+    background: linear-gradient(to right, rgb(177, 177, 177) 0%, white 50%, rgb(177, 177, 177) 100%);
+}
+
+.custom-container {
+    flex: 1; /* Take up remaining space after navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
+    box-sizing: border-box;
+    height: calc(100vh - 120px); /* Subtract navbar height */
+}
+
+.image-grid {
+    display: flex;
+    width: 75%;
+    height: 100%;
+    gap: 20px; /* Space between columns */
+}
+
+.left-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px; /* Space between image cards */
+}
+
+/* Image Cards */
 .image-card {
     position: relative;
     overflow: hidden;
     cursor: pointer;
     width: 100%;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    border-radius: 4px;
+    border: solid 2px rgb(46, 46, 46);
+    flex: 1; /* Allow cards to grow/shrink */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, filter 0.3s ease, border 0.5s ease;
+    background-color: #000; /* Fallback background */
+
+    &:hover {
+        border: solid 2px #203c79;
+    }
 }
 
 .large-card {
-    height: 700px!important; /* Fixed height for large cards */
+    flex: 3; /* Larger proportion */
 }
 
 .small-card {
-    height: 550px!important; /* Fixed height for small cards */
+    flex: 2; /* Smaller proportion */
 }
 
 .image-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure images cover the container */
-    transition: transform 0.3s ease;
+    object-fit: cover; /* Ensures images cover the container */
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 1s ease-in;
+    opacity: 0;
+}
+
+.image-card img.loaded {
+    opacity: 1; /* Full opacity after load */
+}
+
+/* New Adjustments */
+
+/* Move small cards downward */
+.left-column .small-card img,
+.right-column .small-card img {
+    object-position: center 25%; /* Move image downward */
+}
+
+/* Move the Media large card upward */
+.right-column .large-card img {
+    object-position: center 70%; /* Move image upward */
+}
+
+/* Optional: Adjust the Recruitment large card if necessary */
+.left-column .large-card img {
+    object-position: center 40%; /* Move image upward */
 }
 
 .card-title {
-    font-family: 'Dotum';
-    font-size: 75px!important;
-    color: white!important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Dotum', sans-serif;
+    font-size: 3vw; /* Responsive font size */
+    color: white;
     text-shadow: 0px 0px 20px lightgray;
     font-weight: bold;
-    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     z-index: 2;
+    text-align: center;
+    padding: 0 10px;
 }
 
+/* Hover Effects */
 .image-card:hover img {
     transform: scale(1.1); /* Zoom in the image slightly */
-    filter: blur(3px); /* Blur the image */
-    filter: brightness(70%);
-}
-
-.image-card:hover {
-    filter: none; /* Remove blur from the card */
+    filter: brightness(40%);
 }
 
 .image-card:hover .card-title {
-    display: block;
-    z-index: 2;
+    opacity: 1;
 }
 
-.custom-container {
-    margin-top: -15px; /* Adjust padding-top to bring closer to navbar */
-    padding-left: 30px!important;
-    padding-right: 30px!important;
-}
-
-.instagram-carousel {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.instagram-carousel a {
-    margin: 10px;
-}
-
-.instagram-carousel img {
-    width: 100px; /* Adjust the size as needed */
-    height: 100px; /* Adjust the size as needed */
-    object-fit: cover;
-}
-
-/* Fade-out effect */
+/* Fade-out Effect */
 .fade-out {
     animation: fadeOut 0.5s forwards;
 }
 
 @keyframes fadeOut {
-    0% {
+    from {
         opacity: 1;
     }
-    100% {
+    to {
         opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .card-title {
+        font-size: 4vw; /* Adjust font size for smaller screens */
+    }
+
+    /* Adjust positioning for medium screens if needed */
+    .left-column .small-card img,
+    .right-column .small-card img {
+        object-position: center 55%; /* Slightly less movement */
+    }
+
+    .right-column .large-card img {
+        object-position: center 35%; /* Slightly less movement */
+    }
+
+    .left-column .large-card img {
+        object-position: center 35%; /* Slightly less movement */
+    }
+}
+
+@media (max-width: 768px) {
+    .image-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-column,
+    .right-column {
+        flex: none;
+    }
+
+    .image-card {
+        flex: none;
+        height: 30vh; /* Adjust height for mobile */
+    }
+
+    .card-title {
+        font-size: 6vw;
+    }
+
+    /* Move small cards downward on mobile */
+    .left-column .small-card img,
+    .right-column .small-card img {
+        object-position: center 65%; /* Move more downward */
+    }
+
+    /* Move the Media large card upward on mobile */
+    .right-column .large-card img {
+        object-position: center 30%; /* Move more upward */
+    }
+
+    /* Optional: Adjust the Recruitment large card if necessary */
+    .left-column .large-card img {
+        object-position: center 30%; /* Move more upward */
     }
 }

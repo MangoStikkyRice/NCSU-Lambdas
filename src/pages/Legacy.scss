@@ -7,11 +7,15 @@ body {
   background-color: #76777c;
   color: lightgray;
   scroll-snap-type: y proximity;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 section {
   height: 100vh;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   width: 100vw;
+}
+
+.fuck {
+  height: auto;
 }

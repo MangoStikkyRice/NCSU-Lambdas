@@ -1,0 +1,57 @@
+/* Global Styles (e.g., styles.css) */
+
+/* Reset and base styles */
+html, body { 
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    background-color: #76777c;
+    color: lightgray;
+    scroll-snap-type: y proximity;
+    overflow-y: scroll;
+  }
+  
+  section {
+    height: 100vh;
+    scroll-snap-align: start;
+    width: 100vw;
+  }
+  
+  .fuck { /* Consider renaming this class for better clarity */
+    height: auto;
+  }
+  
+  /* Page-Specific Styles */
+  
+  /* Homepage Styles */
+  body.home-page {
+    background-color: #ffffff; /* Example: Different background color */
+    color: #000000;            /* Example: Different text color */
+    scroll-snap-type: none;    /* Disable scroll snapping on homepage */
+    overflow-y: auto;          /* Adjust overflow behavior if needed */
+  }
+  
+  body.home-page section {
+    height: auto;              /* Remove fixed height for sections */
+    width: auto;               /* Remove fixed width for sections */
+  }
+  
+  /* Legacy Page Styles */
+  body.legacy-page {
+    background-color: #76777c; /* Revert or adjust background color */
+    color: lightgray;
+    scroll-snap-type: y proximity;
+    overflow-y: scroll;
+  }
+  
+  body.legacy-page section {
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  body.legacy-page .fuck { /* Scoped adjustment */
+    height: auto; /* Modify as necessary */
+  }
+  
