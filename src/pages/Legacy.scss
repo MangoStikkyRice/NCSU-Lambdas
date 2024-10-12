@@ -6,16 +6,19 @@ html, body {
 body {
   background-color: #76777c;
   color: lightgray;
-  scroll-snap-type: y proximity;
-  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
 }
 
 section {
   height: 100vh;
-  scroll-snap-align: start;
   width: 100vw;
+  scroll-snap-align: center;
+  overflow: hidden;
 }
 
 .fuck {
   height: auto;
+  scroll-snap-align: center;
+  overflow: hidden;
 }

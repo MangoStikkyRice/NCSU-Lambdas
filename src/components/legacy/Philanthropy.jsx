@@ -94,8 +94,8 @@ const Single = ({ item }) => {
 
         tl.fromTo(
             element.querySelector('.imageContainer'),
-            { y: 300, ease: 'power1.inOut' },
-            { y: -100, ease: 'power1.out' },
+            { y: 0, ease: 'power1.inOut' },
+            { y: 0, ease: 'power1.out' },
         );
 
         return () => {

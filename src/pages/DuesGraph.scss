@@ -1,0 +1,39 @@
+/* components/DuesGraph.scss */
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.dues-graph {
+    @include card;
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: $secondary-color;
+    font-family: $font-stack;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    input {
+      margin: 0 10px;
+      padding: 5px;
+      font-size: 16px;
+      font-family: $font-stack;
+    }
+
+    button {
+      padding: 5px 15px;
+      background-color: $primary-color;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

@@ -21,9 +21,6 @@ function Legacy() {
                 <Philanthropy />
             </section>
 
-            <section id="Services" className="full-height">
-                <Parallax type="services" />
-            </section>
         </div>
     );
 }

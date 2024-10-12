@@ -1,0 +1,10 @@
+/* styles/mixins.scss */
+@mixin card {
+    background-color: $card-background;
+    border: 1px solid $card-border;
+    box-shadow: $card-shadow;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
