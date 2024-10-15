@@ -8,10 +8,12 @@ import Info from '../components/legacy/Info'
 function Legacy() {
     return (
         <div className='example-page'>
+            <div className='colorTHIS'>
             <section id="Top" className="full-height">
                 <NavBarNew />
                 <LegacyHero />
             </section>
+            </div>
 
             <section id="Contact" className="full-height">
                 <Info />
@@ -20,6 +22,7 @@ function Legacy() {
             <section id="Philanthropy" className="fuck">
                 <Philanthropy />
             </section>
+
 
         </div>
     );

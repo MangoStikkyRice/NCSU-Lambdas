@@ -20,8 +20,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/legacy" element={<Legacy />} />
           <Route path="/recruitment" element={<Recruitment />} />
-          <Route path="/brothers" element={<AddMember />} />
-          <Route path="/media" element={<CitationsPage />} />
+          <Route path="/brothers" element={<Brothers />} />
+          <Route path="/media" element={<Media />} />
         </Routes>
       </div>
     </Router>

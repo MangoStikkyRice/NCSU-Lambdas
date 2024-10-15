@@ -1,10 +1,12 @@
 import React from 'react';
 import './Recruitment.css';
 import heroImage from '../assets/images/rec.jpg'; // Replace with the correct path to your hero image
+import NavBarNew from '../components/navbar/NavBarNew';
 
 function Recruitment() {
     return (
         <div>
+            <NavBarNew />
             {/* Hero Image Section */}
             <div className="hero-image-recruitment" style={{ backgroundImage: `url(${heroImage})` }}>
                 <div className="hero-text-recruitment">

@@ -62,6 +62,7 @@
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
+    color: black;
 }
 
 .recruitment-faqs h2 {
@@ -82,9 +83,11 @@
     margin-bottom: 10px;
     font-weight: bold;
     text-align: center;
+    color: black;
 }
 
 .faq-item p {
     font-size: 1.3rem;
     line-height: 1.6;
+    color: black;
 }

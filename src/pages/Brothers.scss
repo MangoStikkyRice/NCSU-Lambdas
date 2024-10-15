@@ -1,0 +1,802 @@
+@font-face {
+    font-family: 'UniversCnBold';
+    src: url('../assets/fonts/univers/UniversCnBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Main container for the page */
+.brothers-page {
+    width: 100%;
+    padding: 130px 40px;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+    /* Hide horizontal scroll */
+}
+
+/* Title Strip */
+.title-strip {
+    width: 100vw;
+    /* Full viewport width */
+    margin-left: calc(-50vw + 50%);
+    /* Center it */
+    background-color: #333;
+    /* Dark background color */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-family: 'Dotum', sans-serif;
+
+    h1 {
+        margin: 0;
+        font-size: 3rem;
+    }
+}
+
+/* Legacy Title Container */
+.legacy-title-container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 80px 0;
+    background-color: transparent !important;
+    transform: translateY(-20px);
+
+    .legacy-title {
+        z-index: 1;
+        font-size: 120px;
+        font-family: 'UniversCnBold';
+        text-shadow: #000000 3px 3px 4px;
+        color: #f8f8f8;
+    }
+}
+
+/* Blue Strip */
+.blue-strip1 {
+    position: absolute;
+    width: 110%;
+    height: 120%;
+    background: linear-gradient(to right, #203c79, #203c79af, #203c79);
+    background-size: 200% auto;
+    animation: shimmer 4s infinite;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
+}
+
+/* Keyframes for fade in and fade out */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Apply the fade-in effect to the title */
+.legacy-title.fade-in {
+    animation: fadeIn 0.5s forwards;
+}
+
+/* Filter Container */
+.filter-container {
+    padding: 20px 0 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Filter Box */
+.filter-box {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #203c79e0 50%, #f0f8ff 50%);
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 360px;
+    height: 50px;
+    overflow: hidden;
+
+    label {
+        font-size: 1.2rem;
+        font-family: 'Dotum', sans-serif;
+        color: white;
+        margin-right: auto;
+        z-index: 2;
+        padding-left: 10px;
+        letter-spacing: 0.07em;
+        font-weight: bold;
+    }
+
+    select {
+        font-size: 0.95rem;
+        font-family: 'Dotum', sans-serif;
+        color: #203c79;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+        margin-left: auto;
+        padding-right: 10px;
+        position: relative;
+        appearance: none;
+        text-align: right;
+        letter-spacing: 0.07em;
+        transition: transform 0.5s ease-in-out, color 0.5s ease-in-out;
+
+        /* Remove the pseudo-element from SCSS */
+        /* &:after { ... } */
+
+        &:hover {
+            color: #203c795c;
+            transform: scale3d(1.2, 1.2, 1.2);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+/* Color Box for Headshots */
+.color-box-headshots {
+    background-color: transparent;
+    margin-bottom: 40px;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headshot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Headshot Card */
+.headshot-card {
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    color: black;
+    position: relative;
+    /* Establishes a containing block for absolute positioning */
+
+    &.selected {
+        transform: scale(1.2);
+        z-index: 3;
+        box-shadow: rgba(255, 255, 255, 0.8) 0 0 50px 33px;
+
+        .popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+            background: #203c79e6;
+
+
+            .deselect-instruction {
+                position: absolute;
+                bottom: -25%;
+                /* Adjust this value based on where you want the popup to appear */
+                left: 50%;
+                transform: translate(-50%, -100%);
+                /* Move the popup above the trigger element */
+                background-color: rgba(0, 0, 0, 0.91);
+                color: #ffffff;
+                padding: 6px 12px;
+                border-radius: 10px;
+                font-size: 1.2rem;
+                pointer-events: none;
+                /* Allows clicks to pass through */
+                opacity: 0.8;
+                white-space: nowrap;
+                z-index: 150;
+                /* Ensure it's above other elements */
+
+                /* Arrow pointing upwards */
+                &::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 100%;
+                    /* Position the arrow at the top of the popup */
+                    left: 50%;
+                    /* Center the arrow horizontally */
+                    transform: translateX(-50%);
+                    /* Adjust for exact centering */
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-bottom: 5px solid rgba(0, 0, 0, 0.91);
+                    /* Creates an upward-pointing arrow */
+                    border-width: 25px;
+                }
+            }
+        }
+    }
+
+    &:hover {
+        transform: scale(1.2);
+        z-index: 2;
+
+        .popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+        }
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    h3 {
+        margin-top: 15px;
+        margin-bottom: -2px;
+        font-family: 'Dotum', sans-serif;
+        letter-spacing: 0.08rem;
+        font-size: 2.2rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+        letter-spacing: 0.08rem;
+    }
+
+    /* Popup Styling */
+    .popup {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        color: white;
+        /* Positions the popup to the right of the card */
+        transform: translateY(-50%) translateX(-10px);
+        /* Vertically centered and slightly offscreen */
+        background-color: #20375acb;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 12px;
+        width: 250px;
+        height: 100%;
+        /* Matches the height of the headshot card */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+
+        /* Stack children vertically */
+
+        &.popup-left {
+            left: auto;
+            right: 100%;
+            /* Positions the popup to the left of the card */
+            transform: translateY(-50%) translateX(0px);
+            /* Slightly offscreen to the right */
+        }
+
+        /* Popup Image */
+        .popup-image {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            z-index: 100;
+        }
+
+        /* Popup Header (Fixed) */
+        .popup-header {
+            padding: 5px 5px 5px 0;
+            /* Optional: Add padding */
+            text-align: left;
+
+            h4 {
+                display: flex;
+                align-items: center;
+                /* Vertically centers the NUM and text */
+                margin: 0;
+                /* Removes default margin */
+                font-size: 1.5rem;
+                color: #ffffff;
+                font-family: 'Dotum', sans-serif;
+                letter-spacing: 0.08rem;
+            }
+
+            /* Line Name Text */
+            .line-name {
+                flex: 1;
+                /* Takes up remaining space */
+                font-size: 22px;
+            }
+
+        }
+
+        .NUM {
+            position: relative;
+            /* To manage layering */
+            display: inline-flex;
+            /* Aligns number centrally */
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            /* Adjust size as needed */
+            height: 40px;
+            /* Must be equal to width for a perfect circle */
+            margin-right: 10px;
+            /* Spacing between circle and text */
+            border-radius: 50%;
+            /* Makes it a circle */
+            background: radial-gradient(circle at center,
+                    rgb(255, 255, 255) 0%,
+                    #638fd0 60%,
+                );
+            color: #090909;
+            /* Number color */
+            text-shadow: 2px 2px #ffffff92;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 1;
+            /* Ensures it sits behind if overlapping is needed */
+        }
+
+        /* Popup Info (Scrollable) */
+        .popup-info {
+            text-align: left;
+            padding: 5px 0 0 10px;
+            overflow-y: scroll;
+            /* Changed from 'auto' to 'scroll' */
+            flex: 1;
+            /* Take up remaining space */
+
+            /* Ensure scrollbar is always visible across browsers */
+            scrollbar-width: auto;
+            /* For Firefox */
+            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1);
+            /* For Firefox */
+
+
+            /* WebKit-based browsers (Chrome, Safari, Edge) */
+            &::-webkit-scrollbar {
+                width: 12px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(255, 255, 255, 0.728);
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            p {
+                font-size: 18px;
+            }
+
+            h {
+                font-size: 18px;
+            }
+
+        }
+        .hobbies-section {
+
+            h5 {
+                font-size: 18px;
+                line-height: 16px;
+            }
+
+            /* Container for Hobbies */
+            .hobbies-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                /* Space between bubbles */
+                padding-bottom: 10px;
+                /* Adjust as needed */
+            }
+
+            /* Hobby Bubble */
+            .hobby-bubble {
+                background-color: #ffffff;
+                /* White background */
+                color: #256ad2;
+                /* Text color, adjust as needed */
+                padding: 5px 10px;
+                border-radius: 20px;
+                /* Makes the edges round */
+                font-size: 0.9rem;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                /* Optional: adds a subtle shadow */
+                white-space: nowrap;
+                /* Prevents text from wrapping within the bubble */
+                transition: background-color 0.3s, color 0.3s;
+                cursor: pointer;
+                /* Indicates interactivity */
+
+                /* Hover Effect */
+                &:hover {
+                    background-color: #0080ac;
+                    /* Background on hover */
+                    color: #ffffff;
+                    /* Text color on hover */
+                }
+
+                /* Active State */
+                &.active {
+                    background-color: #0080ac;
+                    color: #ffffff;
+                }
+            }
+
+        }
+    }
+
+
+        /* Popup Footer (Optional) */
+        .popup-footer {
+            padding-top: 10px;
+            /* Optional: Add background color or other styles */
+        }
+
+        /* Popup Link Styling */
+        .popup-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #007bff;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+
+/* Active Filters Display */
+.active-filters {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #ffffff; /* Updated text color for better contrast */
+    text-shadow: #000000 2px 2px 4px;
+    background-color: #6893d4; /* Dark blue background to match the theme */
+    border: 1px solid #ffffff; /* White border for definition */
+    border-radius: 8px; /* Rounded corners for a smoother look */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
+    .active-filter {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        span {
+            font-size: 1.05rem;
+        }
+
+        button {
+            background-color: #ff4d4d; /* Bright red background */
+            color: #ffffff; /* White text for contrast */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            &:hover {
+                background-color: #e60000; /* Darker red on hover */
+                transform: translateY(-2px); /* Slight lift effect */
+            }
+
+            &:active {
+                background-color: #cc0000; /* Even darker red on click */
+                transform: translateY(0); /* Reset position */
+            }
+
+            &:focus {
+                outline: 2px solid #ffffff; /* White outline on focus for accessibility */
+            }
+        }
+    }
+}
+
+
+
+
+/* Additional Styling for Popup on Hover */
+.headshot-card:hover .popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+    /* Move popup into view */
+}
+
+/* Timeline container with 3D perspective */
+.timeline-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 40px 0;
+    max-width: 100%;
+    white-space: nowrap;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+
+    .timeline-line {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: linear-gradient(135deg, #203c79, #92aed8);
+        transform: translateZ(-10px);
+        border-radius: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+}
+
+.timeline-title {
+    color: #000000;
+}
+
+.timeline-entry {
+    position: relative;
+    margin: 0 20px;
+    z-index: 2;
+
+    .timeline-marker {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff84;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        transform: translateZ(30px) translateY(19px);
+
+        .timeline-year {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        &:hover {
+            animation: pulse1 0.5s ease;
+            font-weight: bold;
+
+            .timeline-popup {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    .timeline-popup {
+        position: absolute;
+        bottom: 300%;
+        left: 25%;
+        width: 800px;
+        padding: 15px;
+        background-color: #a4b0c4ec;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        z-index: 10;
+        transition: transform 0.3s ease;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        opacity: 0;
+        flex-direction: row;
+        pointer-events: none;
+
+        .popup-column {
+            width: 49%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            h3 {
+                margin-top: 15px;
+                font-weight: bold;
+                font-size: 38px;
+            }
+
+            h4 {
+                margin-bottom: -2px;
+            }
+
+            p {
+                margin: 5px 0;
+                line-height: 0.8;
+            }
+
+            .timeline-image {
+                width: 100%;
+                margin-top: 10px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .timeline-popup {
+        width: 100%;
+        left: 0;
+        right: 0;
+        transform: translateX(0) translateY(20px);
+    }
+
+    /* Adjust headshot popup for smaller screens */
+    .headshot-card .popup {
+        width: 200px;
+        /* Reduce width for smaller screens */
+    }
+}
+
+@keyframes pulse1 {
+    0% {
+        opacity: 50%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+/* Footer */
+.footer {
+    margin-left: calc(-50vw + 50%);
+    width: 100%;
+    background-color: #172b56;
+    color: white;
+    padding: 35px 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 50vh 0 50vh #172b56;
+    box-sizing: border-box;
+    font-family: 'Dotum', sans-serif;
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        letter-spacing: 0.15rem;
+        font-size: 1.5em;
+        line-height: 1;
+
+        .footer-nav {
+            ul {
+                display: flex;
+                justify-content: center;
+                gap: 60px;
+                list-style: none;
+                padding: 0;
+                margin-top: 60px;
+
+                li {
+                    a {
+                        color: white;
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+html,
+body {
+    width: 100% !important;
+    height: 100%;
+    margin: 0px !important;
+    padding: 0px !important;
+    overflow-x: hidden !important;
+}
+
+/* Related Brothers Section */
+.related-brothers {
+    margin-bottom: 10px;
+}
+
+.related-brothers h5 {
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.related-brothers .related-link {
+    display: inline-flex;
+    /* Aligns content horizontally */
+    align-items: center;
+    /* Vertically centers content */
+    justify-content: center;
+    /* Horizontally centers content */
+    padding: 0 5px;
+    /* Increased padding for better click area */
+    background-color: #445d80;
+    /* Primary button color */
+    color: #ffffff;
+    /* Text color */
+    border: none;
+    /* Removes default border */
+    border-radius: 8px;
+    margin-bottom: 5px;
+    /* Rounded corners for a modern look */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    font-size: 1rem;
+    /* Consistent font size */
+    font-weight: 600;
+    /* Slightly bold text */
+    text-decoration: none;
+    /* Removes underline */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    /* Smooth transitions */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    /* Optional: Add an icon or indicator */
+    /* Example: Adding a right arrow icon using pseudo-element */
+    position: relative;
+}
+
+.related-brothers .related-link:hover {
+    background-color: #6e8bb5;
+    /* Darker shade on hover */
+    transform: translate3d(4px, 2px, 0) scale(1.05);
+    /* Slight upward movement */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    /* Enhanced shadow on hover */
+}
+
+.related-brothers .related-link:active {
+    background-color: #004f6a;
+    /* Even darker on click */
+    transform: translateY(0);
+    /* Reset movement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Reduced shadow on click */
+}
+
+
+.related-brothers .related-link::after {
+    transition: transform 0.3s ease;
+}
+
+.related-brothers .related-link:hover::after {
+    transform: translateX(4px);
+    /* Move icon to the right on hover */
+}

@@ -1,6 +1,6 @@
 .navbar {
     height: 100px;
-    background-color: rgba(255, 255, 255, 0); /* Slight transparency, you can adjust this */
+    background-color: transparent; /* Slight transparency, you can adjust this */
     
     .logo-image {
         width: 100px; /* Adjust the size as needed */
@@ -37,7 +37,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
+        padding: 0 100px;
         height: 100%;
 
         span {

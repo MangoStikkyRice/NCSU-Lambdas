@@ -4,10 +4,13 @@ html, body {
 }
 
 body {
-  background-color: #76777c;
   color: lightgray;
   scroll-snap-type: y mandatory;
   overflow-y: auto;
+}
+
+.colorTHIS {
+  background-color: #76777c;
 }
 
 section {
