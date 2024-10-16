@@ -50,20 +50,3 @@ html, body {
     height: 100vh;
     width: 100vw;
   }
-  
-  body.media-page .fuck { /* Scoped adjustment */
-    height: auto; /* Modify as necessary */
-  }
-  
-  body.media-page {
-    background-color: #ffffff; /* Example: Different background color */
-    color: #000000;            /* Example: Different text color */
-    scroll-snap-type: none;    /* Disable scroll snapping on homepage */
-    overflow-y: auto;          /* Adjust overflow behavior if needed */
-  }
-  
-  body.media-page section {
-    height: auto;              /* Remove fixed height for sections */
-    width: auto;               /* Remove fixed width for sections */
-  }
-  

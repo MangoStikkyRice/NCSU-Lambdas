@@ -4,6 +4,7 @@ import LegacyHero from '../components/legacy/LegacyHero'
 import Parallax from '../components/legacy/Parallax'
 import Philanthropy from '../components/legacy/Philanthropy'
 import Info from '../components/legacy/Info'
+import '../App.css'
 
 function Legacy() {
     return (

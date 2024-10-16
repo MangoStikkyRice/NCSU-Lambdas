@@ -1,5 +1,12 @@
 /* Media.scss */
 
+body {
+    background-color: #76777c;
+    color: lightgray;
+    scroll-snap-type: none;
+    overflow-y: none;
+}
+
 .media-container {
     padding: 2rem;
     background-color: #f5f5f5;

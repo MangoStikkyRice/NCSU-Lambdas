@@ -28,6 +28,7 @@ import langston1 from '../assets/images/langston1.png';
 import chrisk1 from '../assets/images/chrisk1.png';
 import lam1 from '../assets/images/lam1.png';
 import alonso1 from '../assets/images/alonso1.png';
+import MISSING from '../assets/images/MISSING.webp';
 import nureveal from '../assets/images/nureveal.jpg';
 
 const headshots = [
@@ -41,7 +42,211 @@ const headshots = [
         littleIds: null,
         major: 'Electrical Engineering',
         hobbies: ['Dancing', 'Anime'],
-        image: michaelt1
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
+    },
+    {
+        id: 48,
+        name: 'Michael Tran',
+        line_name: 'Carry the Titans',
+        status: 'Alumni',
+        class: 'Eta Evolution',
+        bigId: 12,
+        littleIds: null,
+        major: 'Electrical Engineering',
+        hobbies: ['Dancing', 'Anime'],
+        image: MISSING
     },
     {
         id: 49,
@@ -65,7 +270,7 @@ const headshots = [
         littleIds: [54, 62],
         major: 'Biology',
         hobbies: '',
-        image: kunwoo1
+        image: MISSING
     },
     {
         id: 51,
@@ -77,7 +282,7 @@ const headshots = [
         littleIds: null,
         major: 'Accounting',
         hobbies: '',
-        image: alexs1
+        image: MISSING
     },
     {
         id: 53,
@@ -155,13 +360,13 @@ const headshots = [
         id: 59,
         name: 'Dylan Murray',
         line_name: 'The Last Samurai',
-        status: 'Active',
+        status: 'Actives',
         class: 'Kappa Kazoku',
         bigId: 42,
         littleIds: [63],
         major: 'Parks, Recreation, and Tourism',
         hobbies: ['Genshin Impact', 'Photography'],
-        image: dylan1
+        image: MISSING
     },
     {
         id: 60,
@@ -191,19 +396,19 @@ const headshots = [
         id: 63,
         name: 'Cristian Mendoza',
         line_name: 'The Blue Spirit',
-        status: 'Active',
+        status: 'Actives',
         class: 'Mu Monarchs',
         bigId: 59,
         littleIds: null,
         major: 'Civil Engineering',
         hobbies: ['Painting', 'Skiing'],
-        image: cristian1
+        image: MISSING
     },
     {
         id: 64,
         name: 'Kenny Nguyen',
         line_name: 'Seraph of Courage',
-        status: 'Active',
+        status: 'Actives',
         class: 'Mu Monarchs',
         bigId: 56,
         littleIds: null,
@@ -215,7 +420,7 @@ const headshots = [
         id: 65,
         name: 'San Phyo',
         line_name: 'Leo',
-        status: 'Active',
+        status: 'Actives',
         class: 'Nu Nen',
         bigId: 34,
         littleIds: null,
@@ -227,7 +432,7 @@ const headshots = [
         id: 66,
         name: 'Jack Liu',
         line_name: 'The SailHer',
-        status: 'Active',
+        status: 'Actives',
         class: 'Nu Nen',
         bigId: 55,
         littleIds: null,
@@ -239,7 +444,7 @@ const headshots = [
         id: 67,
         name: 'Jordan Miller',
         line_name: 'InterstellHer',
-        status: 'Active',
+        status: 'Actives',
         class: 'Nu Nen',
         bigId: 44,
         littleIds: [70],
@@ -251,13 +456,13 @@ const headshots = [
         id: 68,
         name: 'Lex Chaffee',
         line_name: 'SubmarinHer',
-        status: 'Active',
+        status: 'Actives',
         class: 'Nu Nen',
         bigId: 55,
         littleIds: null,
         major: 'Applied Mathematics',
         hobbies: ['Grilling', 'K-Pop', 'Dancing'],
-        image: lex1
+        image: MISSING
     },
     {
         id: 69,
@@ -275,19 +480,19 @@ const headshots = [
         id: 70,
         name: 'Chris Kha',
         line_name: 'StarGazeHer',
-        status: 'Active',
+        status: 'Actives',
         class: 'Xi Xin',
         bigId: 67,
         littleIds: null,
         major: 'Sociology',
         hobbies: ['Gaming', 'Gymnastics', 'Asian Food'],
-        image: chrisk1
+        image: MISSING
     },
     {
         id: 71,
         name: 'Lam Nguyen',
         line_name: 'Humanity\'s Strongest Soldier',
-        status: 'Active',
+        status: 'Actives',
         class: 'Xi Xin',
         bigId: 64,
         littleIds: null,
@@ -299,25 +504,25 @@ const headshots = [
         id: 72,
         name: 'Alonso Nolasco',
         line_name: 'TRAILBLAZER',
-        status: 'Active',
+        status: 'Actives',
         class: 'Xi Xin',
         bigId: 62,
         littleIds: null,
         major: 'Animal Science',
         hobbies: ['Gaming', 'Mexican Food'],
-        image: alonso1
+        image: MISSING
     },
     {
         id: 73,
         name: 'Langston Sit',
         line_name: 'RIPTIDE',
-        status: 'Active',
+        status: 'Actives',
         class: 'Xi Xin',
         bigId: 45,
         littleIds: null,
         major: 'Industrial Engineering',
         hobbies: ['Traveling', 'Asian Food', 'K-Pop'],
-        image: langston1
+        image: MISSING
     },
 ];
 
@@ -375,7 +580,7 @@ const Brothers = () => {
         }
     };
 
-    const [filter, setFilter] = useState('All');
+    const [filter, setFilter] = useState('all brothers');
     const [hobbyFilter, setHobbyFilter] = useState(null);
 
     useEffect(() => {
@@ -396,14 +601,14 @@ const Brothers = () => {
 
     const filteredHeadshots = headshots.filter(person => {
         // Status/Class Filter
-        const statusMatch = filter === 'All' ||
-            (filter === 'Eta' && person.class === 'Eta Evolution') ||
-            (filter === 'Theta' && person.class === 'Theta Trinity') ||
-            (filter === 'Iota' && person.class === 'Iota Immortals') ||
-            (filter === 'Kappa' && person.class === 'Kappa Kazoku') ||
-            (filter === 'Mu' && person.class === 'Mu Monarchs') ||
-            (filter === 'Nu' && person.class === 'Nu Nen') ||
-            (filter === 'Xi' && person.class === 'Xi Xin') ||
+        const statusMatch = filter === 'all brothers' ||
+            (filter === 'Etas' && person.class === 'Eta Evolution') ||
+            (filter === 'Thetas' && person.class === 'Theta Trinity') ||
+            (filter === 'Iotas' && person.class === 'Iota Immortals') ||
+            (filter === 'Kappas' && person.class === 'Kappa Kazoku') ||
+            (filter === 'Mus' && person.class === 'Mu Monarchs') ||
+            (filter === 'Nus' && person.class === 'Nu Nen') ||
+            (filter === 'Xis' && person.class === 'Xi Xin') ||
             (person.status === filter);
 
         // Hobby Filter
@@ -415,25 +620,25 @@ const Brothers = () => {
 
     const getTitle = () => {
         switch (filter) {
-            case 'Active':
+            case 'Actives':
                 return 'Active House';
             case 'Alumni':
                 return 'Alumni';
-            case 'Associate':
+            case 'Associates':
                 return 'Associate Members';
-            case 'Eta':
+            case 'Etas':
                 return 'Eta Evolution';
-            case 'Theta':
+            case 'Thetas':
                 return 'Theta Trinity';
-            case 'Iota':
+            case 'Iotas':
                 return 'Iota Immortals';
-            case 'Kappa':
+            case 'Kappas':
                 return 'Kappa Kazoku';
-            case 'Mu':
+            case 'Mus':
                 return 'Mu Monarchs';
-            case 'Xi':
+            case 'Xis':
                 return 'Xi Xin';
-            case 'Nu':
+            case 'Nus':
                 return 'Nu Nen';
             default:
                 return 'All Brothers';
@@ -477,33 +682,27 @@ const Brothers = () => {
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
                         >
-                            <option value="All">All</option>
-                            <option value="Active">Active House</option>
+                            <option value="all brothers">All</option>
+                            <option value="Actives">Active House</option>
                             <option value="Alumni">Alumni</option>
-                            <option value="Associate">Associate</option>
-                            <option value="Eta">Eta Evolution</option>
-                            <option value="Theta">Theta Trinity</option>
-                            <option value="Iota">Iota Immortals</option>
-                            <option value="Kappa">Kappa Kazoku</option>
-                            <option value="Mu">Mu Monarchs</option>
-                            <option value="Nu">Nu Nen</option>
-                            <option value="Xi">Xi Xin</option>
+                            <option value="Associates">Associate</option>
+                            <option value="Etas">Eta Evolution</option>
+                            <option value="Thetas">Theta Trinity</option>
+                            <option value="Iotas">Iota Immortals</option>
+                            <option value="Kappas">Kappa Kazoku</option>
+                            <option value="Mus">Mu Monarchs</option>
+                            <option value="Nus">Nu Nen</option>
+                            <option value="Xis">Xi Xin</option>
                         </select>
                     </div>
                 </div>
 
                 {/* Active Filters Display */}
-                {(filter !== 'All' || hobbyFilter) && (
+                {(hobbyFilter) && (
                     <div className="active-filters">
-                        {filter !== 'All' && (
-                            <div className="active-filter">
-                                <span>Filter by: {getTitle()}</span>
-                                <button onClick={() => setFilter('All')}>Clear</button>
-                            </div>
-                        )}
                         {hobbyFilter && (
                             <div className="active-filter">
-                                <span>Interested in: {hobbyFilter}</span>
+                                <span>Showing {filter} interested in {hobbyFilter}</span>
                                 <button onClick={() => setHobbyFilter(null)}>Clear</button>
                             </div>
                         )}

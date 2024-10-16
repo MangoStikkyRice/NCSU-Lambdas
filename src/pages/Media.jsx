@@ -6,6 +6,7 @@ import { FaYoutube, FaInstagram, FaImages } from 'react-icons/fa';
 import './Media.scss';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import NavBarNew from '../components/navbar/NavBarNew'
 
 export default function Media() {
     const containerRef = useRef(null);
@@ -114,6 +115,7 @@ export default function Media() {
 
     return (
         <div className="media-container" ref={containerRef}>
+            <NavBarNew />
             <h1 className="media-title">
                 <FaImages /> Media Page
             </h1>
