@@ -119,7 +119,7 @@
 /* Hover Effects */
 .image-card:hover img {
     transform: scale(1.1); /* Zoom in the image slightly */
-    filter: brightness(40%);
+    filter: brightness(60%) blur(1px);
 }
 
 .image-card:hover .card-title {

@@ -1,0 +1,94 @@
+.advanced-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  text-align: center;
+
+  svg {
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 5px white); /* Intense white glow for SVG elements */
+    animation: svg-glow 1.2s infinite;
+  }
+
+  p {
+    font-size: 48px; /* Increased font size for readability */
+    color: #172c5a;
+    font-family: 'Dotum', sans-serif;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 5px white; /* Intense white glow for text */
+    animation: text-glow 1.2s infinite;
+
+    .dots {
+      display: flex;
+      margin-left: 5px;
+      margin-top: 20px;
+
+      .dot {
+        width: 8px; /* Size of the bouncing dots */
+        height: 8px;
+        background-color: #203c79;
+        border-radius: 50%;
+        margin: 0 4px;
+        animation: bounce 1.2s infinite, glow 1.2s infinite;
+        box-shadow: 0 0 5px white; /* Intense white glow around the dots */
+      }
+
+      /* Staggered animation delays */
+      .dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(-15px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.678); /* Strong initial glow */
+    }
+    50% {
+      box-shadow: 0 0 10px white; /* Even stronger glow at peak of bounce */
+    }
+  }
+
+    /* Keyframes for text-glow to sync the text with the bouncing dots' glow */
+    @keyframes text-glow {
+      0%,
+      100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.678); /* Soft glow */
+      }
+      50% {
+        text-shadow: 0 0 15px white; /* Stronger glow in sync with the dots */
+      }
+    }
+
+    @keyframes svg-glow {
+      0%,
+      100% {
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.678)); /* Soft glow */
+      }
+      50% {
+        filter: drop-shadow(0 0 10px white); /* Stronger glow in sync with the dots */
+      }
+    }
+}

@@ -1,63 +1,150 @@
-import React from 'react';
-import './Recruitment.css';
-import heroImage from '../assets/images/rec.jpg'; // Replace with the correct path to your hero image
+import React, { useEffect, useState, useRef } from 'react';
+import './RecruitmentRELOADED.scss';
 import NavBarNew from '../components/navbar/NavBarNew';
+import heroImage from '../assets/images/rec.jpg'; // Ensure this path is correct
+import faqs from './faqsData'; // We'll create this data separately
 
-function Recruitment() {
+const RecruitmentRELOADED = () => {
+    const [playerPosition, setPlayerPosition] = useState({ x: 50, y: 300 });
+    const [velocity, setVelocity] = useState({ x: 0, y: 0 });
+    const [isJumping, setIsJumping] = useState(false);
+    const [selectedFaq, setSelectedFaq] = useState(null);
+    const gameAreaRef = useRef(null);
+    const gravity = 0.5;
+    const friction = 0.8;
+
+    // Handle keyboard events
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowLeft') {
+                setVelocity((prev) => ({ ...prev, x: -5 }));
+            }
+            if (e.key === 'ArrowRight') {
+                setVelocity((prev) => ({ ...prev, x: 5 }));
+            }
+            if (e.key === 'ArrowUp') {
+                if (!isJumping) {
+                    setVelocity((prev) => ({ ...prev, y: -10 }));
+                    setIsJumping(true);
+                }
+            }
+        };
+
+        const handleKeyUp = (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                setVelocity((prev) => ({ ...prev, x: 0 }));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
+        };
+    }, [isJumping]);
+
+    // Game loop
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPlayerPosition((prev) => {
+                let newX = prev.x + velocity.x;
+                let newY = prev.y + velocity.y;
+
+                // Apply gravity
+                setVelocity((prevV) => ({ ...prevV, y: prevV.y + gravity }));
+
+                // Ground collision
+                if (newY >= 300) {
+                    newY = 300;
+                    setVelocity((prevV) => ({ ...prevV, y: 0 }));
+                    setIsJumping(false);
+                }
+
+                // Boundary conditions
+                if (newX < 0) newX = 0;
+                if (newX > 800 - 50) newX = 800 - 50; // Assuming game area width is 800px
+
+                return { x: newX, y: newY };
+            });
+
+            // Collision detection with blocks
+            faqs.forEach((faq, index) => {
+                const block = document.getElementById(`block-${index}`);
+                if (block) {
+                    const blockRect = block.getBoundingClientRect();
+                    const playerRect = {
+                        left: playerPosition.x,
+                        right: playerPosition.x + 50,
+                        top: playerPosition.y,
+                        bottom: playerPosition.y + 50,
+                    };
+
+                    if (
+                        playerRect.right > blockRect.left &&
+                        playerRect.left < blockRect.right &&
+                        playerRect.bottom > blockRect.top &&
+                        playerRect.top < blockRect.bottom
+                    ) {
+                        setSelectedFaq(faq);
+                    }
+                }
+            });
+        }, 20); // 50 FPS
+
+        return () => clearInterval(interval);
+    }, [velocity, playerPosition]);
+
+    const closeModal = () => {
+        setSelectedFaq(null);
+    };
+
     return (
-        <div>
+        <div className='recruitment-reloaded-body'>
             <NavBarNew />
             {/* Hero Image Section */}
-            <div className="hero-image-recruitment" style={{ backgroundImage: `url(${heroImage})` }}>
-                <div className="hero-text-recruitment">
+            <div className="hero-image-reloaded" style={{ backgroundImage: `url(${heroImage})` }}>
+                <div className="hero-text-reloaded">
                     <h1>RUSH LPhiE</h1>
                     <p>Discover Brotherhood, Leadership, and Legacy</p>
                 </div>
             </div>
 
-            {/* Recruitment FAQ Section */}
-            <div className="recruitment-faqs">
-                <h2>Recruitment FAQs</h2>
+            {/* Platformer Game Area */}
+            <div className="game-area" ref={gameAreaRef}>
+                {/* Ground */}
+                <div className="ground"></div>
 
-                <div className="faq-item">
-                    <h3>WHAT IS RECRUITMENT/RUSH WEEK?</h3>
-                    <p>Recruitment week is a two week period for students to get a chance to meet the brothers of Lambda Phi Epsilon and to learn more about the fraternity through a variety of social events. Recruitment events are <strong>non-committal</strong> and occur usually at the beginning of every semester.</p>
-                </div>
+                {/* Blocks */}
+                {faqs.map((faq, index) => (
+                    <div key={index} id={`block-${index}`} className="mario-block">
+                        <span className="block-icon">?</span>
+                    </div>
+                ))}
 
-                <div className="faq-item">
-                    <h3>WHAT CAN I EXPECT?</h3>
-                    <p>Expect a lot of friendly faces! We're here to know more about each other and have a great time. There will be multiple social events with transportation, food, and new faces to meet!</p>
-                </div>
-
-                <div className="faq-item">
-                    <h3>SHOULD I ATTEND ALL THE RECRUITMENT EVENTS?</h3>
-                    <p>In order to be eligible to receive a bid (an invitation to join our brotherhood), you must attend <strong>two</strong> social events and <strong>one</strong> info session. However, we encourage attending as many recruitment events as you want in order to get a glimpse into the fraternity life as well as to get a better understanding if Lambda Phi Epsilon is for you.</p>
-                </div>
-
-                <div className="faq-item">
-                    <h3>AM I REQUIRED TO JOIN IF I ATTEND RECRUITMENT?</h3>
-                    <p>No, recruitment events are <strong>non-binding</strong> and are solely to provide both an opportunity to familiarize yourself with the fraternity and Greek life while also providing you an opportunity to meet the brothers of Lambda Phi Epsilon.</p>
-                </div>
-
-                <div className="faq-item">
-                    <h3>WHAT HAPPENS AFTER RECRUITMENT?</h3>
-                    <p>After recruitment week has completed and you have completed the necessary recruitment requirements (attending <strong>two</strong> social events and <strong>one</strong> info session), you will be eligible for a formal interview with the brothers of Lambda Phi Epsilon.</p>
-                </div>
-
-                <div className="faq-item">
-                    <h3>WILL JOINING A FRATERNITY IMPACT MY EDUCATION?</h3>
-                    <p>One of Lambda Phi Epsilon's core and founding purposes is to promote academic achievement. Like any commitment, joining a fraternity will require time and effort, but managing school and joining a fraternity is definitely possible. As fellow students, the brothers of Lambda Phi Epsilon will also be committed to helping you achieve academic responsibility and success. Our info sessions will provide more details with time-commitments and management, but the best estimate would be relating the initiation process to a 3-hour credit course.</p>
-                </div>
-
-                <div className="faq-item">
-                    <h3>DO I HAVE TO BE ASIAN TO BE A MEMBER?</h3>
-                    <p>No, Lambda Phi Epsilon is an Asian-interest fraternity that focuses on the promotion of Asian American awareness. Members of any ethnicity, race, religion, gender identity, sexuality, and background are always welcomed in our brotherhood.</p>
-                </div>
-
-                <p>For any other further questions about recruitment, feel free to contact us on our Instagram!</p>
+                {/* Player */}
+                <div
+                    className="player"
+                    style={{
+                        left: `${playerPosition.x}px`,
+                        top: `${playerPosition.y}px`,
+                    }}
+                ></div>
             </div>
+
+            {/* Modal for FAQ Content */}
+            {selectedFaq && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>{selectedFaq.title}</h2>
+                        <p>{selectedFaq.content}</p>
+                        <button onClick={closeModal} className="close-button">Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
-}
+};
 
-export default Recruitment;
+export default RecruitmentRELOADED;

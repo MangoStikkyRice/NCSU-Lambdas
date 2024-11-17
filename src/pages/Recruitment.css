@@ -7,6 +7,10 @@
     font-style: normal;
 }
 
+.recruitment-body {
+    background-color: rgb(255, 255, 255);
+}
+
 /* Hero Image Section */
 .hero-image-recruitment {
     width: 100vw;
@@ -63,6 +67,7 @@
     margin: 40px auto;
     padding: 0 20px;
     color: black;
+    
 }
 
 .recruitment-faqs h2 {

@@ -1,158 +1,41 @@
-:root {
-    --set-margin: calc((100vw - 62.5rem) / 2);
-    --set-width: auto;
-    --set-gap: 2rem;
-  }
-  
-  html,
-  body {
-    background-color: #1d1e22;
-    color: #ddd;
-    margin: 0;
-    min-height: 100vh;
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
-    font-family: "Rubik", sans-serif, Arial;
-    font-size: 1rem;
-    background-image:
-      linear-gradient(rgba(255,255,255,.07) 2px, transparent 2px),
-      linear-gradient(90deg, rgba(255,255,255,.07) 2px, transparent 2px),
-      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-    background-position: center;
-  }
-  
-  header, footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .sticky-element {
-    overflow: hidden;
-  }
-  
-  .track {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: fit-content;
-    height: 100vh;
-    flex: 0 0 auto;
-  }
-  
-  .track-flex {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 65vh;
-    margin-inline: var(--set-margin);
-  }
-  
-  .panel-wide {
-    position: relative;
-    width: 100vw;
-    height: 100%;
-    overflow: hidden;
-    flex: 0 0 auto;
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-      font-size: 3rem;
-      font-weight: 700;
-      mix-blend-mode: difference;
-    }
-  }
-  
-  video {
+body {
+  margin: 0;
+}
+
+.experience {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+}
+
+.scrollTarget {
+  position: absolute;
+  height: 1000vh;
+  width: 100px;
+  top: 0;
+  z-index: 0;
+}
+
+.vignette-radial {
+  position: fixed;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  pointer-events: none;
+
+  &:after {
+    pointer-events: none;
+    content: ' ';
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    mix-blend-mode: overlay;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: radial-gradient(circle, transparent 60%, black 150%);
   }
-  
-  img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .half-height .track-flex {
-    gap: var(--set-gap);
-  }
-  
-  //progress
-  .progress--bar-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 2rem;
-  }
-  .progress--bar{
-    width: 100%;
-    max-width: 62.5rem;
-    height: 2px;
-    border-radius: 1px;
-    background: #2f2f2f;
-  }
-  .progress--bar-total {
-    width: 0%;
-    height: 100%;
-    background: red;
-    border-radius: 2px;
-  }
-  
-  .elements {
-    width: 62.5rem;
-    display: flex;
-    justify-content: center;
-    gap: .25rem;
-    position: absolute;
-    bottom: 2.5rem;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
-    .thumbs {
-      position: relative;
-      width: calc(62.5vw / 5);
-      background: #2f2f2f;
-      flex: 1;
-      text-align: center;
-      isolation: isolate;
-      padding: .25rem;
-      cursor: pointer;
-    }
-    .visible {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      z-index: -1;
-      width: 0;
-      //height: .5rem;
-      background: red;
-    }
-  }
-  
-  .lottie{
-    width: 300px; height: 300px;
-    position: absolute;
-    top: 20%;
-    top: 20%;
-    right: 10%;
-    opacity: 0;
-    z-index: 100
-  }
+}

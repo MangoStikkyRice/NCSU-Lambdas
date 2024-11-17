@@ -5,14 +5,92 @@
     font-style: normal;
 }
 
+/* Root CSS Variables */
+:root {
+    --color1: rgba(255, 0, 150, 0.5);
+    --color2: rgba(0, 255, 150, 0.5);
+    --color3: rgba(0, 150, 255, 0.5);
+    --color4: rgba(255, 255, 0, 0.5);
+    --color5: rgba(255, 0, 255, 0.5);
+    /* Initial Positions */
+    --pos1-x: 20%;
+    --pos1-y: 80%;
+    --pos2-x: 80%;
+    --pos2-y: 20%;
+    --pos3-x: 50%;
+    --pos3-y: 50%;
+    --pos4-x: 30%;
+    --pos4-y: 70%;
+    --pos5-x: 70%;
+    --pos5-y: 30%;
+    /* Initial Sizes */
+    --size1: 30%;
+    --size2: 40%;
+    --size3: 50%;
+    --size4: 60%;
+    --size5: 70%;
+  }
+  
+  
+
 /* Main container for the page */
 .brothers-page {
-    width: 100%;
-    padding: 130px 40px;
-    background-color: #ffffff;
+    flex: 1;
+    padding: 100px 40px;
     font-family: 'Arial', sans-serif;
     overflow-x: hidden;
     /* Hide horizontal scroll */
+}
+
+.includeHeader {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 30%, white 70%, rgb(151, 151, 151) 100%);
+    background-blend-mode: screen;
+      
+  }
+
+  .advanced-loading {
+    position: relative;
+    z-index: 1;
+}
+
+/* Loading Container */
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;       /* Full viewport width */
+    height: 100vh;      /* Full viewport height */
+    overflow: hidden;   /* Hide overflow to contain the panning background */
+    z-index: 1000;      /* Ensure it stays above all other content */
+    perspective: 2000px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #ffffff; /* Fallback color */
+}
+
+/* Loading Background */
+.loading-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(.8);
+    width: 100vw;            /* Twice the viewport width for smooth panning */
+    height: 100vh;           /* Full viewport height */
+    background:        radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0) 50%), /* Central dark spot */ url('../assets/images/nureveal.jpg') no-repeat center center;
+    background-size: cover;  /* Ensure the image covers the container */
+    box-shadow: inset 0 0 40px 30px rgba(255, 255, 255, 0.363), 5px 5px 20px 3px rgba(0, 0, 0, 0.507);
+    filter: grayscale(100%);
+    transform: scale(0.8) rotateY(-12deg) rotateX(10deg);
+}
+  
+.loading-container > .AdvancedLoading {
+    position: relative;
+    z-index: 1;
 }
 
 /* Title Strip */
@@ -50,37 +128,16 @@
         text-shadow: #000000 3px 3px 4px;
         color: #f8f8f8;
     }
-}
 
-/* Blue Strip */
-.blue-strip1 {
-    position: absolute;
-    width: 110%;
-    height: 120%;
-    background: linear-gradient(to right, #203c79, #203c79af, #203c79);
-    background-size: 200% auto;
-    animation: shimmer 4s infinite;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
-}
-
-/* Keyframes for fade in and fade out */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
+    /* Blue Strip */
+    .blue-strip1 {
+        position: absolute;
+        width: 110%;
+        height: 120%;
+        background: linear-gradient(to right, #203c79, #203c79af, #203c79);
+        background-size: 200% auto;
+        animation: shimmer 4s infinite;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
     }
 }
 
@@ -95,9 +152,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
 
-/* Filter Box */
+    /* Filter Box */
 .filter-box {
     display: flex;
     align-items: center;
@@ -113,9 +169,7 @@
         font-size: 1.2rem;
         font-family: 'Dotum', sans-serif;
         color: white;
-        margin-right: auto;
         z-index: 2;
-        padding-left: 10px;
         letter-spacing: 0.07em;
         font-weight: bold;
     }
@@ -132,7 +186,7 @@
         padding-right: 10px;
         position: relative;
         appearance: none;
-        text-align: right;
+        text-align: center;
         letter-spacing: 0.07em;
         transition: transform 0.5s ease-in-out, color 0.5s ease-in-out;
 
@@ -149,21 +203,37 @@
         }
     }
 }
+}
 
 /* Color Box for Headshots */
 .color-box-headshots {
     background-color: transparent;
     margin-bottom: 40px;
-    max-width: 1600px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
+
+    .headshot-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }
 
-.headshot-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+.statistics-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #203c79;  // Navy blue background
+    color: white;               // White text
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;  // Smooth transition for hover effects
+
+    &:hover {
+        background-color: #405b9e;  // Lighter blue on hover
+    }
 }
+
 
 /* Headshot Card */
 .headshot-card {
@@ -173,12 +243,120 @@
     transition: transform 0.3s ease;
     color: black;
     position: relative;
-    /* Establishes a containing block for absolute positioning */
+    perspective: 800px;
+
+    .view-positions-container {
+        .view-positions-button {
+            padding: 10px 15px;              // Increased padding for a more substantial feel
+            border-radius: 25px;             // Rounded corners for a modern look
+            background: linear-gradient(45deg, #92aed8, #203c79); // Gradient background
+            color: #fff;                     // White text for contrast
+            border: none;                    // Remove border for a cleaner look
+            font-size: 16px;                 // Modern font size
+            font-weight: 600;                // Semi-bold font for emphasis
+            cursor: pointer;                 // Pointer cursor to indicate interactivity
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+            transition: all 0.5s ease;       // Smooth transition on hover and focus
+            margin-bottom: 8px;
+
+            h2 {
+                font-size: 18px;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.719);
+                text-align: center;
+                margin: 0;
+            }
+
+            
+            &:hover {
+                background: linear-gradient(45deg, #92aed8, rgb(0, 62, 161)); // Reverse gradient on hover
+                transform: translateY(-3px);  // Slight lift effect on hover
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); // Larger shadow on hover for emphasis
+            }
+    
+            &:focus {
+                outline: none;                // Remove default outline on focus
+                box-shadow: 0px 0px 10px rgba(38, 132, 255, 0.75); // Glow effect for focus
+            }
+    
+            &:active {
+                transform: translateY(1px);   // Slight press-in effect when clicked
+            }
+        }
+    }
+
+    .position-display {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+
+        p {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 5px 10px;
+            border-radius: 0%;
+            margin: 0;
+            font-size: 22px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.61); // Added glow effect
+        }
+    }
+
+    .position-display.visible {
+        transform: translateY(-140%) scale(1.4);
+        
+        opacity: 1;
+        z-index: 3;
+    }
+
+
+    .card-content {
+        position: relative;
+        z-index: 6; // Add this line
+    }
+
+    .headshot-card .card-inner {
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+        z-index: 9;
+    }
+
+    .headshot-card .card-inner * {
+        backface-visibility: hidden;
+    }
+
+    /* Image Container */
+    .image-container {
+        width: 100%;
+        padding-top: 100%;
+        /* This creates a square container by setting height equal to width */
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Optional: Adds subtle shadow */
+        z-index: 9!important;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            /* Ensures the image covers the container without distortion */
+            z-index: 9!important;
+        }
+    }
 
     &.selected {
         transform: scale(1.2);
         z-index: 3;
-        box-shadow: rgba(255, 255, 255, 0.8) 0 0 50px 33px;
+        box-shadow: rgb(255, 255, 255) 0 0 20px 15px;
 
         .popup {
             opacity: 1;
@@ -203,7 +381,7 @@
                 /* Allows clicks to pass through */
                 opacity: 0.8;
                 white-space: nowrap;
-                z-index: 150;
+                z-index: 2;
                 /* Ensure it's above other elements */
 
                 /* Arrow pointing upwards */
@@ -229,17 +407,6 @@
     &:hover {
         transform: scale(1.2);
         z-index: 2;
-
-        .popup {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(-50%) translateX(0);
-        }
-    }
-
-    img {
-        width: 100%;
-        height: auto;
     }
 
     h3 {
@@ -265,7 +432,7 @@
         transform: translateY(-50%) translateX(-10px);
         /* Vertically centered and slightly offscreen */
         background-color: #20375acb;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.63);
         padding: 12px;
         width: 250px;
         height: 100%;
@@ -273,13 +440,33 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-        z-index: 100;
+
         display: flex;
         flex-direction: column;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
+        z-index: 1;
 
-        /* Stack children vertically */
+        .flags-container {
+            position: absolute;
+            bottom: 0px; /* Adjust as needed */
+            right: 0px;  /* Adjust as needed */
+            display: flex;
+            gap: 3px;      /* Space between flags */
+            flex-wrap: wrap; /* Allow flags to wrap if necessary */
+            transform: scale(2.5);
+        
+            .flag-icon {
+              height: auto;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+              background-color: transparent;
+        
+              &:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+              }
+            }
+        }
 
         &.popup-left {
             left: auto;
@@ -287,6 +474,17 @@
             /* Positions the popup to the left of the card */
             transform: translateY(-50%) translateX(0px);
             /* Slightly offscreen to the right */
+            z-index: 2;
+
+            .flags-container {
+                position: absolute;
+                bottom: 0px; /* Adjust as needed */
+                left: 80px;  /* Adjust as needed */
+                display: flex;
+                gap: 5px;      /* Space between flags */
+                flex-wrap: wrap; /* Allow flags to wrap if necessary */
+                transform: scale(2.2);
+            }
         }
 
         /* Popup Image */
@@ -295,7 +493,142 @@
             height: auto;
             border-radius: 5px;
             margin-bottom: 10px;
-            z-index: 100;
+            z-index: 2;
+        }
+
+        /* Casual Images Carousel */
+        .popup-casual-carousel {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            aspect-ratio: 1 / 1;
+            /* Modern browsers */
+
+            @supports not (aspect-ratio: 1 / 1) {
+                width: 100%;
+                /* Use padding-top to maintain aspect ratio */
+                padding-top: 100%;
+                position: relative;
+            }
+
+            /* Center the image within the carousel */
+            img.popup-casual-image {
+                position: absolute;
+                /* For fallback */
+            }
+        }
+
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            .popup-casual-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 5px;
+                pointer-events: none;
+                /* Removed transitions to prevent CSS-based fade effects */
+                /* transition: opacity 0.5s ease-in-out, transform 0.2s ease-in-out; */
+            }
+
+            .popup-casual-image.active {
+                pointer-events: auto;
+                /* No transitions here */
+            }
+
+            .popup-casual-image.inactive {
+                pointer-events: none;
+                /* No transitions here */
+            }
+        }
+
+        /* Carousel Buttons */
+        .carousel-button {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #203c79;
+            z-index: 2;
+            opacity: 0;
+
+            &:hover {
+                background: rgba(255, 255, 255, 1);
+                transform: translateY(-50%) scale(1.1);
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #92aed8;
+            }
+        }
+
+        .prev-button {
+            left: 5px;
+        }
+
+        .next-button {
+            right: 5px;
+        }
+
+        /* Optional: Remove cursor from images to indicate no interactivity */
+        .popup-casual-image {
+            cursor: default;
+        }
+
+        /* Carousel Image */
+        .popup-casual-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+
+            @supports not (aspect-ratio: 1 / 1) {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+
+        }
+
+        /* Center the image within the carousel */
+        img.popup-casual-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the image covers the container */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+
+        /* Show navigation buttons only on hover */
+        &:hover .carousel-button {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Popup Header (Fixed) */
@@ -391,6 +724,7 @@
             }
 
         }
+
         .hobbies-section {
 
             h5 {
@@ -446,42 +780,47 @@
     }
 
 
-        /* Popup Footer (Optional) */
-        .popup-footer {
-            padding-top: 10px;
-            /* Optional: Add background color or other styles */
-        }
-
-        /* Popup Link Styling */
-        .popup-link {
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #007bff;
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-
+    /* Popup Footer (Optional) */
+    .popup-footer {
+        padding-top: 10px;
+        /* Optional: Add background color or other styles */
     }
+
+    /* Popup Link Styling */
+    .popup-link {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+}
 
 /* Active Filters Display */
 .active-filters {
     margin-bottom: 20px;
     padding: 10px 15px;
     font-size: 1rem;
-    color: #ffffff; /* Updated text color for better contrast */
+    color: #ffffff;
+    /* Updated text color for better contrast */
     text-shadow: #000000 2px 2px 4px;
-    background-color: #6893d4; /* Dark blue background to match the theme */
-    border: 1px solid #ffffff; /* White border for definition */
-    border-radius: 8px; /* Rounded corners for a smoother look */
+    background-color: #6893d4;
+    /* Dark blue background to match the theme */
+    border: 1px solid #ffffff;
+    /* White border for definition */
+    border-radius: 8px;
+    /* Rounded corners for a smoother look */
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
 
     .active-filter {
         display: flex;
@@ -493,10 +832,13 @@
         }
 
         button {
-            background-color: #ff4d4d; /* Bright red background */
-            color: #ffffff; /* White text for contrast */
+            background-color: #ff4d4d;
+            /* Bright red background */
+            color: #ffffff;
+            /* White text for contrast */
             border: none;
-            border-radius: 5px; /* Rounded corners */
+            border-radius: 5px;
+            /* Rounded corners */
             padding: 5px 10px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -504,17 +846,22 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
 
             &:hover {
-                background-color: #e60000; /* Darker red on hover */
-                transform: translateY(-2px); /* Slight lift effect */
+                background-color: #e60000;
+                /* Darker red on hover */
+                transform: translateY(-2px);
+                /* Slight lift effect */
             }
 
             &:active {
-                background-color: #cc0000; /* Even darker red on click */
-                transform: translateY(0); /* Reset position */
+                background-color: #cc0000;
+                /* Even darker red on click */
+                transform: translateY(0);
+                /* Reset position */
             }
 
             &:focus {
-                outline: 2px solid #ffffff; /* White outline on focus for accessibility */
+                outline: 2px solid #ffffff;
+                /* White outline on focus for accessibility */
             }
         }
     }
@@ -531,123 +878,186 @@
     /* Move popup into view */
 }
 
-/* Timeline container with 3D perspective */
-.timeline-container {
+/* Loading Indicator Styles */
+.loading-indicator {
     display: flex;
-    justify-content: space-between;
-    position: relative;
-    padding: 40px 0;
-    max-width: 100%;
-    white-space: nowrap;
-    perspective: 1000px;
-    transform-style: preserve-3d;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* Adjust as needed */
+    font-size: 1.5rem;
+    color: #203c79;
+    position: absolute;
+    z-index: 10!important;
 
-    .timeline-line {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        height: 40px;
-        background: linear-gradient(135deg, #203c79, #92aed8);
-        transform: translateZ(-10px);
-        border-radius: 20px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-        z-index: 1;
+    .dots {
+        display: inline-block;
+        margin-left: 5px;
+        &:after {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            text-align: left;
+            animation: ellipsis steps(4, end) 1s infinite;
+        }
+
+        .dots::after {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            text-align: left;
+            animation: ellipsis 1.5s infinite;
+        }
+        
     }
 }
 
-.timeline-title {
-    color: #000000;
+@keyframes ellipsis {
+    0% {
+        content: '';
+    }
+    25% {
+        content: '.';
+    }
+    50% {
+        content: '..';
+    }
+    75% {
+        content: '...';
+    }
+    100% {
+        content: '';
+    }
 }
 
-.timeline-entry {
-    position: relative;
-    margin: 0 20px;
-    z-index: 2;
 
-    .timeline-marker {
+/* Timeline Styles */
+/* Timeline Styles */
+.timeline-section {
+    padding: 60px 0;
+    text-align: center;
+    overflow: hidden; /* Prevent scroll bars */
+
+    .timeline-title {
+        margin-bottom: 40px;
+
+        h2 {
+            font-size: 3rem;
+            color: #203c79;
+        }
+    }
+
+    .timeline-container {
         position: relative;
-        width: 30px;
-        height: 30px;
-        background-color: #ffffff84;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-        transform: translateZ(30px) translateY(19px);
-
-        .timeline-year {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        &:hover {
-            animation: pulse1 0.5s ease;
-            font-weight: bold;
-
-            .timeline-popup {
-                opacity: 1;
-                pointer-events: auto;
-            }
-        }
-    }
-
-    .timeline-popup {
-        position: absolute;
-        bottom: 300%;
-        left: 25%;
-        width: 800px;
-        padding: 15px;
-        background-color: #a4b0c4ec;
-        border: 1px solid #ddd;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        z-index: 10;
-        transition: transform 0.3s ease;
-        transform: translateX(-50%);
+        padding: 40px 0;
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        opacity: 0;
-        flex-direction: row;
-        pointer-events: none;
 
-        .popup-column {
-            width: 49%;
+        min-height: 400px;
+
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            width: 90%;
+            height: 6px;
+            background: linear-gradient(90deg, #203c79, #92aed8);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-entry {
+            position: relative;
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
+            justify-content: center;
+            z-index: 2;
 
-            h3 {
-                margin-top: 15px;
-                font-weight: bold;
-                font-size: 38px;
-            }
+            .timeline-marker {
+                position: relative;
+                width: 60px;
+                height: 60px;
+                background-color: #ffffff;
+                border-radius: 50%;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 3;
+                transform-origin: center;
+                overflow: visible; /* Ensure children are visible */
 
-            h4 {
-                margin-bottom: -2px;
-            }
+                .timeline-year {
+                    position: absolute;
+                    top: 70px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    font-size: 1.2rem;
+                    color: #203c79;
+                    font-weight: bold;
+                }
 
-            p {
-                margin: 5px 0;
-                line-height: 0.8;
-            }
+                .timeline-popup {
+                    position: absolute;
+                    bottom: calc(100% + 10px);
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 300px;
+                    padding: 20px;
+                    background-color: rgba(255, 255, 255, 0.95);
+                    border: 1px solid #ddd;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                    z-index: 4;
+                    opacity: 0;
+                    pointer-events: none;
+                    transform-origin: bottom center;
+                    border-radius: 8px;
 
-            .timeline-image {
-                width: 100%;
-                margin-top: 10px;
-                object-fit: cover;
-                border-radius: 5px;
+                    .popup-content {
+                        display: flex; /* Add flex display to arrange classes side by side */
+                        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+                        justify-content: space-between;
+                        gap: 20px; /* Space between class entries */
+                
+                        .class-entry {
+                            flex: 1 1 45%; /* Adjust flex basis to 45% to fit two in a row */
+                            box-sizing: border-box;
+                
+                            h3 {
+                                font-size: 1.2rem;
+                                margin-bottom: 5px;
+                            }
+                
+                            h4 {
+                                font-size: 1rem;
+                                margin-bottom: 5px;
+                            }
+                
+                            p {
+                                font-size: 0.9rem;
+                                margin-bottom: 5px;
+                            }
+                
+                            .timeline-image {
+                                width: 100%;
+                                height: auto;
+                                border-radius: 5px;
+                                margin-top: 10px;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+
+                    /* Transition for GSAP */
+                    /* Remove CSS transitions to prevent conflicts with GSAP */
+                }
             }
         }
     }
 }
-
 @media (max-width: 600px) {
     .timeline-popup {
         width: 100%;
@@ -782,6 +1192,23 @@ body {
     /* Enhanced shadow on hover */
 }
 
+/* Image Wrapper */
+.headshot-card .image-wrapper {
+    position: relative;
+    perspective: 800px;
+    /* Ensure the image wrapper has perspective for 3D rotation */
+}
+
+.headshot-card .image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Transform origin to center */
+    transform-origin: center;
+    /* Set the initial transform style to preserve 3D */
+    transform-style: preserve-3d;
+}
+
 .related-brothers .related-link:active {
     background-color: #004f6a;
     /* Even darker on click */
@@ -790,7 +1217,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     /* Reduced shadow on click */
 }
-
 
 .related-brothers .related-link::after {
     transition: transform 0.3s ease;

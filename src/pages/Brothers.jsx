@@ -1,559 +1,112 @@
 // Brothers.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import './Brothers.scss';
 import NavBarNew from './../components/navbar/NavBarNew';
-
-// Import your images as before
-import michaelt1 from '../assets/images/michaelt1.png';
-import alexky1 from '../assets/images/alexky1.jpg';
-import kunwoo1 from '../assets/images/kunwoo1.png';
-import alexs1 from '../assets/images/alexs1.png';
-import richard1 from '../assets/images/richard1.jpg';
-import lee1 from '../assets/images/lee1.jpg';
-import mico1 from '../assets/images/mico1.jpg';
-import austin1 from '../assets/images/austin1.jpg';
-import yucheng1 from '../assets/images/yucheng1.jpg';
-import christoffer1 from '../assets/images/christoffer1.jpg';
-import dylan1 from '../assets/images/dylan1.png';
-import alexk1 from '../assets/images/alex1.jpg';
-import michaela1 from '../assets/images/michael1.jpg';
-import cristian1 from '../assets/images/cristian1.png';
-import kenny1 from '../assets/images/kenny1.png';
-import jordanImg from '../assets/images/jordan1.jpg';
-import san1 from '../assets/images/san1.png';
-import lex1 from '../assets/images/lex1.png';
-import jaycee1 from '../assets/images/jaycee1.png';
-import jack1 from '../assets/images/jack1.png';
-import langston1 from '../assets/images/langston1.png';
-import chrisk1 from '../assets/images/chrisk1.png';
-import lam1 from '../assets/images/lam1.png';
-import alonso1 from '../assets/images/alonso1.png';
-import MISSING from '../assets/images/MISSING.webp';
+import axios from 'axios'; // Import axios for HTTP requests
 import nureveal from '../assets/images/nureveal.jpg';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger
+import AdvancedLoading from '../components/AdvancedLoading';
+import PositionsOverlay from './../components/PositionsOverlay';
+import StatisticsOverlay from './../components/StatisticsOverlay';
+import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
+import { grayscale } from 'three/webgpu';
 
-const headshots = [
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 48,
-        name: 'Michael Tran',
-        line_name: 'Carry the Titans',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 12,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Dancing', 'Anime'],
-        image: MISSING
-    },
-    {
-        id: 49,
-        name: 'Alex Kyu',
-        line_name: 'Gears of Time',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: 36,
-        littleIds: [56],
-        major: 'Biomedical Engineering',
-        hobbies: ['Guitar', 'Anime', 'Gaming'],
-        image: alexky1
-    },
-    {
-        id: 50,
-        name: 'Kunwoo Lee',
-        line_name: 'Knightmare',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: null,
-        littleIds: [54, 62],
-        major: 'Biology',
-        hobbies: '',
-        image: MISSING
-    },
-    {
-        id: 51,
-        name: 'Alex Singleton',
-        line_name: 'Neon Future',
-        status: 'Alumni',
-        class: 'Eta Evolution',
-        bigId: null,
-        littleIds: null,
-        major: 'Accounting',
-        hobbies: '',
-        image: MISSING
-    },
-    {
-        id: 53,
-        name: 'Richard Ngo',
-        line_name: 'H.A.L.F',
-        status: 'Alumni',
-        class: 'Theta Trinity',
-        bigId: null,
-        littleIds: [58],
-        major: 'Business Administration: Marketing',
-        hobbies: '',
-        image: richard1
-    },
-    {
-        id: 54,
-        name: 'Lee Willson',
-        line_name: 'King of Currumpaw',
-        status: 'Alumni',
-        class: 'Theta Trinity',
-        bigId: 50,
-        littleIds: null,
-        major: 'Applied Mathematics',
-        hobbies: ['Gaming', 'Working Out', 'Cooking'],
-        image: lee1
-    },
-    {
-        id: 55,
-        name: 'Mico Guevarra',
-        line_name: 'MjolnHer',
-        status: 'Alumni',
-        class: 'Theta Trinity',
-        bigId: 27,
-        littleIds: [66, 68],
-        major: 'Computer Science',
-        hobbies: ['Dancing', 'Photography', 'Anime'],
-        image: mico1
-    },
-    {
-        id: 56,
-        name: 'Austin Heyward',
-        line_name: 'Dragon of Resonance',
-        status: 'Alumni',
-        class: 'Iota Immortals',
-        bigId: 49,
-        littleIds: [64],
-        major: 'Computer Science',
-        hobbies: ['Singing', 'Gaming', 'Manga', 'Anime'],
-        image: austin1
-    },
-    {
-        id: 57,
-        name: 'Yucheng Niu',
-        line_name: 'Radiant',
-        status: 'Alumni',
-        class: 'Iota Immortals',
-        bigId: 43,
-        littleIds: null,
-        major: 'Computer Science',
-        hobbies: ['DPR Simp', 'Manga', 'Nature Walks'],
-        image: yucheng1
-    },
-    {
-        id: 58,
-        name: 'Christoffer Villazor',
-        line_name: 'Hachiman',
-        status: 'Alumni',
-        class: 'Iota Immortals',
-        bigId: 53,
-        littleIds: null,
-        major: 'Animal Science',
-        hobbies: ['Writing', 'Gaming', 'Smash Bros.', 'Anime'],
-        image: christoffer1
-    },
-    {
-        id: 59,
-        name: 'Dylan Murray',
-        line_name: 'The Last Samurai',
-        status: 'Actives',
-        class: 'Kappa Kazoku',
-        bigId: 42,
-        littleIds: [63],
-        major: 'Parks, Recreation, and Tourism',
-        hobbies: ['Genshin Impact', 'Photography'],
-        image: MISSING
-    },
-    {
-        id: 60,
-        name: 'Alex Kay',
-        line_name: 'The Pursuit of HAPPYNESS',
-        status: 'Alumni',
-        class: 'Kappa Kazoku',
-        bigId: 42,
-        littleIds: null,
-        major: 'Animal Science',
-        hobbies: ['Music', 'Reading', 'Skateboarding', 'Drawing'],
-        image: alexk1
-    },
-    {
-        id: 62,
-        name: 'Michael Ashe',
-        line_name: 'SKYTHUNDER',
-        status: 'Alumni',
-        class: 'Kappa Kazoku',
-        bigId: 50,
-        littleIds: [72],
-        major: 'Computer Science',
-        hobbies: ['Gaming', 'Hiking'],
-        image: michaela1
-    },
-    {
-        id: 63,
-        name: 'Cristian Mendoza',
-        line_name: 'The Blue Spirit',
-        status: 'Actives',
-        class: 'Mu Monarchs',
-        bigId: 59,
-        littleIds: null,
-        major: 'Civil Engineering',
-        hobbies: ['Painting', 'Skiing'],
-        image: MISSING
-    },
-    {
-        id: 64,
-        name: 'Kenny Nguyen',
-        line_name: 'Seraph of Courage',
-        status: 'Actives',
-        class: 'Mu Monarchs',
-        bigId: 56,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Skateboarding', 'LoL', 'Roblox'],
-        image: kenny1
-    },
-    {
-        id: 65,
-        name: 'San Phyo',
-        line_name: 'Leo',
-        status: 'Actives',
-        class: 'Nu Nen',
-        bigId: 34,
-        littleIds: null,
-        major: 'Business Administration: Finance',
-        hobbies: ['Lifting', 'Boba'],
-        image: san1
-    },
-    {
-        id: 66,
-        name: 'Jack Liu',
-        line_name: 'The SailHer',
-        status: 'Actives',
-        class: 'Nu Nen',
-        bigId: 55,
-        littleIds: null,
-        major: 'Computer Science',
-        hobbies: ['Sleeping', 'Coding'],
-        image: jack1
-    },
-    {
-        id: 67,
-        name: 'Jordan Miller',
-        line_name: 'InterstellHer',
-        status: 'Actives',
-        class: 'Nu Nen',
-        bigId: 44,
-        littleIds: [70],
-        major: 'Computer Science',
-        hobbies: ['Saxophone', 'Gaming', 'DIY'],
-        image: jordanImg
-    },
-    {
-        id: 68,
-        name: 'Lex Chaffee',
-        line_name: 'SubmarinHer',
-        status: 'Actives',
-        class: 'Nu Nen',
-        bigId: 55,
-        littleIds: null,
-        major: 'Applied Mathematics',
-        hobbies: ['Grilling', 'K-Pop', 'Dancing'],
-        image: MISSING
-    },
-    {
-        id: 69,
-        name: 'Jaycee Wang',
-        line_name: 'A Silent VOICE',
-        status: 'Associate',
-        class: 'Nu Nen',
-        bigId: 60,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Clubbing', 'K-Pop', 'Gaming'],
-        image: jaycee1
-    },
-    {
-        id: 70,
-        name: 'Chris Kha',
-        line_name: 'StarGazeHer',
-        status: 'Actives',
-        class: 'Xi Xin',
-        bigId: 67,
-        littleIds: null,
-        major: 'Sociology',
-        hobbies: ['Gaming', 'Gymnastics', 'Asian Food'],
-        image: MISSING
-    },
-    {
-        id: 71,
-        name: 'Lam Nguyen',
-        line_name: 'Humanity\'s Strongest Soldier',
-        status: 'Actives',
-        class: 'Xi Xin',
-        bigId: 64,
-        littleIds: null,
-        major: 'Electrical Engineering',
-        hobbies: ['Gaming', 'Asian Outreach'],
-        image: lam1
-    },
-    {
-        id: 72,
-        name: 'Alonso Nolasco',
-        line_name: 'TRAILBLAZER',
-        status: 'Actives',
-        class: 'Xi Xin',
-        bigId: 62,
-        littleIds: null,
-        major: 'Animal Science',
-        hobbies: ['Gaming', 'Mexican Food'],
-        image: MISSING
-    },
-    {
-        id: 73,
-        name: 'Langston Sit',
-        line_name: 'RIPTIDE',
-        status: 'Actives',
-        class: 'Xi Xin',
-        bigId: 45,
-        littleIds: null,
-        major: 'Industrial Engineering',
-        hobbies: ['Traveling', 'Asian Food', 'K-Pop'],
-        image: MISSING
-    },
-];
-
-
-const timelineData = [
-    { year: '2016', className: 'Alpha Class', PC: 'John Doe', PD: 'Jane Smith' },
-    { year: '2017', className: 'Beta Class', PC: 'Mike Johnson', PD: 'Emily Davis' },
-    { year: '2018', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-    { year: '2019', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-    { year: '2020', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-    { year: '2021', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-    { year: '2022', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-    { year: '2023', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans', image: nureveal },
-    { year: '2024', className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-];
+gsap.registerPlugin(ScrollTrigger);
 
 const Brothers = () => {
-    // State to track the selected brother's ID
-    const [selectedBrotherId, setSelectedBrotherId] = useState(null);
 
-    // Refs for each headshot to enable scrolling
+    const [showStatistics, setShowStatistics] = useState(false);
+    // Open statistics overlay
+    const openStatistics = () => {
+        setShowStatistics(true);
+    };
+
+    // Close statistics overlay
+    const closeStatistics = () => {
+        setShowStatistics(false);
+    };
+
+    useEffect(() => {
+        const numGradients = 5;
+        const colors = [
+            'rgba(255, 0, 150, 0.5)',
+            'rgba(0, 255, 150, 0.5)',
+            'rgba(0, 150, 255, 0.5)',
+            'rgba(255, 255, 0, 0.5)',
+            'rgba(255, 0, 255, 0.5)',
+            'rgba(0, 255, 255, 0.5)',
+        ];
+
+        for (let i = 1; i <= numGradients; i++) {
+            animateGradient(i);
+        }
+
+        function animateGradient(i) {
+            const vars = {
+                [`--pos${i}-x`]: `${gsap.utils.random(0, 100)}%`,
+                [`--pos${i}-y`]: `${gsap.utils.random(0, 100)}%`,
+                [`--size${i}`]: `${gsap.utils.random(30, 80)}%`,
+                [`--color${i}`]: colors[gsap.utils.random(0, colors.length - 1)],
+            };
+
+            gsap.to(document.documentElement, {
+                duration: gsap.utils.random(10, 20),
+                ...vars,
+                ease: 'sine.inOut',
+                onComplete: () => animateGradient(i),
+            });
+        }
+    }, []);
+
+    // States to hold brothers data
+    const [brothers, setBrothers] = useState([]);
+    const [selectedBrotherId, setSelectedBrotherId] = useState(null);
+    const [overlayData, setOverlayData] = useState(null); // New state for overlay
+
+    // Function to handle opening the overlay
+    const openOverlay = (positions, name, imageUrl) => {
+        setOverlayData({ positions, name, imageUrl }); // Store imageUrl
+    };
+
+    // Function to handle closing the overlay
+    const closeOverlay = () => {
+        setOverlayData(null);
+    };
+
+    // Refs for each brother's headshot to enable scrolling
     const headshotRefs = useRef({});
+
+    const [loading, setLoading] = useState(true);
+
+    // Fetch brothers data from API on component mount
+    useEffect(() => {
+        fetchBrothers();
+    }, []);
+
+    const fetchBrothers = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/brothers/');
+            setBrothers(response.data);
+            setLoading(false); // Set loading to false after data is fetched
+        } catch (error) {
+            console.error("Error fetching brothers data:", error);
+            setLoading(false); // Set loading to false even if there's an error
+        }
+    };
 
     // Function to handle link clicks within popups
     const handleLinkClick = (targetId) => {
         if (selectedBrotherId === targetId) {
+
             // Deselect if the same brother is clicked again
             setSelectedBrotherId(null);
         } else {
+
             // Select the new brother
             setSelectedBrotherId(targetId);
+
             // Scroll to the target headshot smoothly
             headshotRefs.current[targetId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -580,9 +133,7 @@ const Brothers = () => {
         }
     };
 
-    const [filter, setFilter] = useState('all brothers');
-    const [hobbyFilter, setHobbyFilter] = useState(null);
-
+    // Extend click functionality to deselect headshots when clicking anywhere on the page
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest('.headshot-card')) {
@@ -597,18 +148,25 @@ const Brothers = () => {
         };
     }, []);
 
+    // Default filter values on page load
+    const [filter, setFilter] = useState('all brothers');
+    const [hobbyFilter, setHobbyFilter] = useState(null);
+
+    // Checks the third column to assign a left-side popup instead of a right
     const isInThirdColumn = (index) => (index + 1) % 3 === 0;
 
-    const filteredHeadshots = headshots.filter(person => {
+    // Filter brothers based on selected filter and hobby
+    const filteredBrothers = brothers.filter(person => {
+
         // Status/Class Filter
         const statusMatch = filter === 'all brothers' ||
-            (filter === 'Etas' && person.class === 'Eta Evolution') ||
-            (filter === 'Thetas' && person.class === 'Theta Trinity') ||
-            (filter === 'Iotas' && person.class === 'Iota Immortals') ||
-            (filter === 'Kappas' && person.class === 'Kappa Kazoku') ||
-            (filter === 'Mus' && person.class === 'Mu Monarchs') ||
-            (filter === 'Nus' && person.class === 'Nu Nen') ||
-            (filter === 'Xis' && person.class === 'Xi Xin') ||
+            (filter === 'Etas' && person.class_field === 'Eta Evolution') ||
+            (filter === 'Thetas' && person.class_field === 'Theta Trinity') ||
+            (filter === 'Iotas' && person.class_field === 'Iota Immortals') ||
+            (filter === 'Kappas' && person.class_field === 'Kappa Kazoku') ||
+            (filter === 'Mus' && person.class_field === 'Mu Monarchs') ||
+            (filter === 'Nus' && person.class_field === 'Nu Nen') ||
+            (filter === 'Xis' && person.class_field === 'Xi Xin') ||
             (person.status === filter);
 
         // Hobby Filter
@@ -617,7 +175,7 @@ const Brothers = () => {
         return statusMatch && hobbyMatch;
     });
 
-
+    // Gets the title for the banner based on active filter
     const getTitle = () => {
         switch (filter) {
             case 'Actives':
@@ -636,17 +194,17 @@ const Brothers = () => {
                 return 'Kappa Kazoku';
             case 'Mus':
                 return 'Mu Monarchs';
-            case 'Xis':
-                return 'Xi Xin';
             case 'Nus':
                 return 'Nu Nen';
+            case 'Xis':
+                return 'Xi Xin';
             default:
                 return 'All Brothers';
         }
     };
 
     // Function to get a member by ID
-    const getMemberById = (id) => headshots.find(member => member.id === id);
+    const getMemberById = (id) => brothers.find(member => member.id === id);
 
     // Function to get a member's big
     const getBig = (member) => {
@@ -659,23 +217,150 @@ const Brothers = () => {
     // Function to get a member's littles
     const getLittles = (member) => {
         if (member.littleIds && member.littleIds.length > 0) {
-            return headshots.filter(brother => member.littleIds.includes(brother.id));
+            return brothers.filter(brother => member.littleIds.includes(brother.id));
         }
         return [];
     };
 
+    // Hardcoded timeline values
+    const timelineData = [
+        {
+            year: '2016',
+            classes: [
+                { className: 'Alpha Class', PC: 'John Doe', PD: 'Jane Smith' },
+                { className: 'Beta Class', PC: 'Mike Johnson', PD: 'Emily Davis' },
+            ],
+        },
+        {
+            year: '2017',
+            classes: [
+                { className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
+                { className: 'Delta Class', PC: 'Sarah Miller', PD: 'James Brown' },
+            ],
+        },
+        // Add more years and classes as needed
+    ];
 
+    // Refs for timeline
+    const markersRef = useRef([]);
+    const timelineRef = useRef(null);
+
+    useEffect(() => {
+        // Clear markersRef on re-render
+        markersRef.current = [];
+
+        // Initial animation for timeline markers
+        gsap.fromTo(
+            markersRef.current,
+            {
+                y: 50,
+                opacity: 0,
+            },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'expo',
+                scrollTrigger: {
+                    trigger: timelineRef.current,
+                    start: 'top 80%',
+                },
+            }
+        );
+        // Cleanup function
+        return () => {
+            // Clear any GSAP instances if necessary
+        };
+    }, []);
+
+    const handleMarkerMouseEnter = (index) => {
+        const marker = markersRef.current[index];
+        const popup = marker.querySelector('.timeline-popup');
+
+        gsap.to(marker, {
+            scale: 1.2,
+            duration: 1,
+            ease: 'elastic.out(1, 0.3)',
+        });
+        gsap.to(popup, {
+            autoAlpha: 1,
+            y: -20,
+            duration: 0.3,
+            ease: 'power2.out',
+        });
+    };
+
+    const handleMarkerMouseLeave = (index) => {
+        const marker = markersRef.current[index];
+        const popup = marker.querySelector('.timeline-popup');
+
+        gsap.to(marker, {
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.in',
+        });
+        gsap.to(popup, {
+            autoAlpha: 0,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.in',
+        });
+    };
+
+    useEffect(() => {
+        if (loading) {
+            gsap.fromTo(
+                '.loading-background',
+                {
+                    x: '0vw',
+                    rotationY: -12,
+                    rotateX: 10,
+                    filter: 'grayscale(100%)'
+                },
+                {
+                    x: '0vw',
+                    scale: .75,
+                    rotationY: -5,
+                    filter: 'grayscale(0%)',
+                    rotateX: 0,
+                    duration: 6,      // Duration for the pan and rotation
+                    ease: 'none',      // Smooth linear movement
+                    repeat: -1,        // Loop the animation infinitely
+                    yoyo: true         // Reverse the animation direction on each repeat
+                }
+            );
+        }
+    }, [loading]);
+
+    // Set up the Brothers page
     return (
+
+        // Container for the entire page, including the navbar.
         <div className="includeHeader">
             <NavBarNew />
-            <div className="brothers-page">
-                <div className="legacy-title-container1">
-                    <div className="blue-strip1"></div>
-                    <h2 className="legacy-title">{getTitle()}</h2>
-                </div>
 
-                <div className="filter-container">
-                    <div className='filter-box'>
+            {/* Container for the entire page, excluding the navbar. */}
+            <div className="brothers-page">
+                {/* Display loading indicator if data is still loading */}
+                {loading ? (
+                    <div className="loading-container">
+                        <div className="loading-background"></div> {/* Panning background */}
+                        <AdvancedLoading className="advanced-loading" /> {/* Centered loading animation */}
+                    </div>
+                ) : (
+                    <>
+
+                        {/* Container for the title strip. */}
+                        <div className="legacy-title-container1">
+                            <div className="blue-strip1"></div>
+                            <h2 className="legacy-title">{getTitle()}</h2>
+                        </div>
+
+ {/* Container for filter and statistics button */}
+ <div className="filter-container">
+                    <div className="filter-box">
+                        {/* Filter Dropdown */}
                         <label htmlFor="roleFilter">Filter by:</label>
                         <select
                             id="roleFilter"
@@ -685,7 +370,7 @@ const Brothers = () => {
                             <option value="all brothers">All</option>
                             <option value="Actives">Active House</option>
                             <option value="Alumni">Alumni</option>
-                            <option value="Associates">Associate</option>
+                            <option value="Associates">Associate Members</option>
                             <option value="Etas">Eta Evolution</option>
                             <option value="Thetas">Theta Trinity</option>
                             <option value="Iotas">Iota Immortals</option>
@@ -695,172 +380,128 @@ const Brothers = () => {
                             <option value="Xis">Xi Xin</option>
                         </select>
                     </div>
+
+                    {/* Button to trigger the statistics overlay */}
+                    <button 
+                        onClick={openStatistics} 
+                        className="statistics-button"
+                        style={{
+                            padding: '10px 20px',
+                            borderRadius: '8px',
+                            backgroundColor: '#203c79',
+                            color: '#fff',
+                            border: 'none',
+                            cursor: 'pointer',
+                            marginLeft: '20px' // Space it nicely next to the dropdown
+                        }}
+                    >
+                        View Statistics
+                    </button>
                 </div>
 
-                {/* Active Filters Display */}
-                {(hobbyFilter) && (
-                    <div className="active-filters">
-                        {hobbyFilter && (
-                            <div className="active-filter">
-                                <span>Showing {filter} interested in {hobbyFilter}</span>
-                                <button onClick={() => setHobbyFilter(null)}>Clear</button>
+                {/* Render statistics overlay */}
+                {showStatistics && <StatisticsOverlay onClose={closeStatistics} brothers={brothers} />}
+
+                        {/* Strip that shows the active filter whenever a hobby is selected. */}
+                        {(hobbyFilter) && (
+                            <div className="active-filters">
+                                {hobbyFilter && (
+                                    <div className="active-filter">
+                                        <span>Showing {filter} interested in {hobbyFilter}</span>
+                                        <button onClick={() => setHobbyFilter(null)}>Clear</button>
+                                    </div>
+                                )}
                             </div>
                         )}
-                    </div>
-                )}
 
-                <div className="color-box-headshots">
-                    <div className="headshot-grid">
-                        {filteredHeadshots.map((person, index) => (
-                            <div
-                                className={`headshot-card ${isSelected(person.id) ? 'selected' : ''}`}
-                                key={person.id}
-                                ref={(el) => assignRef(person.id, el)}
-                                onClick={() => handleHeadshotClick(person.id)} // Toggle selection on headshot click
-                            >
-                                <img src={person.image} alt={person.name} />
-                                <h3>{person.name}</h3>
-                                <p>{person.class}</p>
-                                <div className={`popup ${isInThirdColumn(index) ? 'popup-left' : 'popup-right'}`}>
-                                    <img src={person.image} alt={person.name} className="popup-image" />
+                        {/* Container for all headshots, including the grid. */}
+                        <div className="color-box-headshots">
 
-                                    {/* Fixed Header (Non-Scrollable) */}
-                                    <div className="popup-header">
-                                        <h4>
-                                            <span className='NUM'>{person.id}</span>
-                                            <span className='line-name'>'{person.line_name}'</span>
-                                        </h4>
-                                    </div>
+                            {/* Grid to map headshots pulled from database. */}
+                            <div className="headshot-grid">
+            {filteredBrothers.map((person, index) => (
+                <HeadshotCard
+                    key={person.id}
+                    person={person}
+                    index={index}
+                    isSelected={isSelected}
+                    handleHeadshotClick={handleHeadshotClick}
+                    assignRef={assignRef}
+                    handleLinkClick={handleLinkClick}
+                    getBig={getBig}
+                    getLittles={getLittles}
+                    hobbyFilter={hobbyFilter}
+                    setHobbyFilter={setHobbyFilter}
+                    isInThirdColumn={isInThirdColumn}
+                    // Pass image_url when opening the overlay
+                    openOverlay={() => openOverlay(person.positions || mockPositions, person.name, person.image_url)}
+                />
+            ))}
+        </div>
+                        </div>
 
-                                    {/* Static Content */}
-                                    <div className="popup-info">
-
-                                        {/* Big */}
-                                        {getBig(person) && (
-                                            <div className="related-brothers">
-                                                <h>Little of </h>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleLinkClick(person.bigId);
-                                                    }}
-                                                    className="related-link"
-                                                >
-                                                    {getBig(person).name}
-                                                </button>
-                                            </div>
-                                        )}
-
-                                        {/* Littles */}
-                                        {getLittles(person).length > 0 && (
-                                            <div className="related-brothers">
-                                                <h5>Big brother of:</h5>
-                                                <ul>
-                                                    {getLittles(person).map(little => (
-                                                        <li key={little.id}>
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleLinkClick(little.id);
-                                                                }}
-                                                                className="related-link"
-                                                            >
-                                                                {little.name}
-                                                            </button>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
-
-                                        {/* Course of study/Major label. !!Dependent on status!! */}
-                                        <p>
-                                            {person.status === 'Alumni'
-                                                ? 'Studied ' : 'Studies '}
-                                            {person.major}</p>
-
-                                        {/* Hobbies Section */}
-                                        {person.hobbies && person.hobbies.length > 0 && (
-                                            <div className="hobbies-section">
-                                                <h5>Hobbies:</h5>
-                                                <div className="hobbies-container">
-                                                    {person.hobbies.map((hobby, index) => (
-                                                        <span
-                                                            key={index}
-                                                            className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation(); // Prevent triggering other click events
-                                                                setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
-                                                            }}
-                                                            aria-label={`Filter by hobby: ${hobby}`}
-                                                            role="button"
-                                                            tabIndex="0"
-                                                            onKeyPress={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    setHobbyFilter(hobby === hobbyFilter ? null : hobby);
-                                                                }
-                                                            }}
-                                                        >
-                                                            {hobby}
-                                                        </span>
+                        {/* Timeline Section */}
+                        <div className="timeline-section">
+                            <div className="timeline-title">
+                                <h2>Chapter Timeline</h2>
+                            </div>
+                            <div className="timeline-container" ref={timelineRef}>
+                                <div className="timeline-line"></div>
+                                {timelineData.map((entry, index) => (
+                                    <div key={index} className="timeline-entry">
+                                        <div
+                                            className="timeline-marker"
+                                            ref={(el) => (markersRef.current[index] = el)}
+                                            onMouseEnter={() => handleMarkerMouseEnter(index)}
+                                            onMouseLeave={() => handleMarkerMouseLeave(index)}
+                                        >
+                                            <span className="timeline-year">{entry.year}</span>
+                                            <div className="timeline-popup">
+                                                <div className="popup-content">
+                                                    {entry.classes.map((classEntry, classIndex) => (
+                                                        <div key={classIndex} className="class-entry">
+                                                            <h3>{classEntry.className}</h3>
+                                                            <h4>New Member Educators</h4>
+                                                            <p>PC: {classEntry.PC}</p>
+                                                            <p>PD: {classEntry.PD}</p>
+                                                            {classEntry.image && (
+                                                                <img
+                                                                    src={classEntry.image}
+                                                                    alt={`${classEntry.className} Image`}
+                                                                    className="timeline-image"
+                                                                />
+                                                            )}
+                                                        </div>
                                                     ))}
                                                 </div>
                                             </div>
-                                        )}
-
-
-                                        {/* Graduation status (Alumni, Active, Associate) label. */}
-                                        <p>Status: <b>{person.status}</b></p>
-
-                                    </div>
-
-                                    {selectedBrotherId && (
-                                        <div className="deselect-instruction">
-                                            {isSelected(person.id) ? 'Click again to defocus' : ''}
-                                        </div>
-                                    )}
-
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-
-                <div className="timeline-section">
-                    <div className="timeline-title"><h2>Chapter Timeline</h2></div>
-                    <div className="timeline-container">
-                        <div className="timeline-line"></div>
-                        {timelineData.map((entry, index) => (
-                            <div key={index} className="timeline-entry">
-                                <div className="timeline-marker">
-                                    <span className="timeline-year">{entry.year}</span>
-                                    <div className="timeline-popup">
-                                        <div className="popup-column">
-                                            <h3>{entry.className}</h3>
-                                            <h4>New Member Educators</h4>
-                                            <p>{entry.PC}</p>
-                                            <p>{entry.PD}</p>
-                                            {entry.image && <img src={entry.image} alt="Placeholder" className="timeline-image" />}
-                                        </div>
-                                        <div className="popup-column">
-                                            <h3>{entry.className}</h3>
-                                            <h4>New Member Educators</h4>
-                                            <p>{entry.PC}</p>
-                                            <p>{entry.PD}</p>
-                                            {entry.image && <img src={entry.image} alt="Placeholder" className="timeline-image" />}
                                         </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
+                        </div>
 
+        {/* Positions Overlay */}
+        <AnimatePresence>
+            {overlayData && (
+                <PositionsOverlay
+                    positions={overlayData.positions}
+                    onClose={closeOverlay}
+                    name={overlayData.name}
+                    imageUrl={overlayData.imageUrl} // Pass imageUrl to PositionsOverlay
+                />
+            )}
+        </AnimatePresence>
+                    </>
+                )}
+
+
+
+                {/* Container to make space for the footer. */}
                 <footer className="footer">
                     <div className="footer-content">
                         <p>&copy; 2024 NC State Lambda Phi Epsilon. All rights reserved.</p>
-                        <p>Developed by <strong>InterstellHer</strong>.</p>
+                        <p>Designed, Built, Tested by Jordan <strong>'InterstellHer'</strong> Miller.</p>
                         <nav className="footer-nav">
                             <ul>
                                 <li><a href="/about">About Us</a></li>
@@ -871,6 +512,512 @@ const Brothers = () => {
                     </div>
                 </footer>
             </div>
+        </div>
+    );
+
+
+};
+
+// Setup headshot card attributes.
+const HeadshotCard = ({
+    person,
+    index,
+    isSelected,
+    handleHeadshotClick,
+    assignRef,
+    handleLinkClick,
+    getBig,
+    getLittles,
+    hobbyFilter,
+    setHobbyFilter,
+    isInThirdColumn,
+    openOverlay,
+}) => {
+
+    const mockPositions = [
+        { title: 'President', description: 'Leads the chapter and oversees all activities.' },
+        { title: 'Vice President', description: 'Assists the President and steps in when needed.' },
+        { title: 'Treasurer', description: 'Manages the chapter\'s finances and budget.' },
+        { title: 'Secretary', description: 'Keeps records of meetings and official documents.' },
+        // Add more positions as needed
+    ];
+
+    // State to track current casual image index
+    const [currentCasualImageIndex, setCurrentCasualImageIndex] = useState(0);
+
+    // Reference to the card for 3D rotations.
+    const cardRef = useRef(null);
+
+    // Apply rotation only when selected
+    useEffect(() => {
+        const card = cardRef.current;
+        if (isSelected(person.id)) {
+            gsap.to(card, {
+                duration: 0.5,
+                rotateX: 0, // Ensure no initial rotation
+                rotateY: 0,
+                ease: "power2.out",
+            });
+        } else {
+            gsap.to(card, {
+                duration: 0.5,
+                rotateX: 0,
+                rotateY: 0,
+                ease: "power2.out",
+            });
+        }
+    }, [isSelected(person.id), person.id]);
+
+    // Set up interval for image shuffling on selection
+    useEffect(() => {
+        let interval;
+        if (isSelected(person.id)) {
+            interval = setInterval(() => {
+                handleNextCasualImage();
+            }, 5000);
+        }
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        };
+    }, [isSelected(person.id), person.id]);
+
+    // Functions to handle image navigation
+    const handlePrevCasualImage = () => {
+        setCurrentCasualImageIndex(prevIndex => {
+            const casualImages = ['casual_image1', 'casual_image2', 'casual_image3']
+                .map(key => person[key])
+                .filter(img => img);
+            const newIndex = (prevIndex - 1 + casualImages.length) % casualImages.length;
+            return newIndex;
+        });
+    };
+
+    const handleNextCasualImage = () => {
+        setCurrentCasualImageIndex(prevIndex => {
+            const casualImages = ['casual_image1', 'casual_image2', 'casual_image3']
+                .map(key => person[key])
+                .filter(img => img);
+            const newIndex = (prevIndex + 1) % casualImages.length;
+            return newIndex;
+        });
+    };
+
+    // Get the current casual image.
+    const currentCasualImage =
+        ['casual_image1', 'casual_image2', 'casual_image3']
+            .map(key => person[key])
+            .filter(img => img)[currentCasualImageIndex] ||
+        '/path/to/default/image.png';
+
+    // Handles 3D rotations on the headshot only when selected.
+    const handleMouseMove = (e) => {
+        if (!isSelected(person.id)) return; // Do nothing if not selected
+
+        const card = cardRef.current;
+        const rect = card.getBoundingClientRect();
+        const cardWidth = rect.width;
+        const cardHeight = rect.height;
+
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const centerX = cardWidth / 2;
+        const centerY = cardHeight / 2;
+
+        const deltaX = mouseX - centerX;
+        const deltaY = mouseY - centerY;
+
+        const rotateX = (deltaY / centerY) * -10; // Adjust the multiplier for desired effect
+        const rotateY = (deltaX / centerX) * 10;
+
+        const deadzone = 0.4 * Math.min(cardWidth, cardHeight) / 2;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if (distance < deadzone) {
+            // Within deadzone: Reset rotation
+            gsap.to(card, {
+                duration: 0.3,
+                rotateX: 0,
+                rotateY: 0,
+                ease: "power2.out",
+            });
+            return;
+        } else {
+
+
+            // Apply the rotation to the card
+            gsap.to(card, {
+                duration: 0.3,
+                rotateX: rotateX,
+                rotateY: rotateY,
+                ease: "power2.out",
+            });
+        }
+    };
+
+    // Handles resetting rotation when mouse leaves the card
+    const handleMouseLeave = () => {
+        if (!isSelected(person.id)) return; // Only reset if selected
+        const card = cardRef.current;
+        gsap.to(card, {
+            duration: 0.5,
+            rotateX: 0,
+            rotateY: 0,
+            ease: "power2.out",
+        });
+    };
+
+    // Ref for the flags container
+    const flagsContainerRef = useRef(null);
+
+    // Ref for the card content to apply tilt
+    const cardContentRef = useRef(null);
+
+    // Function to handle headshot hover (mouse enter)
+    const handleCardMouseEnter = () => {
+        setHovered(true);
+        if (!isSelected(person.id) && flagsContainerRef.current) {
+
+            const fromX = isInThirdColumn(index) ? 50 : -50;
+
+            // Animate flags to scale up
+            gsap.fromTo(
+                flagsContainerRef.current.children,
+                { x: fromX, opacity: 0, scale: 0.1, },
+                {
+                    x: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: 0.1,
+                    ease: "expo",
+                    onComplete: () => {
+                        flagsContainerRef.current.dataset.hasAnimated = true;
+                    },
+                }
+            );
+        }
+    };
+
+    // Function to handle headshot hover leave (mouse leave)
+    const handleCardMouseLeave = () => {
+        setHovered(false);
+        if (!isSelected(person.id) && flagsContainerRef.current) {
+            // Animate flags back to original scale
+            gsap.to(flagsContainerRef.current.children, {
+                scale: 1,
+                duration: 0.3,
+                stagger: 0.05,
+                ease: 'power2.in',
+            });
+        }
+    };
+
+    // Get the big brother
+    const bigBrother = getBig(person);
+
+    // Get the littles
+    const littles = getLittles(person);
+
+    const { nationalities } = person;
+
+    // Sort nationalities alphabetically by country name
+    const sortedNationalities = [...nationalities].sort((a, b) => {
+        const nameA = a.name.toUpperCase(); // Ignore case
+        const nameB = b.name.toUpperCase(); // Ignore case
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0; // Names are equal
+    });
+
+    // State to track hover status
+    const [hovered, setHovered] = useState(false);
+
+    // Reference to the position display div
+    const positionDisplayRef = useRef(null);
+
+    // GSAP animation for position display when hovered or selected
+    useEffect(() => {
+        const positionDisplay = positionDisplayRef.current;
+        gsap.killTweensOf(positionDisplay); // Kill any existing tweens
+
+        if (hovered || isSelected(person.id)) {
+            // Pop out with GSAP
+            gsap.to(positionDisplay, {
+                duration: 1,
+                y: '-140%',
+                scale: 1.4,
+                opacity: 1,
+                ease: 'expo',
+            });
+        } else {
+            // Hide with GSAP
+            gsap.to(positionDisplay, {
+                duration: 0.5,
+                y: '0%',
+                scale: 1,
+                opacity: 0,
+                ease: 'expo',
+            });
+        }
+    }, [hovered, isSelected(person.id)]);
+
+    // Helper function to parse month and determine "Fall" or "Spring"
+    const formatSeason = (dateString) => {
+        if (!dateString) return "Unknown";  // Return a default value if date is missing
+
+        // Extract the month and year from the string
+        const [month, year] = dateString.split(" ");
+
+        // Define months for "Spring" and "Fall"
+        const springMonths = ["January", "February", "March", "April", "May", "June"];
+        const fallMonths = ["July", "August", "September", "October", "November", "December"];
+
+        // Determine if the month is part of Spring or Fall
+        if (springMonths.includes(month)) {
+            return `Spring ${year}`;
+        } else if (fallMonths.includes(month)) {
+            return `Fall ${year}`;
+        }
+
+        // Default return if month is invalid
+        return dateString;
+    };
+
+
+
+    // Setup the individual headshot card.
+    return (
+
+        // Container for the entire card.
+        <div
+            className={`headshot-card ${isSelected(person.id) ? 'selected' : ''}`}
+            ref={(el) => assignRef(person.id, el)}
+            onClick={() => handleHeadshotClick(person.id)}
+            onMouseEnter={handleCardMouseEnter}
+            onMouseLeave={handleCardMouseLeave}
+        >
+
+            {/* Position Display */}
+            {person.positions && person.positions.length > 0 && (
+                <div className="position-display" ref={positionDisplayRef}>
+                    <p>
+                        {(() => {
+                            // Sort positions by start date and get the latest
+                            const latestPosition = person.positions.sort((a, b) => {
+                                const dateA = new Date(`${a.start_month} ${a.start_year}`);
+                                const dateB = new Date(`${b.start_month} ${b.start_year}`);
+                                return dateB - dateA;
+                            })[0];
+
+                            // Format start and end dates for the latest position
+                            const startFormatted = formatSeason(`${latestPosition.start_month} ${latestPosition.start_year}`);
+                            const endFormatted = latestPosition.end_month && latestPosition.end_year
+                                ? formatSeason(`${latestPosition.end_month} ${latestPosition.end_year}`)
+                                : 'Present';
+
+                            return `${latestPosition.title}`;
+                        })()}
+                    </p>
+                </div>
+            )}
+
+
+
+            {/* Popup Content */}
+            <div className={`popup ${isInThirdColumn(index) ? 'popup-left' : 'popup-right'}`}>
+
+                {/* Casual Images Carousel */}
+                <div className="popup-casual-carousel">
+
+                    {/* Casual images and Navigation buttons */}
+                    {person.casual_image1 || person.casual_image2 || person.casual_image3 ? (
+                        <>
+                            <button
+                                className="carousel-button prev-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePrevCasualImage();
+                                }}
+                                aria-label={`Previous casual image for ${person.name}`}
+                            >
+                                &#10094;
+                            </button>
+                            <AnimatePresence mode='wait'>
+                                <motion.img
+                                    key={currentCasualImageIndex}
+                                    src={currentCasualImage}
+                                    alt={`${person.name} Casual ${currentCasualImageIndex + 1}`}
+                                    className="popup-casual-image"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                />
+                            </AnimatePresence>
+                            <button
+                                className="carousel-button next-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNextCasualImage();
+                                }}
+                                aria-label={`Next casual image for ${person.name}`}
+                            >
+                                &#10095;
+                            </button>
+                        </>
+                    ) : null}
+                </div>
+
+                {/* Fixed Header (Non-Scrollable) */}
+                <div className="popup-header">
+                    <h4>
+                        <span className='NUM'>{person.id}</span>
+                        <span className='line-name'>'{person.line_name}'</span>
+                    </h4>
+                </div>
+
+                {/* Dynamic Content */}
+                <div className="popup-info">
+
+                    {/* Big */}
+                    {bigBrother && (
+                        <div className="related-brothers">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleLinkClick(person.bigId);
+                                }}
+                                className="related-link"
+                            >
+                                {bigBrother.name}
+                            </button>
+                            <h>'s Little</h>
+                        </div>
+                    )}
+
+                    {/* Littles */}
+                    {littles.length > 0 && (
+                        <div className="related-brothers">
+                            <h5>Big brother of:</h5>
+                            <ul>
+                                {littles.map(little => (
+                                    <li key={little.id}>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleLinkClick(little.id);
+                                            }}
+                                            className="related-link"
+                                        >
+                                            {little.name}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+    {/* New "View Positions" Button */}
+    <div className="view-positions-container">
+        <button
+            className="view-positions-button"
+            onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering card click
+                openOverlay(person.positions || mockPositions, person.name, person.image_url); // Pass image_url
+                handleHeadshotClick(person.id);
+            }}
+            aria-label={`View positions for ${person.name}`}
+        >
+            <h2>View Service Record</h2>
+        </button>
+    </div>
+
+
+                    {/* Course of study/Major label */}
+                    <p>
+                        {person.status === 'Alumni'
+                            ? 'Studied ' : 'Studies '}
+                        {person.major}
+                    </p>
+
+                    {/* Hobbies Section */}
+                    {person.hobbies && person.hobbies.length > 0 && (
+                        <div className="hobbies-section">
+                            <h5>Hobbies:</h5>
+                            <div className="hobbies-container">
+                                {person.hobbies.map((hobby, index) => (
+                                    <span
+                                        key={index}
+                                        className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent triggering other click events
+                                            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
+                                        }}
+                                        aria-label={`Filter by hobby: ${hobby}`}
+                                        role="button"
+                                        tabIndex="0"
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter') {
+                                                setHobbyFilter(hobby === hobbyFilter ? null : hobby);
+                                            }
+                                        }}
+                                    >
+                                        {hobby}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Graduation status (Alumni, Active, Associate) label. */}
+                    <p>Status: <b>{person.status}</b></p>
+                </div>
+
+                {/* Nationality Flags */}
+                <div className="flags-container" ref={flagsContainerRef}>
+                    {sortedNationalities && sortedNationalities.length > 0 ? (
+                        sortedNationalities.map((country) => (
+                            <span
+                                key={country.code}
+                                className={`fi fi-${country.code.toLowerCase()} flag-icon`}
+                                aria-label={`${country.name} flag`}
+                                title={country.name}
+                            ></span>
+                        ))
+                    ) : (
+                        <span
+                            className="fi fi-un flag-icon"
+                            aria-label="No nationality specified"
+                            title="Unknown"
+                        ></span>
+                    )}
+                </div>
+
+                {/* Show a message to deselect a headshot when selected. */}
+                {isSelected(person.id) && (
+                    <div className="deselect-instruction">
+                        Click again to defocus
+                    </div>
+                )}
+            </div>
+
+            {/* Content Layer */}
+            <div
+                className="card-content"
+                ref={cardRef}
+                onMouseMove={handleMouseMove} // Keep the mouse move handler
+                onMouseLeave={handleMouseLeave}
+            >
+                <div className="image-container">
+                    <img src={person.image_url || '/path/to/default/image.png'} alt={person.name} />
+                </div>
+                <h3>{person.name}</h3>
+                <p>{person.class_field}</p>
+            </div>
+
         </div>
     );
 };
