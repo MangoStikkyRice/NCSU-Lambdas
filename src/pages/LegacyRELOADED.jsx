@@ -18,14 +18,12 @@ const LegacyRELOADED = () => {
 
       // Touch variables
   let lastTouchX = 0;
-  let lastTouchY = 0;
   let isTouching = false;
 
   // Handle touch start
 const handleTouchStart = (event) => {
   isTouching = true;
   lastTouchX = event.touches[0].clientX;
-  lastTouchY = event.touches[0].clientY;
 };
 
 // Handle touch move
@@ -39,17 +37,12 @@ const handleTouchMove = (event) => {
   const deltaY = touchY - lastTouchY;
 
   lastTouchX = touchX;
-  lastTouchY = touchY;
 
   // Update camera rotation proxies based on deltaX and deltaY
   // Adjust the sensitivity as needed
   const rotationSpeed = 0.005; // Adjust this value for sensitivity
 
   cameraRotationProxyX -= deltaX * rotationSpeed;
-  cameraRotationProxyY -= deltaY * rotationSpeed;
-
-  // Clamp cameraRotationProxyY if needed
-  cameraRotationProxyY = Mathutils.clamp(cameraRotationProxyY, -0.5, 0.5);
 };
 
 // Handle touch end and cancel
@@ -834,7 +827,6 @@ const handleTouchEnd = () => {
       currentCameraPercentage = cameraTargetPercentage;
 
       camera.rotation.y += (cameraRotationProxyX - camera.rotation.y) / 15;
-      camera.rotation.x += (cameraRotationProxyY - camera.rotation.x) / 15;
 
       updateCameraPercentage(currentCameraPercentage);
 
