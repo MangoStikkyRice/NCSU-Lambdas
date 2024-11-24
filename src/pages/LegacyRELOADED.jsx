@@ -16,39 +16,47 @@ const LegacyRELOADED = () => {
 
   useEffect(() => {
 
-      // Touch variables
+  // Touch variables
   let lastTouchX = 0;
   let isTouching = false;
+  let touchStartTime = 0;
+  let longPressTimeout;
+  let isLongPress = false;
 
-  // Handle touch start
-const handleTouchStart = (event) => {
-  isTouching = true;
-  lastTouchX = event.touches[0].clientX;
-};
+  const handleTouchStart = (event) => {
+    isTouching = true;
+    lastTouchX = event.touches[0].clientX;
+    touchStartTime = Date.now();
+    isLongPress = false;
+  
+    // Start a timer to detect long-press (e.g., 500ms)
+    longPressTimeout = setTimeout(() => {
+      isLongPress = true;
+    }, 500);
+  };
 
-// Handle touch move
-const handleTouchMove = (event) => {
-  if (!isTouching) return;
+  const handleTouchMove = (event) => {
+    if (!isTouching) return;
+  
+    // If not a long-press, prevent default scrolling behavior
+    if (!isLongPress) {
+      event.preventDefault();
+  
+      const touchX = event.touches[0].clientX;
+      const deltaX = touchX - lastTouchX;
+      lastTouchX = touchX;
+  
+      // Update camera rotation proxy based on deltaX only
+      const rotationSpeed = 0.005; // Adjust this value for sensitivity
+  
+      cameraRotationProxyX -= deltaX * rotationSpeed;
+    }
+  };
 
-  const touchX = event.touches[0].clientX;
-  const touchY = event.touches[0].clientY;
-
-  const deltaX = touchX - lastTouchX;
-  const deltaY = touchY - lastTouchY;
-
-  lastTouchX = touchX;
-
-  // Update camera rotation proxies based on deltaX and deltaY
-  // Adjust the sensitivity as needed
-  const rotationSpeed = 0.005; // Adjust this value for sensitivity
-
-  cameraRotationProxyX -= deltaX * rotationSpeed;
-};
-
-// Handle touch end and cancel
-const handleTouchEnd = () => {
-  isTouching = false;
-};
+  const handleTouchEnd = () => {
+    isTouching = false;
+    clearTimeout(longPressTimeout);
+  };
 
 
     // Math utilities
@@ -965,12 +973,13 @@ const handleTouchEnd = () => {
     };
 
     window.addEventListener('resize', handleResize);
-    document.addEventListener('mousemove', handleMouseMove);
-    canvasRef.current.addEventListener('click', handleCanvasClick);
+// Existing mouse event listeners
+document.addEventListener('mousemove', handleMouseMove);
+canvasRef.current.addEventListener('click', handleCanvasClick);
 
-    // Add touch event listeners
-canvasRef.current.addEventListener('touchstart', handleTouchStart, false);
-canvasRef.current.addEventListener('touchmove', handleTouchMove, false);
+// Add touch event listeners
+canvasRef.current.addEventListener('touchstart', handleTouchStart, { passive: false });
+canvasRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
 canvasRef.current.addEventListener('touchend', handleTouchEnd, false);
 canvasRef.current.addEventListener('touchcancel', handleTouchEnd, false);
 
