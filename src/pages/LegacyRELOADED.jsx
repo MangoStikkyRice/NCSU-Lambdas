@@ -8,12 +8,56 @@ gsap.registerPlugin(ScrollTrigger);
 
 import placeholderImage from '../assets/images/GRACEYANG.png';
 import secondImage from '../assets/images/EVANCHEN.png';
+import fourthImage from '../assets/images/BTM.png';
 
 const LegacyRELOADED = () => {
   const canvasRef = useRef(null);
   const scrollTargetRef = useRef(null);
 
   useEffect(() => {
+
+      // Touch variables
+  let lastTouchX = 0;
+  let lastTouchY = 0;
+  let isTouching = false;
+
+  // Handle touch start
+const handleTouchStart = (event) => {
+  isTouching = true;
+  lastTouchX = event.touches[0].clientX;
+  lastTouchY = event.touches[0].clientY;
+};
+
+// Handle touch move
+const handleTouchMove = (event) => {
+  if (!isTouching) return;
+
+  const touchX = event.touches[0].clientX;
+  const touchY = event.touches[0].clientY;
+
+  const deltaX = touchX - lastTouchX;
+  const deltaY = touchY - lastTouchY;
+
+  lastTouchX = touchX;
+  lastTouchY = touchY;
+
+  // Update camera rotation proxies based on deltaX and deltaY
+  // Adjust the sensitivity as needed
+  const rotationSpeed = 0.005; // Adjust this value for sensitivity
+
+  cameraRotationProxyX -= deltaX * rotationSpeed;
+  cameraRotationProxyY -= deltaY * rotationSpeed;
+
+  // Clamp cameraRotationProxyY if needed
+  cameraRotationProxyY = Mathutils.clamp(cameraRotationProxyY, -0.5, 0.5);
+};
+
+// Handle touch end and cancel
+const handleTouchEnd = () => {
+  isTouching = false;
+};
+
+
     // Math utilities
     const Mathutils = {
       normalize: function ($value, $min, $max) {
@@ -281,6 +325,7 @@ const LegacyRELOADED = () => {
         paragraph: 'This is the paragraph text for Genesis.',
         image: placeholderImage,
         link: 'http://example.com/genesis', // Add your link here
+        buttonText: 'Learn more about'
       },
       {
         percentage: 0.3,
@@ -288,7 +333,8 @@ const LegacyRELOADED = () => {
         paragraph:
           'In 1995, Evan Chen, a member of Theta Chapter at Stanford University, was diagnosed with leukemia. Their chapter, along with Evan’s friends, organized a joint effort to find a bone marrow donor. What resulted was the largest bone marrow typing drive in the history of the NMDP and Asian American Donor Program (AADP). In a matter of days, over two thousand people were typed. A match was eventually found for Evan, but unfortunately by that time the disease had taken its toll on him and he passed away in 1996. In Evan’s memory, the national philanthropy for Lambda Phi Epsilon was established and the fraternity has been working with the organization from that point forward.',
         image: secondImage,
-        link: 'http://example.com/evanchen',
+        link: 'https://www.nmdp.org/',
+        buttonText: 'Explore NMDP'
       },
       {
         percentage: 0.5,
@@ -296,15 +342,17 @@ const LegacyRELOADED = () => {
         paragraph:
           'Lambda Phi Epsilon works with the National Marrow Donor Program to save the lives of patients requiring bone marrow transplants. Additionally, the fraternity promotes awareness for leukemia and other blood disorders. Individuals who suffer from these types of illnesses depend on donors with similar ethnic backgrounds to find compatible bone marrow matches. Thus, the fraternity aims to register as many committed donors to the cause through local #NMDP campaigns to increase the chances for patients to find a life-saving donor.',
         image: placeholderImage,
-        link: 'http://example.com/bethematch',
+        link: 'https://www.mskcc.org/news/stem-cell-bone-marrow-donation-process',
+        buttonText: 'The Donation Process'
       },
       {
         percentage: 0.7,
         text: 'International Commitment',
         paragraph:
           "Every Lambda Phi Epsilon chapter works with the AADP, Asians for Miracle Marrow Matches, and the Cammy Lee Leukemia Foundation to hold bone marrow typing drives on their campuses to encourage Asians and other minorities to register as committed bone marrow/stem cell donors. Since the fraternity's inception, Lambda Phi Epsilon has educated thousands of donors to commit to saving the life of a patient in need.",
-        image: placeholderImage,
+        image: fourthImage,
         link: 'http://example.com/internationalcommitment',
+        buttonText: 'Learn more about'
       },
       {
         percentage: 0.9,
@@ -312,6 +360,7 @@ const LegacyRELOADED = () => {
         paragraph: 'An overview of the constitution.',
         image: placeholderImage,
         link: 'http://example.com/constitution',
+        buttonText: 'Learn more about'
       },
     ];
 
@@ -406,7 +455,7 @@ const LegacyRELOADED = () => {
       }
 
       // Store the paragraph height
-      contentSprite.paragraphHeight = y - 70;
+      contentSprite.paragraphHeight = y - 100;
 
       // Update the texture
       textTexture.needsUpdate = true;
@@ -426,7 +475,7 @@ const LegacyRELOADED = () => {
       );
 
       // Draw the button background
-      readMoreButtonContext.fillStyle = 'green';
+      readMoreButtonContext.fillStyle = '#203c79';
       readMoreButtonContext.fillRect(
         0,
         0,
@@ -436,7 +485,7 @@ const LegacyRELOADED = () => {
 
       // Draw the button text
       readMoreButtonContext.fillStyle = 'white';
-      readMoreButtonContext.font = '18px Arial';
+      readMoreButtonContext.font = '32px Arial';
       readMoreButtonContext.textAlign = 'center';
       readMoreButtonContext.textBaseline = 'middle';
 
@@ -465,16 +514,14 @@ const LegacyRELOADED = () => {
       } = contentSprite;
 
       // Compute the fraction of the text sprite occupied by the paragraph
-      const paragraphCanvasHeight = 70 + paragraphHeight; // y after drawing lines
+      const paragraphCanvasHeight = paragraphHeight; // y after drawing lines
       const paragraphFraction = paragraphCanvasHeight / textCanvasHeight;
 
       // Position the "Read More" button below the paragraph text
       const marginBetweenTextAndButton = 0; // Adjust as needed
       const readMoreButtonOffsetY =
         -(
-          (paragraphFraction * textSpriteHeight) / 2 +
-          .2 +
-          readMoreButtonHeight / 2
+          (paragraphFraction * textSpriteHeight) / 2
         );
 
       readMoreButtonSprite.position.set(0, readMoreButtonOffsetY, 0);
@@ -511,37 +558,37 @@ const LegacyRELOADED = () => {
       const imageTexture = new THREE.CanvasTexture(imageCanvas);
 
       img.onload = () => {
-        // Apply 'cover' strategy
+        // Determine image and canvas aspect ratios
         const imgAspect = img.width / img.height;
         const canvasAspect = imageCanvas.width / imageCanvas.height;
-        let renderableWidth, renderableHeight, xStart, yStart;
-
+      
+        // Adjust to fit within the canvas
         if (imgAspect > canvasAspect) {
           // Image is wider than canvas
-          renderableHeight = imageCanvas.height;
-          renderableWidth = img.width * (imageCanvas.height / img.height);
-          xStart = -(renderableWidth - imageCanvas.width) / 2;
-          yStart = 0;
+          const scale = imageCanvas.width / img.width;
+          const renderableWidth = img.width * scale;
+          const renderableHeight = img.height * scale;
+          const xStart = (imageCanvas.width - renderableWidth) / 2;
+          const yStart = (imageCanvas.height - renderableHeight) / 2;
+      
+          // Draw centered image
+          imageContext.drawImage(img, xStart, yStart, renderableWidth, renderableHeight);
         } else {
           // Image is taller than canvas
-          renderableWidth = imageCanvas.width;
-          renderableHeight = img.height * (imageCanvas.width / img.width);
-          xStart = 0;
-          yStart = -(renderableHeight - imageCanvas.height) / 2;
+          const scale = imageCanvas.height / img.height;
+          const renderableWidth = img.width * scale;
+          const renderableHeight = img.height * scale;
+          const xStart = (imageCanvas.width - renderableWidth) / 2;
+          const yStart = (imageCanvas.height - renderableHeight) / 2;
+      
+          // Draw centered image
+          imageContext.drawImage(img, xStart, yStart, renderableWidth, renderableHeight);
         }
-
-        // Draw the image onto the canvas
-        imageContext.drawImage(
-          img,
-          xStart,
-          yStart,
-          renderableWidth,
-          renderableHeight
-        );
-
+      
         // Update the texture after drawing
         imageTexture.needsUpdate = true;
       };
+      
 
       // Create the sprite for the image
       const spriteMaterial = new THREE.SpriteMaterial({
@@ -637,8 +684,8 @@ const LegacyRELOADED = () => {
 
       // Create the "Read More" button canvas
       const readMoreButtonCanvas = document.createElement('canvas');
-      readMoreButtonCanvas.width = 150;
-      readMoreButtonCanvas.height = 40;
+      readMoreButtonCanvas.width = 250;
+      readMoreButtonCanvas.height = 90;
       const readMoreButtonContext = readMoreButtonCanvas.getContext('2d');
 
       // Initial draw of the "Read More" button
@@ -681,23 +728,26 @@ const LegacyRELOADED = () => {
       // Create the button canvas
       const buttonCanvas = document.createElement('canvas');
       buttonCanvas.width = 200;
-      buttonCanvas.height = 50;
+      buttonCanvas.height = 60;
       const buttonContext = buttonCanvas.getContext('2d');
+
+      const buttonText = content.buttonText || 'Learn More'; // Default if no text provided
 
       // Draw the button background
       buttonContext.fillStyle = 'blue';
       buttonContext.fillRect(0, 0, buttonCanvas.width, buttonCanvas.height);
-
+      
       // Draw the button text
       buttonContext.fillStyle = 'white';
       buttonContext.font = '20px Arial';
       buttonContext.textAlign = 'center';
       buttonContext.textBaseline = 'middle';
       buttonContext.fillText(
-        'Learn More',
+        buttonText,
         buttonCanvas.width / 2,
         buttonCanvas.height / 2
       );
+      
 
       // Create a texture from the button canvas
       const buttonTexture = new THREE.CanvasTexture(buttonCanvas);
@@ -926,14 +976,27 @@ const LegacyRELOADED = () => {
     document.addEventListener('mousemove', handleMouseMove);
     canvasRef.current.addEventListener('click', handleCanvasClick);
 
-    // Cleanup function
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('mousemove', handleMouseMove);
-      if (canvasRef.current) {
-        canvasRef.current.removeEventListener('click', handleCanvasClick);
-      }
-    };
+    // Add touch event listeners
+canvasRef.current.addEventListener('touchstart', handleTouchStart, false);
+canvasRef.current.addEventListener('touchmove', handleTouchMove, false);
+canvasRef.current.addEventListener('touchend', handleTouchEnd, false);
+canvasRef.current.addEventListener('touchcancel', handleTouchEnd, false);
+
+// Cleanup function
+return () => {
+  window.removeEventListener('resize', handleResize);
+  document.removeEventListener('mousemove', handleMouseMove);
+  if (canvasRef.current) {
+    canvasRef.current.removeEventListener('click', handleCanvasClick);
+
+    // Remove touch event listeners
+    canvasRef.current.removeEventListener('touchstart', handleTouchStart);
+    canvasRef.current.removeEventListener('touchmove', handleTouchMove);
+    canvasRef.current.removeEventListener('touchend', handleTouchEnd);
+    canvasRef.current.removeEventListener('touchcancel', handleTouchEnd);
+  }
+};
+
   }, []);
 
   return (
