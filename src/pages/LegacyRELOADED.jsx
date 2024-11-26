@@ -1,91 +1,68 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './LegacyRELOADED.scss';
+import NavBarNew from '../components/navbar/NavBarNew';
 
+// Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// Import images
+import firstImage from '../assets/images/Crest (1).png';
 import placeholderImage from '../assets/images/GRACEYANG.png';
 import secondImage from '../assets/images/EVANCHEN.png';
 import fourthImage from '../assets/images/BTM.png';
+import fifthImage from '../assets/images/constitution.jpg';
 
 const LegacyRELOADED = () => {
+  // Refs and state
   const canvasRef = useRef(null);
   const scrollTargetRef = useRef(null);
+  const [showOverlay, setShowOverlay] = useState(true);
+
+  // Helper function to paginate text
+  const paginateText = (paragraph, maxCharsPerPage = 500) => {
+    const words = paragraph.split(' ');
+    const pages = [];
+    let currentPage = '';
+
+    words.forEach((word) => {
+      if ((currentPage + word).length > maxCharsPerPage) {
+        pages.push(currentPage.trim());
+        currentPage = word + ' ';
+      } else {
+        currentPage += word + ' ';
+      }
+    });
+
+    if (currentPage.trim()) {
+      pages.push(currentPage.trim());
+    }
+
+    return pages;
+  };
 
   useEffect(() => {
-
-  // Touch variables
-  let lastTouchX = 0;
-  let isTouching = false;
-  let touchStartTime = 0;
-  let longPressTimeout;
-  let isLongPress = false;
-
-  const handleTouchStart = (event) => {
-    isTouching = true;
-    lastTouchX = event.touches[0].clientX;
-    touchStartTime = Date.now();
-    isLongPress = false;
-  
-    // Start a timer to detect long-press (e.g., 500ms)
-    longPressTimeout = setTimeout(() => {
-      isLongPress = true;
-    }, 500);
-  };
-
-  const handleTouchMove = (event) => {
-    if (!isTouching) return;
-  
-    // If not a long-press, prevent default scrolling behavior
-    if (!isLongPress) {
-      event.preventDefault();
-  
-      const touchX = event.touches[0].clientX;
-      const deltaX = touchX - lastTouchX;
-      lastTouchX = touchX;
-  
-      // Update camera rotation proxy based on deltaX only
-      const rotationSpeed = 0.005; // Adjust this value for sensitivity
-  
-      cameraRotationProxyX -= deltaX * rotationSpeed;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    isTouching = false;
-    clearTimeout(longPressTimeout);
-  };
-
+    // Variables
+    let hoveredObject = null;
+    const lineHeight = 23; // Adjust based on your font size
+    const titleLineHeight = 55; // Adjust based on your font size
 
     // Math utilities
     const Mathutils = {
-      normalize: function ($value, $min, $max) {
-        return ($value - $min) / ($max - $min);
-      },
-      interpolate: function ($normValue, $min, $max) {
-        return $min + ($max - $min) * $normValue;
-      },
+      normalize: ($value, $min, $max) => ($value - $min) / ($max - $min),
+      interpolate: ($normValue, $min, $max) => $min + ($max - $min) * $normValue,
       map: function ($value, $min1, $max1, $min2, $max2) {
-        if ($value < $min1) {
-          $value = $min1;
-        }
-        if ($value > $max1) {
-          $value = $max1;
-        }
-        const res = this.interpolate(
+        $value = this.clamp($value, $min1, $max1);
+        return this.interpolate(
           this.normalize($value, $min1, $max1),
           $min2,
           $max2
         );
-        return res;
       },
-      clamp: function (value, min, max) {
-        return Math.max(min, Math.min(max, value));
-      },
+      clamp: (value, min, max) => Math.max(min, Math.min(max, value)),
     };
-    const markers = [];
 
     // Variables accessible in event handlers
     let p1, p2;
@@ -101,25 +78,25 @@ const LegacyRELOADED = () => {
     });
     renderer.setSize(ww, wh);
 
-    // Create an empty scene
+    // Create an empty scene with fog
     const scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x194794, 0, 100);
 
     // Create a perspective camera
-    let cameraRotationProxyX = 3.14159;
+    let cameraRotationProxyX = Math.PI;
     let cameraRotationProxyY = 0;
 
     const camera = new THREE.PerspectiveCamera(45, ww / wh, 0.001, 200);
     camera.rotation.y = cameraRotationProxyX;
     camera.rotation.z = cameraRotationProxyY;
 
-    const c = new THREE.Group();
-    c.position.z = 400;
+    // Create a group and add camera to the scene
+    const cameraGroup = new THREE.Group();
+    cameraGroup.position.z = 400;
+    cameraGroup.add(camera);
+    scene.add(cameraGroup);
 
-    c.add(camera);
-    scene.add(c);
-
-    // Array of points
+    // Define points for the path
     const points = [
       [10, 89, 0],
       [50, 88, 10],
@@ -130,91 +107,85 @@ const LegacyRELOADED = () => {
       [180, 44, 5],
       [207, 35, 10],
       [232, 36, 0],
-    ];
+    ].map(([x, z, y]) => new THREE.Vector3(x, y, z));
 
-    // Convert the array of points into vertices
-    for (let i = 0; i < points.length; i++) {
-      const x = points[i][0];
-      const y = points[i][2];
-      const z = points[i][1];
-      points[i] = new THREE.Vector3(x, y, z);
-    }
-    // Create a path from the points
+    // Create a Catmull-Rom curve from the points
     const path = new THREE.CatmullRomCurve3(points);
     path.tension = 0.5;
 
-    // Create a new geometry with a different radius
-    const geometry = new THREE.TubeGeometry(path, 300, 7, 32, false);
+    // Create tube geometry along the path
+    const tubeGeometry = new THREE.TubeGeometry(path, 300, 7, 32, false);
 
+    // Load textures
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(
+    const spaceTexture = textureLoader.load(
       'https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/3d_space_5.jpg',
-      function (texture) {
+      (texture) => {
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
         texture.offset.set(0, 0);
         texture.repeat.set(15, 2);
       }
     );
 
-    const mapHeight = textureLoader.load(
+    const bumpMap = textureLoader.load(
       'https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/waveform-bump3.jpg',
-      function (texture) {
+      (texture) => {
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
         texture.offset.set(0, 0);
         texture.repeat.set(15, 2);
       }
     );
 
-    const material = new THREE.MeshPhongMaterial({
+    // Create material for the tube
+    const tubeMaterial = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
-      map: texture,
+      map: spaceTexture,
       shininess: 20,
-      bumpMap: mapHeight,
+      bumpMap: bumpMap,
       bumpScale: -0.03,
       specular: 0x0b2349,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.4,
     });
 
-    // Create a mesh
-    const tube = new THREE.Mesh(geometry, material);
+    // Create and add the tube mesh
+    const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
     scene.add(tube);
 
-    // Inner tube
-    const geometry2 = new THREE.TubeGeometry(path, 150, 6.4, 32, false);
-    const geo = new THREE.EdgesGeometry(geometry2);
-
-    const mat = new THREE.LineBasicMaterial({
+    // Create inner tube wireframe
+    const innerTubeGeometry = new THREE.TubeGeometry(path, 150, 6.8, 32, false);
+    const innerTubeEdges = new THREE.EdgesGeometry(innerTubeGeometry);
+    const innerTubeMaterial = new THREE.LineBasicMaterial({
       linewidth: 1,
-      opacity: 0.1,
+      opacity: 0.05,
       transparent: true,
     });
-
-    const wireframe = new THREE.LineSegments(geo, mat);
+    const wireframe = new THREE.LineSegments(innerTubeEdges, innerTubeMaterial);
     scene.add(wireframe);
 
-    // Create a point light in our scene
+    // Add point light to the scene
     const light = new THREE.PointLight(0xffffff, 0.35, 4, 0);
     light.castShadow = true;
     scene.add(light);
 
-    function updateCameraPercentage(percentage) {
+    // Function to update camera position based on percentage along the path
+    const updateCameraPercentage = (percentage) => {
       p1 = path.getPointAt(percentage % 1);
       p2 = path.getPointAt((percentage + 0.03) % 1);
 
-      c.position.set(p1.x, p1.y, p1.z);
-      c.lookAt(p2);
+      cameraGroup.position.set(p1.x, p1.y, p1.z);
+      cameraGroup.lookAt(p2);
       light.position.set(p2.x, p2.y, p2.z);
-    }
+    };
 
+    // Camera percentage variables
     let cameraTargetPercentage = 0;
     let currentCameraPercentage = 0;
 
+    // GSAP timeline for scrolling
     gsap.defaults({ ease: 'none' });
 
-    const tubePerc = {
-      percent: 0,
-    };
+    const tubePerc = { percent: 0 };
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -222,111 +193,84 @@ const LegacyRELOADED = () => {
         start: 'top top',
         end: 'bottom 100%',
         scrub: 5,
-        markers: { color: 'white' },
       },
     });
+
     tl.to(tubePerc, {
       percent: 0.96,
       duration: 10,
-      onUpdate: function () {
+      onUpdate: () => {
         cameraTargetPercentage = tubePerc.percent;
       },
     });
 
-    // Particle system
+    // Particle system setup
     const spikeyTexture = textureLoader.load(
       'https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/spikey.png'
     );
 
-    const particleCount = 6800;
+    const particleCount = 8400;
     const positions1 = new Float32Array(particleCount * 3);
     const positions2 = new Float32Array(particleCount * 3);
     const positions3 = new Float32Array(particleCount * 3);
 
-    const pMaterial = new THREE.PointsMaterial({
+    const particleMaterial = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 0.5,
       map: spikeyTexture,
       transparent: true,
       blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      alphaTest: 0.04,
+      sizeAttenuation: true,
     });
 
-    // Create the individual particles for particles1
+    // Initialize particle positions for particles1
     for (let p = 0; p < particleCount; p++) {
-      const pX = Math.random() * 500 - 250;
-      const pY = Math.random() * 50 - 25;
-      const pZ = Math.random() * 500 - 250;
-
-      positions1[p * 3] = pX;
-      positions1[p * 3 + 1] = pY;
-      positions1[p * 3 + 2] = pZ;
+      positions1[p * 3] = Math.random() * 500 - 250;
+      positions1[p * 3 + 1] = Math.random() * 50 - 25;
+      positions1[p * 3 + 2] = Math.random() * 500 - 250;
     }
 
-    // Create BufferGeometry and set positions for particles1
-    const particles1 = new THREE.BufferGeometry();
-    particles1.setAttribute(
-      'position',
-      new THREE.BufferAttribute(positions1, 3)
-    );
-
-    // Create the particle system
-    const particleSystem1 = new THREE.Points(particles1, pMaterial);
+    const particlesGeometry1 = new THREE.BufferGeometry();
+    particlesGeometry1.setAttribute('position', new THREE.BufferAttribute(positions1, 3));
+    const particleSystem1 = new THREE.Points(particlesGeometry1, particleMaterial);
     scene.add(particleSystem1);
 
-    // Repeat for particles2
+    // Initialize particle positions for particles2
     for (let p = 0; p < particleCount; p++) {
-      const pX = Math.random() * 500;
-      const pY = Math.random() * 10 - 5;
-      const pZ = Math.random() * 500;
-
-      positions2[p * 3] = pX;
-      positions2[p * 3 + 1] = pY;
-      positions2[p * 3 + 2] = pZ;
+      positions2[p * 3] = Math.random() * 500;
+      positions2[p * 3 + 1] = Math.random() * 10 - 5;
+      positions2[p * 3 + 2] = Math.random() * 500;
     }
 
-    const particles2 = new THREE.BufferGeometry();
-    particles2.setAttribute(
-      'position',
-      new THREE.BufferAttribute(positions2, 3)
-    );
-
-    const particleSystem2 = new THREE.Points(particles2, pMaterial);
+    const particlesGeometry2 = new THREE.BufferGeometry();
+    particlesGeometry2.setAttribute('position', new THREE.BufferAttribute(positions2, 3));
+    const particleSystem2 = new THREE.Points(particlesGeometry2, particleMaterial);
     scene.add(particleSystem2);
 
-    // Repeat for particles3
+    // Initialize particle positions for particles3
     for (let p = 0; p < particleCount; p++) {
-      const pX = Math.random() * 500;
-      const pY = Math.random() * 10 - 5;
-      const pZ = Math.random() * 500;
-
-      positions3[p * 3] = pX;
-      positions3[p * 3 + 1] = pY;
-      positions3[p * 3 + 2] = pZ;
+      positions3[p * 3] = Math.random() * 500;
+      positions3[p * 3 + 1] = Math.random() * 10 - 5;
+      positions3[p * 3 + 2] = Math.random() * 500;
     }
 
-    const particles3 = new THREE.BufferGeometry();
-    particles3.setAttribute(
-      'position',
-      new THREE.BufferAttribute(positions3, 3)
-    );
-
-    const particleSystem3 = new THREE.Points(particles3, pMaterial);
+    const particlesGeometry3 = new THREE.BufferGeometry();
+    particlesGeometry3.setAttribute('position', new THREE.BufferAttribute(positions3, 3));
+    const particleSystem3 = new THREE.Points(particlesGeometry3, particleMaterial);
     scene.add(particleSystem3);
 
-    // **Adding images, paragraphs, and buttons throughout the track**
-
-    // Compute Frenet frames for the path
-    const frames = path.computeFrenetFrames(1000, false);
-
-    // Array of percentages where we want to place images and paragraphs
-    const contentData = [
+    // Define content data with images, text, and buttons
+    const originalContentData = [
       {
         percentage: 0.1,
-        text: 'Genesis',
-        paragraph: 'This is the paragraph text for Genesis.',
-        image: placeholderImage,
-        link: 'http://example.com/genesis', // Add your link here
-        buttonText: 'Learn more about'
+        text: 'National History',
+        paragraph:
+          'Lambda Phi Epsilon was founded on February 25, 1981 by a group of nineteen dedicated men led by principal founder Mr. Craig Ishigo. Hoping to transcend the traditional boundaries of national origins, the founders aimed to create an organization that would set new standards of excellence within the Asian American community, develop leaders within each of the member’s respective community, and bridge the gaps between those communities. While the initial charter was comprised of Asian Pacific Americans, the brotherhood was open to all who were interested in supporting these goals. Mr. Craig Ishigo and Mr. Darryl L. Mu signed the charter as President and Vice President, respectively.\n\nOn May 28th, 1990, the fraternity, now with six chapters total, convened on the campus of the University of California, Irvine for the first annual National Convention, which to this day has been held regularly over Memorial Day weekend. A national governing body was established to oversee the development of individual chapters and the fraternity as a whole, with Mr. Robert Mimaki, Mr. Eric Naritomi, and Mr. Doug Nishida appointed as National President, Northern Governor and Southern Governor, respectively. On September 8th, 1990, Lambda Phi Epsilon reached another milestone and became the first and only nationally recognized Asian American interest fraternity in the United States with the admission to the National Interfraternity Conference. In 2006, Lambda Phi Epsilon joined the National Asian Pacific Islander American Panhellenic Association to increase collaboration and partnership between fellow APIA Greek organizations.\n\nToday, Lambda Phi Epsilon is widely renown as the preeminent international Asian interest fraternal organization, providing outstanding leadership, philanthropy, and advocacy in the community.\n\nOur mission is to guide men on a lifelong discovery of authenticity and personal growth in a world where Lambda men live authentic, fulfilling lives and contribute through the pursuit of their noble purpose. To Authenticity, Courageous Leadership, Cultural Heritage, Love, and Wisdom, since February 25, 1981.',
+        image: firstImage,
+        link: 'http://example.com/genesis',
+        buttonText: 'International News →',
       },
       {
         percentage: 0.3,
@@ -335,7 +279,7 @@ const LegacyRELOADED = () => {
           'In 1995, Evan Chen, a member of Theta Chapter at Stanford University, was diagnosed with leukemia. Their chapter, along with Evan’s friends, organized a joint effort to find a bone marrow donor. What resulted was the largest bone marrow typing drive in the history of the NMDP and Asian American Donor Program (AADP). In a matter of days, over two thousand people were typed. A match was eventually found for Evan, but unfortunately by that time the disease had taken its toll on him and he passed away in 1996. In Evan’s memory, the national philanthropy for Lambda Phi Epsilon was established and the fraternity has been working with the organization from that point forward.',
         image: secondImage,
         link: 'https://www.nmdp.org/',
-        buttonText: 'Explore NMDP'
+        buttonText: 'Explore NMDP →',
       },
       {
         percentage: 0.5,
@@ -344,7 +288,7 @@ const LegacyRELOADED = () => {
           'Lambda Phi Epsilon works with the National Marrow Donor Program to save the lives of patients requiring bone marrow transplants. Additionally, the fraternity promotes awareness for leukemia and other blood disorders. Individuals who suffer from these types of illnesses depend on donors with similar ethnic backgrounds to find compatible bone marrow matches. Thus, the fraternity aims to register as many committed donors to the cause through local #NMDP campaigns to increase the chances for patients to find a life-saving donor.',
         image: placeholderImage,
         link: 'https://www.mskcc.org/news/stem-cell-bone-marrow-donation-process',
-        buttonText: 'The Donation Process'
+        buttonText: 'The Donation Process →',
       },
       {
         percentage: 0.7,
@@ -352,501 +296,479 @@ const LegacyRELOADED = () => {
         paragraph:
           "Every Lambda Phi Epsilon chapter works with the AADP, Asians for Miracle Marrow Matches, and the Cammy Lee Leukemia Foundation to hold bone marrow typing drives on their campuses to encourage Asians and other minorities to register as committed bone marrow/stem cell donors. Since the fraternity's inception, Lambda Phi Epsilon has educated thousands of donors to commit to saving the life of a patient in need.",
         image: fourthImage,
-        link: 'http://example.com/internationalcommitment',
-        buttonText: 'Learn more about'
+        link: 'https://my.bethematch.org/s/join?language=en_US&joinCode=recruithome&_ga=2.51664814.649395165.1719235886-1741193351.1716920694',
+        buttonText: 'Join the Registry! →',
       },
       {
         percentage: 0.9,
         text: 'The Constitution',
-        paragraph: 'An overview of the constitution.',
-        image: placeholderImage,
+        paragraph:
+          "The following document is this chapter's Constitution, which contains all of the bylaws and processes in which this organization follows. Please feel free to look through them learn about how this chapter operates.",
+        image: fifthImage,
         link: 'http://example.com/constitution',
-        buttonText: 'Learn more about'
+        buttonText: 'Constitution PDF →',
       },
     ];
+
+    // Process content data to include pagination
+    const contentData = originalContentData.map((content) => ({
+      ...content,
+      pages: paginateText(content.paragraph, 500),
+    }));
 
     // Array to store sprites for later visibility control
     const contentSprites = [];
 
-    // Functions moved outside the loop so they are accessible in event handlers
+    // Compute Frenet frames for the path
+    const frames = path.computeFrenetFrames(1000, false);
 
-    // Function to draw text on the canvas
-    function drawTextCanvas(contentSprite) {
-      const { textCanvas, textContext, content, textTexture } = contentSprite;
-
+    // Function to draw text on the canvas and update the texture
+    const drawTextCanvas = (contentSprite) => {
+      const {
+        textCanvas,
+        textContext,
+        content,
+        textTexture,
+        currentPage,
+      } = contentSprite;
+    
+      // Get current page content
+      const pageContent = content.pages[currentPage] || '';
+    
       // Clear the canvas
       textContext.clearRect(0, 0, textCanvas.width, textCanvas.height);
-
+    
+      // Save the context state
+      textContext.save();
+    
       // Set common text properties
-      textContext.fillStyle = 'white';
       textContext.textAlign = 'left';
       textContext.textBaseline = 'top';
-
-      // Draw the title text
+    
+      // Draw the title
       textContext.font = 'Bold 48px Arial';
-      textContext.fillText(content.text, 10, 10);
-
-      // Draw the paragraph text
+      const titleMaxWidth = textCanvas.width - 450;
+      let titleX = 10;
+      let titleY = 10;
+    
+      const titleWords = content.text.split(' ');
+      let titleLine = '';
+      const titleLines = [];
+    
+      titleWords.forEach((word) => {
+        const testLine = titleLine + word + ' ';
+        const testWidth = textContext.measureText(testLine).width;
+    
+        if (testWidth > titleMaxWidth && titleLine !== '') {
+          titleLines.push(titleLine);
+          titleLine = word + ' ';
+        } else {
+          titleLine = testLine;
+        }
+      });
+      titleLines.push(titleLine);
+    
+      // Calculate title height
+      const titleHeight = titleLines.length * titleLineHeight;
+      contentSprite.titleHeight = titleHeight;
+    
+      // Draw the blue banner behind the title text
+      const bannerX = 0;
+      const bannerY = titleY - 12; // Slight padding above
+      const bannerWidth = textCanvas.width - 480;
+      const bannerHeight = titleHeight + 10; // Add padding below
+    
+      const gradient = textContext.createLinearGradient(
+        bannerX,
+        bannerY,
+        bannerX + bannerWidth,
+        bannerY
+      );
+      gradient.addColorStop(0, '#203c79'); // Darker blue at the top
+      gradient.addColorStop(1, 'rgba(32, 60, 121, 0)'); // Lighter blue at the bottom
+    
+      textContext.fillStyle = gradient;
+      textContext.fillRect(bannerX, bannerY, bannerWidth, bannerHeight);
+    
+      // Set shadow for the text
+      textContext.shadowColor = 'rgba(0, 0, 0, 1)';
+      textContext.shadowBlur = 5;
+      textContext.shadowOffsetX = 0;
+      textContext.shadowOffsetY = 5;
+    
+      // Draw the title text over the banner
+      textContext.fillStyle = 'white';
+      for (let i = 0; i < titleLines.length; i++) {
+        textContext.fillText(titleLines[i], titleX + 10, titleY);
+        titleY += titleLineHeight;
+      }
+    
+      // Set font for paragraph text
       textContext.font = '18px Arial';
-      const maxWidth = textCanvas.width - 20;
-      const lineHeight = 23;
+      textContext.fillStyle = 'white';
+      const maxWidth = textCanvas.width - 550;
       let x = 10;
-      let y = 70; // Start below the title
-
-      const words = content.paragraph.split(' ');
-      let line = '';
-      let lines = [];
-
-      if (contentSprite.expanded) {
-        // Draw all lines
-        for (let n = 0; n < words.length; n++) {
-          const testLine = line + words[n] + ' ';
-          const metrics = textContext.measureText(testLine);
-          const testWidth = metrics.width;
-
-          if (testWidth > maxWidth && n > 0) {
+      let y = titleY + 10;
+    
+      // Define paragraph spacing
+      const paragraphSpacing = 10; // Adjust this value as needed
+    
+      // Split content into paragraphs
+      const paragraphs = pageContent.split('\n\n');
+    
+      paragraphs.forEach((paragraph, pIndex) => {
+        const words = paragraph.split(' ');
+        let line = '';
+        const lines = [];
+    
+        words.forEach((word) => {
+          const testLine = line + word + ' ';
+          const testWidth = textContext.measureText(testLine).width;
+    
+          if (testWidth > maxWidth && line !== '') {
             lines.push(line);
-            line = words[n] + ' ';
+            line = word + ' ';
           } else {
             line = testLine;
           }
-        }
+        });
+    
         if (line !== '') {
           lines.push(line);
         }
-      } else {
-        // Draw up to 3 lines
-        let lineCount = 0;
-
-        for (let n = 0; n < words.length; n++) {
-          const testLine = line + words[n] + ' ';
-          const metrics = textContext.measureText(testLine);
-          const testWidth = metrics.width;
-
-          if (testWidth > maxWidth && n > 0) {
-            lines.push(line);
-            line = words[n] + ' ';
-            lineCount++;
-
-            if (lineCount >= 3) {
-              // We've reached the desired number of lines
-              break;
-            }
-          } else {
-            line = testLine;
-          }
+    
+        // Draw lines of the paragraph
+        lines.forEach((lineText) => {
+          textContext.fillText(lineText, x, y);
+          y += lineHeight;
+        });
+    
+        // Add paragraph spacing after each paragraph except the last one
+        if (pIndex < paragraphs.length - 1) {
+          y += paragraphSpacing;
         }
-
-        if (lineCount < 3 && line !== '') {
-          lines.push(line);
-        }
-
-        if (lines.length === 3 && line !== '') {
-          // Add '...' to indicate more text
-          line = line.trim() + '...';
-          lines[lines.length - 1] = line;
-        }
+      });
+    
+      // Calculate total paragraph height
+      const totalParagraphHeight = y - (titleY + 10);
+      contentSprite.totalParagraphHeight = totalParagraphHeight;
+    
+      // Restore the context state
+      textContext.restore();
+    
+      // Draw "Read more..." if applicable
+      const hasMorePages = contentSprite.currentPage < contentSprite.totalPages - 1;
+      if (hasMorePages && contentSprite.isHovered) {
+        textContext.font = 'Italic 16px Arial';
+        textContext.fillStyle = 'yellow';
+        textContext.fillText('Read more...', x, y + 20); // Position below the last line
       }
-
-      // Draw the lines
-      y = 70;
-      for (let i = 0; i < lines.length; i++) {
-        textContext.fillText(lines[i], x, y);
-        y += lineHeight;
-      }
-
-      // Store the paragraph height
-      contentSprite.paragraphHeight = y - 100;
-
+    
       // Update the texture
       textTexture.needsUpdate = true;
-    }
+    };
+    
 
-    // Function to update the "Read More" button text
-    function updateReadMoreButtonText(contentSprite) {
-      const { readMoreButtonContext, readMoreButtonCanvas, expanded, readMoreButtonTexture } =
-        contentSprite;
-
-      // Clear the canvas
-      readMoreButtonContext.clearRect(
-        0,
-        0,
-        readMoreButtonCanvas.width,
-        readMoreButtonCanvas.height
-      );
-
-      // Draw the button background
-      readMoreButtonContext.fillStyle = '#203c79';
-      readMoreButtonContext.fillRect(
-        0,
-        0,
-        readMoreButtonCanvas.width,
-        readMoreButtonCanvas.height
-      );
-
-      // Draw the button text
-      readMoreButtonContext.fillStyle = 'white';
-      readMoreButtonContext.font = '32px Arial';
-      readMoreButtonContext.textAlign = 'center';
-      readMoreButtonContext.textBaseline = 'middle';
-
-      const buttonText = expanded ? 'Show Less' : 'Read More';
-
-      readMoreButtonContext.fillText(
-        buttonText,
-        readMoreButtonCanvas.width / 2,
-        readMoreButtonCanvas.height / 2
-      );
-
-      // Update the texture
-      readMoreButtonTexture.needsUpdate = true;
-    }
-
-    // Function to update button positions
-    function updateButtonPositions(contentSprite) {
+    // Function to draw the button on the canvas and update the texture
+    const drawButtonCanvas = (contentSprite) => {
       const {
-        textSpriteHeight,
-        textCanvasHeight,
-        paragraphHeight,
-        readMoreButtonSprite,
-        readMoreButtonHeight,
-        learnMoreButtonSprite,
-        learnMoreButtonHeight,
+        buttonCanvas,
+        buttonContext,
+        buttonTexture,
+        buttonIsHovered,
+        content,
+        buttonCanvasWidth,
+        buttonCanvasHeight,
       } = contentSprite;
 
-      // Compute the fraction of the text sprite occupied by the paragraph
-      const paragraphCanvasHeight = paragraphHeight; // y after drawing lines
-      const paragraphFraction = paragraphCanvasHeight / textCanvasHeight;
+      // Clear canvas
+      buttonContext.clearRect(0, 0, buttonCanvas.width, buttonCanvas.height);
 
-      // Position the "Read More" button below the paragraph text
-      const marginBetweenTextAndButton = 0; // Adjust as needed
-      const readMoreButtonOffsetY =
-        -(
-          (paragraphFraction * textSpriteHeight) / 2
-        );
-
-      readMoreButtonSprite.position.set(0, readMoreButtonOffsetY, 0);
-
-      // Now position the "Learn More" button below the "Read More" button
-      const marginBetweenButtons = 0.2; // Adjust as needed
-
-      const learnMoreButtonOffsetY =
-        readMoreButtonOffsetY -
-        readMoreButtonHeight / 2 -
-        learnMoreButtonHeight / 2 -
-        marginBetweenButtons;
-
-      learnMoreButtonSprite.position.set(0, learnMoreButtonOffsetY, 0);
-    }
-
-    // Now proceed with creating the content sprites
-    contentData.forEach((content) => {
-      // [Rest of your content sprite creation code remains the same]
-
-      // [Code for creating image sprite, text sprite, read more button, learn more button]
-
-      // Create a canvas for the image with fixed dimensions
-      const imageCanvas = document.createElement('canvas');
-      const canvasSize = 512; // Fixed canvas size
-      imageCanvas.width = canvasSize;
-      imageCanvas.height = canvasSize;
-      const imageContext = imageCanvas.getContext('2d');
-
-      // Load the image for this content point
-      const img = new Image();
-      img.src = content.image;
-
-      const imageTexture = new THREE.CanvasTexture(imageCanvas);
-
-      img.onload = () => {
-        // Determine image and canvas aspect ratios
-        const imgAspect = img.width / img.height;
-        const canvasAspect = imageCanvas.width / imageCanvas.height;
-      
-        // Adjust to fit within the canvas
-        if (imgAspect > canvasAspect) {
-          // Image is wider than canvas
-          const scale = imageCanvas.width / img.width;
-          const renderableWidth = img.width * scale;
-          const renderableHeight = img.height * scale;
-          const xStart = (imageCanvas.width - renderableWidth) / 2;
-          const yStart = (imageCanvas.height - renderableHeight) / 2;
-      
-          // Draw centered image
-          imageContext.drawImage(img, xStart, yStart, renderableWidth, renderableHeight);
-        } else {
-          // Image is taller than canvas
-          const scale = imageCanvas.height / img.height;
-          const renderableWidth = img.width * scale;
-          const renderableHeight = img.height * scale;
-          const xStart = (imageCanvas.width - renderableWidth) / 2;
-          const yStart = (imageCanvas.height - renderableHeight) / 2;
-      
-          // Draw centered image
-          imageContext.drawImage(img, xStart, yStart, renderableWidth, renderableHeight);
-        }
-      
-        // Update the texture after drawing
-        imageTexture.needsUpdate = true;
-      };
-      
-
-      // Create the sprite for the image
-      const spriteMaterial = new THREE.SpriteMaterial({
-        map: imageTexture,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0, // Start fully transparent
-        depthTest: true,
-        depthWrite: true,
-        alphaTest: 0.1, // Add this line
-      });
-
-      const sprite = new THREE.Sprite(spriteMaterial);
-
-      // Set the sprite scale to maintain consistent dimensions
-      const spriteSize = 5; // Desired size
-      sprite.scale.set(spriteSize, spriteSize, 1);
-
-      // Get the position along the path
-      const percentage = content.percentage % 1;
-      const position = path.getPointAt(percentage);
-
-      // Compute the index in the frames
-      const numSegments = frames.binormals.length;
-      const index = Math.floor(percentage * numSegments);
-
-      // Get the tangent vector
-      const tangent = frames.tangents[index].clone().normalize();
-
-      // Compute the right vector as the cross product of the tangent and world up vector
-      const up = new THREE.Vector3(0, 1, 0);
-      const right = new THREE.Vector3().crossVectors(tangent, up).normalize();
-
-      // If the right vector is zero length (when tangent is parallel to up), use binormal
-      if (right.length() === 0) {
-        right.copy(frames.binormals[index]).normalize();
-      }
-
-      // Position the sprite to the left
-      const offsetLeft = -4; // Distance to the left
-      sprite.position.copy(position);
-      sprite.position.add(right.clone().multiplyScalar(offsetLeft));
-
-      // **Create a combined canvas for title and paragraph**
-
-      // Define canvas dimensions
-      const textCanvasWidth = 524;
-      const textCanvasHeight = 512;
-
-      // Create the canvas
-      const textCanvas = document.createElement('canvas');
-      textCanvas.width = textCanvasWidth;
-      textCanvas.height = textCanvasHeight;
-      const textContext = textCanvas.getContext('2d');
-
-      // Create a texture from the combined canvas
-      const textTexture = new THREE.CanvasTexture(textCanvas);
-      textTexture.needsUpdate = true;
-
-      const textSpriteMaterial = new THREE.SpriteMaterial({
-        map: textTexture,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0, // Start fully transparent
-        depthTest: true,
-        depthWrite: true,
-        alphaTest: 0.1, // Add this line
-      });
-
-      const textSprite = new THREE.Sprite(textSpriteMaterial);
-
-      // Set the sprite scale to maintain consistent dimensions
-      const textSpriteHeight = 7.5; // Desired height
-      const textSpriteWidth =
-        (textCanvasWidth / textCanvasHeight) * textSpriteHeight;
-      textSprite.scale.set(textSpriteWidth, textSpriteHeight, 1);
-
-      // Create a group for the text sprite
-      const textGroup = new THREE.Group();
-
-      // Add the text sprite to the group
-      textGroup.add(textSprite);
-
-      // Position the text group to the right
-      const offsetRight = 2.5; // Distance to the right
-      textGroup.position.copy(position);
-      textGroup.position.add(right.clone().multiplyScalar(offsetRight));
-
-      // Ensure textGroup faces the camera
-      textGroup.quaternion.copy(camera.quaternion);
-
-      // **Create the "Read More" button sprite**
-
-      // Create the "Read More" button canvas
-      const readMoreButtonCanvas = document.createElement('canvas');
-      readMoreButtonCanvas.width = 250;
-      readMoreButtonCanvas.height = 90;
-      const readMoreButtonContext = readMoreButtonCanvas.getContext('2d');
-
-      // Initial draw of the "Read More" button
-      const readMoreButtonTexture = new THREE.CanvasTexture(
-        readMoreButtonCanvas
-      );
-      const readMoreButtonMaterial = new THREE.SpriteMaterial({
-        map: readMoreButtonTexture,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0,
-        depthTest: true,
-        depthWrite: true,
-        alphaTest: 0.1,
-      });
-      const readMoreButtonSprite = new THREE.Sprite(readMoreButtonMaterial);
-
-      // Set the sprite scale
-      const readMoreButtonWidth = 1.5;
-      const readMoreButtonHeight =
-        (readMoreButtonCanvas.height / readMoreButtonCanvas.width) *
-        readMoreButtonWidth;
-      readMoreButtonSprite.scale.set(
-        readMoreButtonWidth,
-        readMoreButtonHeight,
-        1
-      );
-
-      // Set userData to identify the button
-      readMoreButtonSprite.userData = {
-        type: 'readMoreButton',
-        contentSprite: null, // Will be set later
-      };
-
-      // Add the "Read More" button sprite to the text group
-      textGroup.add(readMoreButtonSprite);
-
-      // **Create a "Learn More" button sprite below the "Read More" button**
-
-      // Create the button canvas
-      const buttonCanvas = document.createElement('canvas');
-      buttonCanvas.width = 200;
-      buttonCanvas.height = 60;
-      const buttonContext = buttonCanvas.getContext('2d');
-
-      const buttonText = content.buttonText || 'Learn More'; // Default if no text provided
-
-      // Draw the button background
-      buttonContext.fillStyle = 'blue';
-      buttonContext.fillRect(0, 0, buttonCanvas.width, buttonCanvas.height);
-      
-      // Draw the button text
-      buttonContext.fillStyle = 'white';
-      buttonContext.font = '20px Arial';
+      // Draw button text
+      buttonContext.fillStyle = buttonIsHovered ? 'yellow' : 'white';
+      buttonContext.font = 'Bold 20px Arial';
       buttonContext.textAlign = 'center';
       buttonContext.textBaseline = 'middle';
+
+      // Optional shadow
+      buttonContext.shadowColor = 'rgba(0, 0, 0, 0.5)';
+      buttonContext.shadowBlur = 4;
+      buttonContext.shadowOffsetX = 0;
+      buttonContext.shadowOffsetY = 2;
+
       buttonContext.fillText(
-        buttonText,
-        buttonCanvas.width / 2,
-        buttonCanvas.height / 2
+        content.buttonText,
+        buttonCanvasWidth / 2,
+        buttonCanvasHeight / 2
       );
-      
 
-      // Create a texture from the button canvas
-      const buttonTexture = new THREE.CanvasTexture(buttonCanvas);
+      // Update texture
       buttonTexture.needsUpdate = true;
+    };
 
-      const buttonMaterial = new THREE.SpriteMaterial({
-        map: buttonTexture,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0, // Start fully transparent
-        depthTest: true,
-        depthWrite: true,
-        alphaTest: 0.1, // Add this line
+    // Function to create and setup content sprites
+    const createContentSprites = () => {
+      contentData.forEach((content) => {
+        // Create image canvas
+        const imageCanvas = document.createElement('canvas');
+        const canvasSize = 512; // Fixed canvas size
+        imageCanvas.width = canvasSize;
+        imageCanvas.height = canvasSize;
+        const imageContext = imageCanvas.getContext('2d');
+
+        // Load the image
+        const img = new Image();
+        img.src = content.image;
+
+        const imageTexture = new THREE.CanvasTexture(imageCanvas);
+
+        img.onload = () => {
+          const imgAspect = img.width / img.height;
+          const canvasAspect = imageCanvas.width / imageCanvas.height;
+
+          let renderableWidth, renderableHeight, xStart, yStart;
+
+          if (imgAspect > canvasAspect) {
+            const scale = imageCanvas.width / img.width;
+            renderableWidth = img.width * scale;
+            renderableHeight = img.height * scale;
+            xStart = (imageCanvas.width - renderableWidth) / 2;
+            yStart = (imageCanvas.height - renderableHeight) / 2;
+          } else {
+            const scale = imageCanvas.height / img.height;
+            renderableWidth = img.width * scale;
+            renderableHeight = img.height * scale;
+            xStart = (imageCanvas.width - renderableWidth) / 2;
+            yStart = (imageCanvas.height - renderableHeight) / 2;
+          }
+
+          imageContext.drawImage(img, xStart, yStart, renderableWidth, renderableHeight);
+          imageTexture.needsUpdate = true;
+        };
+
+        // Create group for image and button
+        const imageGroup = new THREE.Group();
+
+        // Create sprite for the image
+        const spriteMaterial = new THREE.SpriteMaterial({
+          map: imageTexture,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0,
+          depthTest: true,
+          depthWrite: true,
+          alphaTest: 0.1,
+        });
+
+        const sprite = new THREE.Sprite(spriteMaterial);
+        const spriteSize = 5; // Desired size
+        sprite.scale.set(spriteSize, spriteSize, 1);
+
+        // Position the image sprite at the origin of the group
+        sprite.position.set(0, 0, 0);
+
+        // Add the image sprite to the group
+        imageGroup.add(sprite);
+
+        // Create button canvas
+        const buttonCanvas = document.createElement('canvas');
+        const buttonCanvasWidth = 256;
+        const buttonCanvasHeight = 64;
+        const dpr = window.devicePixelRatio || 1;
+        buttonCanvas.width = buttonCanvasWidth * dpr;
+        buttonCanvas.height = buttonCanvasHeight * dpr;
+        const buttonContext = buttonCanvas.getContext('2d');
+        buttonContext.scale(dpr, dpr);
+
+        // Create texture from canvas
+        const buttonTexture = new THREE.CanvasTexture(buttonCanvas);
+        buttonTexture.needsUpdate = true;
+
+        // Create sprite material for the button
+        const buttonSpriteMaterial = new THREE.SpriteMaterial({
+          map: buttonTexture,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0,
+          depthTest: true,
+          depthWrite: true,
+          alphaTest: 0.1,
+        });
+
+        // Create sprite for the button
+        const buttonSprite = new THREE.Sprite(buttonSpriteMaterial);
+        const buttonSpriteHeight = 1; // Adjust size as needed
+        const buttonSpriteWidth =
+          buttonSpriteHeight * (buttonCanvasWidth / buttonCanvasHeight);
+        buttonSprite.scale.set(buttonSpriteWidth, buttonSpriteHeight, 1);
+
+        // Store original and hovered scales
+        const originalScale = new THREE.Vector3(
+          buttonSprite.scale.x,
+          buttonSprite.scale.y,
+          buttonSprite.scale.z
+        );
+        const hoveredScale = originalScale.clone().multiplyScalar(1.2);
+
+        // Assign scales to contentSprite
+        const contentSprite = {
+          buttonSpriteOriginalScale: originalScale,
+          buttonSpriteHoveredScale: hoveredScale,
+          buttonCanvasWidth,
+          buttonCanvasHeight,
+          buttonCanvas,
+          buttonContext,
+          buttonTexture,
+        };
+
+        // Position the button sprite below the image sprite within the group
+        const verticalSpacing = 0.5; // Adjust spacing as needed
+        buttonSprite.position.set(
+          0,
+          -spriteSize / 2 - buttonSpriteHeight / 2 - verticalSpacing,
+          0
+        );
+
+        // Add the button sprite to the group
+        imageGroup.add(buttonSprite);
+
+        // Position the group along the path
+        const percentage = content.percentage % 1;
+        const position = path.getPointAt(percentage);
+
+        // Compute the tangent and right vectors
+        const numSegments = frames.binormals.length;
+        const index = Math.floor(percentage * numSegments);
+        const tangent = frames.tangents[index].clone().normalize();
+        const normal = frames.normals[index].clone().normalize();
+        const binormal = frames.binormals[index].clone().normalize();
+        const up = new THREE.Vector3(0, 1, 0);
+        const right = new THREE.Vector3().crossVectors(tangent, up).normalize();
+
+        if (right.length() === 0) {
+          right.copy(frames.binormals[index]).normalize();
+        }
+
+        const offsetLeft = -4; // Distance to the left
+        imageGroup.position.copy(position).add(right.clone().multiplyScalar(offsetLeft));
+
+        // Rotate the group so that it faces towards the camera
+        imageGroup.quaternion.copy(camera.quaternion);
+
+        // Create text canvas
+        const textCanvasWidth = 512;
+        const textCanvasHeight = 512;
+        const textCanvas = document.createElement('canvas');
+        const dprText = window.devicePixelRatio || 1;
+        textCanvas.width = textCanvasWidth * dprText;
+        textCanvas.height = textCanvasHeight * dprText;
+        const textContext = textCanvas.getContext('2d');
+        textContext.scale(dprText, dprText);
+
+        const textTexture = new THREE.CanvasTexture(textCanvas);
+        textTexture.needsUpdate = true;
+
+        const textSpriteMaterial = new THREE.SpriteMaterial({
+          map: textTexture,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0,
+          depthTest: true,
+          depthWrite: true,
+          alphaTest: 0.1,
+        });
+
+        const textSprite = new THREE.Sprite(textSpriteMaterial);
+        const textSpriteHeight = 7.5; // Desired height
+        const textSpriteWidth = (textCanvasWidth / textCanvasHeight) * textSpriteHeight;
+        textSprite.scale.set(textSpriteWidth, textSpriteHeight, 1);
+
+        // Create group for text
+        const textGroup = new THREE.Group();
+        textGroup.add(textSprite);
+
+        const verticalOffset = -1; // Adjust this value as needed
+        const offsetRight = 2.5; // Distance to the right
+        textGroup.position.copy(position).add(right.clone().multiplyScalar(offsetRight)).add(new THREE.Vector3(0, verticalOffset, 0));
+
+        // Ensure textGroup faces the camera
+        textGroup.quaternion.copy(camera.quaternion);
+
+        // Create contentSprite object with pagination
+        const pages = content.pages;
+
+        Object.assign(contentSprite, {
+          imageGroup,
+          sprite,
+          buttonSprite,
+          textGroup,
+          textSprite,
+          textCanvas,
+          textContext,
+          textTexture,
+          textSpriteMaterial,
+          textSpriteHeight,
+          textCanvasHeight,
+          content,
+          percentage: content.percentage,
+          currentPage: 0,
+          totalPages: pages.length,
+          totalParagraphHeight: 0,
+          buttonSpriteMaterial,
+          buttonIsHovered: false,
+          needsButtonRedraw: true,
+          isHovered: false,
+          needsRedraw: true,
+        });
+
+        // Link textSprite to contentSprite
+        textSprite.userData = {
+          type: 'textSprite',
+          contentSprite: contentSprite,
+        };
+
+        // Link buttonSprite to contentSprite
+        buttonSprite.userData = {
+          type: 'buttonSprite',
+          contentSprite: contentSprite,
+        };
+
+        // Initial drawing of the text canvas
+        drawTextCanvas(contentSprite);
+
+        // Initial drawing of the button canvas
+        drawButtonCanvas(contentSprite);
+
+        // Add groups to the scene
+        scene.add(imageGroup);
+        scene.add(textGroup);
+
+        // Store the sprites for later use
+        contentSprites.push(contentSprite);
       });
+    };
 
-      const buttonSprite = new THREE.Sprite(buttonMaterial);
+    // Initialize content sprites
+    createContentSprites();
 
-      // Set the sprite scale
-      const buttonWidth = 2; // Adjust as needed
-      const buttonHeight =
-        (buttonCanvas.height / buttonCanvas.width) * buttonWidth;
-      buttonSprite.scale.set(buttonWidth, buttonHeight, 1);
-
-      // Position the button below the text (will be updated later)
-      buttonSprite.position.set(0, 0, 0);
-
-      // Set the link in userData
-      buttonSprite.userData = { type: 'learnMoreButton', link: content.link };
-
-      // Add the button sprite to the text group
-      textGroup.add(buttonSprite);
-
-      // **Create the contentSprite object**
-
-      const contentSprite = {
-        sprite,
-        textGroup,
-        textCanvas,
-        textContext,
-        textTexture,
-        textSpriteMaterial,
-        textSpriteHeight,
-        textCanvasHeight,
-        expanded: false,
-        content,
-        percentage: content.percentage,
-        readMoreButtonSprite,
-        readMoreButtonCanvas,
-        readMoreButtonContext,
-        readMoreButtonTexture,
-        readMoreButtonMaterial,
-        readMoreButtonWidth,
-        readMoreButtonHeight,
-        learnMoreButtonSprite: buttonSprite,
-        learnMoreButtonHeight: buttonHeight,
-        learnMoreButtonWidth: buttonWidth,
-        paragraphHeight: 0,
-      };
-
-      // Set the contentSprite in userData for the readMoreButton
-      readMoreButtonSprite.userData.contentSprite = contentSprite;
-
-      // Set the contentSprite in userData for the learnMoreButton
-      buttonSprite.userData.contentSprite = contentSprite;
-
-      // Initial drawing of the text canvas and buttons
-      drawTextCanvas(contentSprite);
-      updateReadMoreButtonText(contentSprite);
-      updateButtonPositions(contentSprite);
-
-      // Add the image sprite and text group to the scene
-      scene.add(sprite);
-      scene.add(textGroup);
-
-      // Store the sprites for later use
-      contentSprites.push(contentSprite);
-    });
-
-    // Set up raycaster for click detection
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
-    function render() {
+    // Render loop
+    const render = () => {
       currentCameraPercentage = cameraTargetPercentage;
 
       camera.rotation.y += (cameraRotationProxyX - camera.rotation.y) / 15;
+      camera.rotation.x += (cameraRotationProxyY - camera.rotation.x) / 15;
 
       updateCameraPercentage(currentCameraPercentage);
 
       // Update sprite opacity based on distance with deadzone
       contentSprites.forEach((contentSprite) => {
-        const { sprite, textGroup } = contentSprite;
-        const distance = c.position.distanceTo(sprite.position);
+        const { imageGroup, textGroup } = contentSprite;
+        const distance = cameraGroup.position.distanceTo(imageGroup.position);
 
         const minDistance = 20; // Distance within which opacity is 1
         const maxDistance = 25; // Distance beyond which opacity is 0
 
-        let opacity;
+        let opacity = 1;
 
         if (distance <= minDistance) {
           opacity = 1;
@@ -858,7 +780,12 @@ const LegacyRELOADED = () => {
 
         opacity = Mathutils.clamp(opacity, 0, 1);
 
-        sprite.material.opacity = opacity;
+        // Update opacity for all materials in the image group
+        imageGroup.traverse((child) => {
+          if (child.material) {
+            child.material.opacity = opacity;
+          }
+        });
 
         // Update opacity for all materials in the text group
         textGroup.traverse((child) => {
@@ -875,26 +802,32 @@ const LegacyRELOADED = () => {
 
       // Render the scene
       renderer.render(scene, camera);
+
+      // Redraw canvases if needed
+      contentSprites.forEach((contentSprite) => {
+        if (contentSprite.needsRedraw) {
+          drawTextCanvas(contentSprite);
+          contentSprite.needsRedraw = false;
+        }
+        if (contentSprite.needsButtonRedraw) {
+          drawButtonCanvas(contentSprite);
+          contentSprite.needsButtonRedraw = false;
+        }
+      });
+
       requestAnimationFrame(render);
-    }
+    };
     requestAnimationFrame(render);
 
-    // Event listeners
+    // Raycaster for click detection
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    // Event handlers
     const handleMouseMove = (event) => {
-      cameraRotationProxyX = Mathutils.map(
-        event.clientX,
-        0,
-        window.innerWidth,
-        3.24,
-        3.04
-      );
-      cameraRotationProxyY = Mathutils.map(
-        event.clientY,
-        0,
-        window.innerHeight,
-        -0.1,
-        0.1
-      );
+      // Update camera rotation proxies based on mouse position
+      cameraRotationProxyX = Mathutils.map(event.clientX, 0, window.innerWidth, 3.24, 3.04);
+      cameraRotationProxyY = Mathutils.map(event.clientY, 0, window.innerHeight, -0.1, 0.1);
 
       // Update mouse position in normalized device coordinates (-1 to +1)
       const rect = renderer.domElement.getBoundingClientRect();
@@ -905,18 +838,83 @@ const LegacyRELOADED = () => {
 
       // Array of clickable objects
       const clickableObjects = contentSprites.flatMap((cs) => [
-        cs.learnMoreButtonSprite,
-        cs.readMoreButtonSprite,
+        cs.textSprite,
+        cs.buttonSprite,
       ]);
 
       const intersects = raycaster.intersectObjects(clickableObjects, true);
 
       if (intersects.length > 0) {
-        // Change cursor to pointer
+        const intersectedObject = intersects[0].object;
+        const { type, contentSprite } = intersectedObject.userData;
+
         canvasRef.current.style.cursor = 'pointer';
+
+        if (type === 'textSprite') {
+          contentSprites.forEach((cs) => {
+            if (cs.textSprite === intersectedObject) {
+              if (!cs.isHovered) {
+                cs.isHovered = true;
+                cs.needsRedraw = true;
+              }
+            } else {
+              if (cs.isHovered) {
+                cs.isHovered = false;
+                cs.needsRedraw = true;
+              }
+            }
+          });
+        } else if (type === 'buttonSprite') {
+          contentSprites.forEach((cs) => {
+            if (cs.buttonSprite === intersectedObject) {
+              if (!cs.buttonIsHovered) {
+                cs.buttonIsHovered = true;
+                // Animate scale up using GSAP
+                gsap.to(cs.buttonSprite.scale, {
+                  x: cs.buttonSpriteHoveredScale.x,
+                  y: cs.buttonSpriteHoveredScale.y,
+                  z: cs.buttonSpriteHoveredScale.z,
+                  duration: 0.3,
+                  ease: 'power2.out',
+                });
+                cs.needsButtonRedraw = true;
+              }
+            } else {
+              if (cs.buttonIsHovered) {
+                cs.buttonIsHovered = false;
+                // Animate scale back to original
+                gsap.to(cs.buttonSprite.scale, {
+                  x: cs.buttonSpriteOriginalScale.x,
+                  y: cs.buttonSpriteOriginalScale.y,
+                  z: cs.buttonSpriteOriginalScale.z,
+                  duration: 0.3,
+                  ease: 'power2.out',
+                });
+                cs.needsButtonRedraw = true;
+              }
+            }
+          });
+        }
       } else {
-        // Revert cursor to default
         canvasRef.current.style.cursor = 'default';
+        contentSprites.forEach((cs) => {
+          if (cs.isHovered) {
+            cs.isHovered = false;
+            cs.needsRedraw = true;
+          }
+          if (cs.buttonIsHovered) {
+            cs.buttonIsHovered = false;
+            // Animate scale back to original
+            gsap.to(cs.buttonSprite.scale, {
+              x: cs.buttonSpriteOriginalScale.x,
+              y: cs.buttonSpriteOriginalScale.y,
+              z: cs.buttonSpriteOriginalScale.z,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
+            cs.needsButtonRedraw = true;
+          }
+        });
       }
     };
 
@@ -930,33 +928,37 @@ const LegacyRELOADED = () => {
 
       // Array of clickable objects
       const clickableObjects = contentSprites.flatMap((cs) => [
-        cs.learnMoreButtonSprite,
-        cs.readMoreButtonSprite,
+        cs.textSprite,
+        cs.buttonSprite,
       ]);
 
       const intersects = raycaster.intersectObjects(clickableObjects, true);
 
       if (intersects.length > 0) {
         const clickedObject = intersects[0].object;
-        if (clickedObject.userData.type === 'learnMoreButton') {
-          const link = clickedObject.userData.link;
-          if (link) {
-            window.location.href = link;
+        const { type, contentSprite } = clickedObject.userData;
+
+        if (type === 'buttonSprite') {
+          if (contentSprite && contentSprite.content.link) {
+            window.open(contentSprite.content.link, '_blank');
           }
-        } else if (clickedObject.userData.type === 'readMoreButton') {
-          const contentSprite = clickedObject.userData.contentSprite;
+        } else if (type === 'textSprite') {
           if (contentSprite) {
-            // Toggle expanded state
-            contentSprite.expanded = !contentSprite.expanded;
-
-            // Update the "Read More" button text
-            updateReadMoreButtonText(contentSprite);
-
-            // Redraw the text canvas
-            drawTextCanvas(contentSprite);
-
-            // Update button positions
-            updateButtonPositions(contentSprite);
+            gsap.to(contentSprite.textSprite.material, {
+              opacity: 0,
+              duration: 0,
+              onComplete: () => {
+                contentSprite.currentPage += 1;
+                if (contentSprite.currentPage >= contentSprite.totalPages) {
+                  contentSprite.currentPage = 0; // Wrap around to the beginning
+                }
+                drawTextCanvas(contentSprite);
+                gsap.to(contentSprite.textSprite.material, {
+                  opacity: 1,
+                  duration: 0.3,
+                });
+              },
+            });
           }
         }
       }
@@ -972,36 +974,42 @@ const LegacyRELOADED = () => {
       renderer.setSize(width, height);
     };
 
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowOverlay(false);
+      } else {
+        setShowOverlay(true);
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
-// Existing mouse event listeners
-document.addEventListener('mousemove', handleMouseMove);
-canvasRef.current.addEventListener('click', handleCanvasClick);
+    document.addEventListener('mousemove', handleMouseMove);
+    canvasRef.current.addEventListener('click', handleCanvasClick);
 
-// Add touch event listeners
-canvasRef.current.addEventListener('touchstart', handleTouchStart, { passive: false });
-canvasRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
-canvasRef.current.addEventListener('touchend', handleTouchEnd, false);
-canvasRef.current.addEventListener('touchcancel', handleTouchEnd, false);
-
-// Cleanup function
-return () => {
-  window.removeEventListener('resize', handleResize);
-  document.removeEventListener('mousemove', handleMouseMove);
-  if (canvasRef.current) {
-    canvasRef.current.removeEventListener('click', handleCanvasClick);
-
-    // Remove touch event listeners
-    canvasRef.current.removeEventListener('touchstart', handleTouchStart);
-    canvasRef.current.removeEventListener('touchmove', handleTouchMove);
-    canvasRef.current.removeEventListener('touchend', handleTouchEnd);
-    canvasRef.current.removeEventListener('touchcancel', handleTouchEnd);
-  }
-};
-
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousemove', handleMouseMove);
+      if (canvasRef.current) {
+        canvasRef.current.removeEventListener('click', handleCanvasClick);
+      }
+    };
   }, []);
 
   return (
     <>
+      <NavBarNew />
+      {showOverlay && (
+        <div className={`intro-overlay ${!showOverlay ? 'hide' : ''}`}>
+          <div className="intro-text">
+            Scroll through our Legacy
+            <div className="arrow-down"></div>
+          </div>
+        </div>
+      )}
       <canvas className="experience" ref={canvasRef}></canvas>
       <div className="scrollTarget" ref={scrollTargetRef}></div>
       <div className="vignette-radial"></div>

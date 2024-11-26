@@ -1,124 +1,150 @@
 /* src/components/Media.scss */
 
 body {
-  background: black;
+  background: linear-gradient(to right, rgb(61, 61, 61) 0%, rgb(190, 189, 189) 50%, rgb(61, 61, 61) 100%);
+}
+
+.media-title {
+  height: auto;
+  width: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 48px;
+  color: black;
+  text-shadow: 1px 1px 4px black;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; // Match the container width
+  margin: 0 auto; // Center the container
+  
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 48px;
+  color: #000;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10; // Ensure arrows are above other elements
+
+  &:hover {
+    color: #555;
+  }
+}
+
+.left-arrow {
+  left: 10px;
+}
+
+.right-arrow {
+  right: 10px;
 }
 
 .container {
   position: relative;
   height: 350px;
   width: 100%;
-  max-width: 1000px; // Add this to limit the container width for centering
-  top: 100px;
-  text-indent: 4px;
+  max-width: 1000px; // Match the container width
+  top: 40px;
   font-weight: bold;
   overflow: hidden;
   margin: 0 auto; // Center the container
 
   .img-holder {
     width: 250px;
-    height: 180px;
+    height: auto;
     position: absolute;
     background-color: #fff;
     box-shadow: 0px 1px 6px 3px #ccc;
     visibility: hidden;
     opacity: 0;
     top: 50px;
-    left: 395px;
+    left: 375px;
     cursor: pointer;
     z-index: 99;
     transform-style: preserve-3d;
-    
+
+    .video-title {
+      position: absolute;
+      top: -45px; // Adjust as needed
+      left: 50%;
+      width: 100%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 24px;
+      color: rgb(31, 31, 31);
+      text-shadow: 1px 1px 4px rgb(88, 88, 88);
+    }
 
     img {
-      margin-top: 5px;
+      margin-bottom: 1px;
       width: 100%;
       height: auto;
       display: block;
     }
-
-    .img-ref {
-      position: relative;
-      left: 0;
-      z-index: -1;
-
-      img {
-        transform: scaleY(-1);
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-
-      &::after {
-        content: "";
-        width: 100%;
-        height: 300px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0) 38%,
-          rgba(0, 0, 0, 0.67) 40%,
-          rgb(0, 0, 0) 65%
-        );
-      }
-    }
   }
 }
 
-.controller {
-  top: 120px;
-  left: 20px;
-  width: 300px;
-  margin: 0 auto;
-  position: relative;
-
-  input {
-    padding: 5px;
-    font-size: 16px;
-    width: 50px;
-    margin-left: 5px;
-  }
+.gallery-wrapper {
+  margin-top: 20px; /* Adds space above the gallery */
 }
 
-.scrolller-container {
-  width: 800px;
-  height: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+.gallery-title {
+  margin-top: 0; /* Reset margin-top since it's handled by gallery-wrapper */
+  text-align: center;
+  font-size: 36px;
+  color: black;
+  text-shadow: 1px 1px 4px black;
+}
+
+.windirstat-gallery {
   position: relative;
-  top: 150px;
-  left: 130px;
+  width: 1000px; /* Match the width used in the treemap size */
+  height: 600px; /* Match the height used in the treemap size */
+  margin: 20px auto 50px auto; /* Center the gallery */
+}
+
+.treemap-node {
+  position: absolute;
+  border: 1px solid #000000;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
   cursor: pointer;
-  background-color: #f5f5f5;
+  z-index: 1; /* Set a default z-index */
+}
 
-  .semester-year-display {
-    position: absolute;
-    top: -20px; // Position above the scroller
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 14px;
-    transition: opacity 0.3s ease;
-  }
+.treemap-node:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  z-index: 3; /* Bring to front */
+}
 
-  .scroller {
-    width: 100px;
-    height: 15px;
-    background-color: #ddd;
-    border-radius: 10px;
-    position: absolute;
-    left: 0px;
-    cursor: grab;
-    transition: background-color 0.3s;
+.treemap-node.expanded {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2; /* Ensure it's on top */
+  transform: none;
+}
 
-    &:active {
-      cursor: grabbing;
-      background-color: #ccc;
-    }
-  }
+.treemap-node.expanded::after {
+  content: 'Click to close';
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
 }

@@ -1,6 +1,7 @@
 .navbar {
     height: 100px;
     background-color: transparent; /* Slight transparency, you can adjust this */
+    z-index: 4;
     
     .logo-image {
         width: 100px; /* Adjust the size as needed */

@@ -1,5 +1,3 @@
-// Brothers.jsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import './Brothers.scss';
 import NavBarNew from './../components/navbar/NavBarNew';
@@ -7,11 +5,14 @@ import axios from 'axios'; // Import axios for HTTP requests
 import nureveal from '../assets/images/nureveal.jpg';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger
-import AdvancedLoading from '../components/AdvancedLoading';
 import PositionsOverlay from './../components/PositionsOverlay';
 import StatisticsOverlay from './../components/StatisticsOverlay';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
-import { grayscale } from 'three/webgpu';
+
+import class2016AImage from '../assets/images/panel2.jpg';
+import class2016BImage from '../assets/images/panel2.jpg';
+import class2017AImage from '../assets/images/panel2.jpg';
+import class2017BImage from '../assets/images/panel2.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,8 +79,6 @@ const Brothers = () => {
     // Refs for each brother's headshot to enable scrolling
     const headshotRefs = useRef({});
 
-    const [loading, setLoading] = useState(true);
-
     // Fetch brothers data from API on component mount
     useEffect(() => {
         fetchBrothers();
@@ -89,10 +88,8 @@ const Brothers = () => {
         try {
             const response = await axios.get('http://localhost:8000/api/brothers/');
             setBrothers(response.data);
-            setLoading(false); // Set loading to false after data is fetched
         } catch (error) {
             console.error("Error fetching brothers data:", error);
-            setLoading(false); // Set loading to false even if there's an error
         }
     };
 
@@ -222,23 +219,132 @@ const Brothers = () => {
         return [];
     };
 
-    // Hardcoded timeline values
     const timelineData = [
         {
             year: '2016',
             classes: [
-                { className: 'Alpha Class', PC: 'John Doe', PD: 'Jane Smith' },
-                { className: 'Beta Class', PC: 'Mike Johnson', PD: 'Emily Davis' },
+
+                {
+                    className: 'Charter Conquest',
+                    PC: 'Mike Johnson',
+                    PD: 'Emily Davis',
+                    image: class2016BImage,
+                },
             ],
         },
         {
             year: '2017',
             classes: [
-                { className: 'Gamma Class', PC: 'David Lee', PD: 'Chris Evans' },
-                { className: 'Delta Class', PC: 'Sarah Miller', PD: 'James Brown' },
+                {
+                    className: 'Alpha Ascension',
+                    PC: 'David Lee',
+                    PD: 'Chris Evans',
+                    image: class2017AImage,
+                },
+                {
+                    className: 'Beta Battalion',
+                    PC: 'Sarah Miller',
+                    PD: 'James Brown',
+                    image: class2017BImage,
+                },
             ],
         },
-        // Add more years and classes as needed
+        {
+            year: '2018',
+            classes: [
+                {
+                    className: 'Gamma Guardians',
+                    PC: 'John Doe',
+                    PD: 'Jane Smith',
+                    image: class2016AImage,
+                },
+                {
+                    className: 'Delta Dimension',
+                    PC: 'Mike Johnson',
+                    PD: 'Emily Davis',
+                    image: class2016BImage,
+                },
+            ],
+        },
+        {
+            year: '2019',
+            classes: [
+                {
+                    className: 'Zeta Zaibatsu',
+                    PC: 'David Lee',
+                    PD: 'Chris Evans',
+                    image: class2017AImage,
+                },
+                {
+                    className: 'Eta Evolution',
+                    PC: 'Sarah Miller',
+                    PD: 'James Brown',
+                    image: class2017BImage,
+                },
+            ],
+        },
+        {
+            year: '2020',
+            classes: [
+                {
+                    className: 'Theta Trinity',
+                    PC: 'John Doe',
+                    PD: 'Jane Smith',
+                    image: class2016AImage,
+                },
+                {
+                    className: 'Iota Immortals',
+                    PC: 'Mike Johnson',
+                    PD: 'Emily Davis',
+                    image: class2016BImage,
+                },
+            ],
+        },
+        {
+            year: '2022',
+            classes: [
+                {
+                    className: 'Kappa Kazoku',
+                    PC: 'David Lee',
+                    PD: 'Chris Evans',
+                    image: class2017AImage,
+                },
+                {
+                    className: 'Mu Monarchs',
+                    PC: 'Sarah Miller',
+                    PD: 'James Brown',
+                    image: class2017BImage,
+                },
+            ],
+        },
+        {
+            year: '2023',
+            classes: [
+                {
+                    className: 'Nu Nen',
+                    PC: 'David Lee',
+                    PD: 'Chris Evans',
+                    image: class2017AImage,
+                },
+            ],
+        },
+        {
+            year: '2024',
+            classes: [
+                {
+                    className: 'Xi Xin',
+                    PC: 'Sarah Miller',
+                    PD: 'James Brown',
+                    image: class2017BImage,
+                },
+                {
+                    className: 'Omicron Okami',
+                    PC: 'David Lee',
+                    PD: 'Chris Evans',
+                    image: class2017AImage,
+                },
+            ],
+        },
     ];
 
     // Refs for timeline
@@ -274,64 +380,74 @@ const Brothers = () => {
         };
     }, []);
 
+    // Modify handleMarkerMouseEnter
     const handleMarkerMouseEnter = (index) => {
         const marker = markersRef.current[index];
         const popup = marker.querySelector('.timeline-popup');
 
+        // Kill any ongoing tweens on marker and popup
+        gsap.killTweensOf([marker, popup]);
+
+        // Animate marker scaling
         gsap.to(marker, {
             scale: 1.2,
-            duration: 1,
-            ease: 'elastic.out(1, 0.3)',
+            duration: 0.5,
+            ease: 'power2.out',
         });
+
+        // Show the popup
         gsap.to(popup, {
             autoAlpha: 1,
             y: -20,
             duration: 0.3,
             ease: 'power2.out',
         });
+
+        // Adjust popup position for first and last markers
+        if (index === 0 || index === 1) {
+            // First marker: Align popup to the left
+            popup.style.left = '0%';
+            popup.style.transform = 'translateX(0%)';
+        } else if (index === timelineData.length - 1 || index === timelineData.length - 2) {
+            // Last marker: Align popup to the right
+            popup.style.left = '100%';
+            popup.style.transform = 'translateX(-100%)';
+        } else {
+            // Other markers: Center the popup
+            popup.style.left = '50%';
+            popup.style.transform = 'translateX(-50%)';
+        }
     };
 
     const handleMarkerMouseLeave = (index) => {
         const marker = markersRef.current[index];
         const popup = marker.querySelector('.timeline-popup');
 
+        // Kill any ongoing tweens on marker and popup
+        gsap.killTweensOf([marker, popup]);
+
+        // Animate marker scaling back to normal
         gsap.to(marker, {
             scale: 1,
             duration: 0.3,
             ease: 'power2.in',
         });
+
+        // Hide the popup
         gsap.to(popup, {
             autoAlpha: 0,
             y: 0,
-            duration: 0.3,
+            duration: 0.2,
             ease: 'power2.in',
+            onComplete: () => {
+                // Reset popup position after the animation completes
+                popup.style.left = '';
+                popup.style.transform = '';
+            },
         });
     };
 
-    useEffect(() => {
-        if (loading) {
-            gsap.fromTo(
-                '.loading-background',
-                {
-                    x: '0vw',
-                    rotationY: -12,
-                    rotateX: 10,
-                    filter: 'grayscale(100%)'
-                },
-                {
-                    x: '0vw',
-                    scale: .75,
-                    rotationY: -5,
-                    filter: 'grayscale(0%)',
-                    rotateX: 0,
-                    duration: 6,      // Duration for the pan and rotation
-                    ease: 'none',      // Smooth linear movement
-                    repeat: -1,        // Loop the animation infinitely
-                    yoyo: true         // Reverse the animation direction on each repeat
-                }
-            );
-        }
-    }, [loading]);
+
 
     // Set up the Brothers page
     return (
@@ -342,159 +458,155 @@ const Brothers = () => {
 
             {/* Container for the entire page, excluding the navbar. */}
             <div className="brothers-page">
-                {/* Display loading indicator if data is still loading */}
-                {loading ? (
-                    <div className="loading-container">
-                        <div className="loading-background"></div> {/* Panning background */}
-                        <AdvancedLoading className="advanced-loading" /> {/* Centered loading animation */}
-                    </div>
-                ) : (
-                    <>
+                <>
 
-                        {/* Container for the title strip. */}
-                        <div className="legacy-title-container1">
-                            <div className="blue-strip1"></div>
-                            <h2 className="legacy-title">{getTitle()}</h2>
+                    {/* Container for the title strip. */}
+                    <div className="legacy-title-container1">
+                        <div className="blue-strip1"></div>
+                        <h2 className="legacy-title">{getTitle()}</h2>
+                    </div>
+
+                    {/* Container for filter and statistics button */}
+                    <div className="filter-container">
+                        <div className="filter-box">
+                            {/* Filter Dropdown */}
+                            <label htmlFor="roleFilter">Filter by:</label>
+                            <select
+                                id="roleFilter"
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                            >
+                                <option value="all brothers">All</option>
+                                <option value="Actives">Active House</option>
+                                <option value="Alumni">Alumni</option>
+                                <option value="Associates">Associate Members</option>
+                                <option value="Etas">Eta Evolution</option>
+                                <option value="Thetas">Theta Trinity</option>
+                                <option value="Iotas">Iota Immortals</option>
+                                <option value="Kappas">Kappa Kazoku</option>
+                                <option value="Mus">Mu Monarchs</option>
+                                <option value="Nus">Nu Nen</option>
+                                <option value="Xis">Xi Xin</option>
+                            </select>
                         </div>
 
- {/* Container for filter and statistics button */}
- <div className="filter-container">
-                    <div className="filter-box">
-                        {/* Filter Dropdown */}
-                        <label htmlFor="roleFilter">Filter by:</label>
-                        <select
-                            id="roleFilter"
-                            value={filter}
-                            onChange={(e) => setFilter(e.target.value)}
+                        {/* Button to trigger the statistics overlay */}
+                        <button
+                            onClick={openStatistics}
+                            className="statistics-button"
+                            style={{
+                                padding: '10px 20px',
+                                borderRadius: '8px',
+                                backgroundColor: '#203c79',
+                                color: '#fff',
+                                border: 'none',
+                                cursor: 'pointer',
+                                marginLeft: '20px' // Space it nicely next to the dropdown
+                            }}
                         >
-                            <option value="all brothers">All</option>
-                            <option value="Actives">Active House</option>
-                            <option value="Alumni">Alumni</option>
-                            <option value="Associates">Associate Members</option>
-                            <option value="Etas">Eta Evolution</option>
-                            <option value="Thetas">Theta Trinity</option>
-                            <option value="Iotas">Iota Immortals</option>
-                            <option value="Kappas">Kappa Kazoku</option>
-                            <option value="Mus">Mu Monarchs</option>
-                            <option value="Nus">Nu Nen</option>
-                            <option value="Xis">Xi Xin</option>
-                        </select>
+                            View Statistics
+                        </button>
                     </div>
 
-                    {/* Button to trigger the statistics overlay */}
-                    <button 
-                        onClick={openStatistics} 
-                        className="statistics-button"
-                        style={{
-                            padding: '10px 20px',
-                            borderRadius: '8px',
-                            backgroundColor: '#203c79',
-                            color: '#fff',
-                            border: 'none',
-                            cursor: 'pointer',
-                            marginLeft: '20px' // Space it nicely next to the dropdown
-                        }}
-                    >
-                        View Statistics
-                    </button>
-                </div>
+                    {/* Render statistics overlay */}
+                    {showStatistics && <StatisticsOverlay onClose={closeStatistics} brothers={brothers} />}
 
-                {/* Render statistics overlay */}
-                {showStatistics && <StatisticsOverlay onClose={closeStatistics} brothers={brothers} />}
-
-                        {/* Strip that shows the active filter whenever a hobby is selected. */}
-                        {(hobbyFilter) && (
-                            <div className="active-filters">
-                                {hobbyFilter && (
-                                    <div className="active-filter">
-                                        <span>Showing {filter} interested in {hobbyFilter}</span>
-                                        <button onClick={() => setHobbyFilter(null)}>Clear</button>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Container for all headshots, including the grid. */}
-                        <div className="color-box-headshots">
-
-                            {/* Grid to map headshots pulled from database. */}
-                            <div className="headshot-grid">
-            {filteredBrothers.map((person, index) => (
-                <HeadshotCard
-                    key={person.id}
-                    person={person}
-                    index={index}
-                    isSelected={isSelected}
-                    handleHeadshotClick={handleHeadshotClick}
-                    assignRef={assignRef}
-                    handleLinkClick={handleLinkClick}
-                    getBig={getBig}
-                    getLittles={getLittles}
-                    hobbyFilter={hobbyFilter}
-                    setHobbyFilter={setHobbyFilter}
-                    isInThirdColumn={isInThirdColumn}
-                    // Pass image_url when opening the overlay
-                    openOverlay={() => openOverlay(person.positions || mockPositions, person.name, person.image_url)}
-                />
-            ))}
-        </div>
+                    {/* Strip that shows the active filter whenever a hobby is selected. */}
+                    {(hobbyFilter) && (
+                        <div className="active-filters">
+                            {hobbyFilter && (
+                                <div className="active-filter">
+                                    <span>Showing {filter} interested in {hobbyFilter}</span>
+                                    <button onClick={() => setHobbyFilter(null)}>Clear</button>
+                                </div>
+                            )}
                         </div>
+                    )}
 
-                        {/* Timeline Section */}
-                        <div className="timeline-section">
-                            <div className="timeline-title">
-                                <h2>Chapter Timeline</h2>
-                            </div>
-                            <div className="timeline-container" ref={timelineRef}>
-                                <div className="timeline-line"></div>
-                                {timelineData.map((entry, index) => (
-                                    <div key={index} className="timeline-entry">
+                    {/* Container for all headshots, including the grid. */}
+                    <div className="color-box-headshots">
+
+                        {/* Grid to map headshots pulled from database. */}
+                        <div className="headshot-grid">
+                            {filteredBrothers.map((person, index) => (
+                                <HeadshotCard
+                                    key={person.id}
+                                    person={person}
+                                    index={index}
+                                    isSelected={isSelected}
+                                    handleHeadshotClick={handleHeadshotClick}
+                                    assignRef={assignRef}
+                                    handleLinkClick={handleLinkClick}
+                                    getBig={getBig}
+                                    getLittles={getLittles}
+                                    hobbyFilter={hobbyFilter}
+                                    setHobbyFilter={setHobbyFilter}
+                                    isInThirdColumn={isInThirdColumn}
+                                    // Pass image_url when opening the overlay
+                                    openOverlay={() => openOverlay(person.positions || mockPositions, person.name, person.image_url)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Timeline Section */}
+                    <div className="timeline-section">
+                        <div className="timeline-title">
+                            <h2>Chapter Timeline</h2>
+                        </div>
+                        <div className="timeline-container" ref={timelineRef}>
+                            <div className="timeline-line"></div>
+                            {timelineData.map((entry, index) => (
+                                <div key={index} className="timeline-entry">
+                                    <div
+                                        className="timeline-marker"
+                                        ref={(el) => (markersRef.current[index] = el)}
+                                        onMouseEnter={() => handleMarkerMouseEnter(index)}
+                                        onMouseLeave={() => handleMarkerMouseLeave(index)}
+                                    >
+                                        <span className="timeline-year">{entry.year}</span>
                                         <div
-                                            className="timeline-marker"
-                                            ref={(el) => (markersRef.current[index] = el)}
-                                            onMouseEnter={() => handleMarkerMouseEnter(index)}
-                                            onMouseLeave={() => handleMarkerMouseLeave(index)}
+                                            className="timeline-popup"
+                                            style={{ width: entry.classes.length === 1 ? '400px' : '800px' }}
                                         >
-                                            <span className="timeline-year">{entry.year}</span>
-                                            <div className="timeline-popup">
-                                                <div className="popup-content">
-                                                    {entry.classes.map((classEntry, classIndex) => (
-                                                        <div key={classIndex} className="class-entry">
-                                                            <h3>{classEntry.className}</h3>
-                                                            <h4>New Member Educators</h4>
+                                            <div className="popup-content">
+                                                {entry.classes.map((classEntry, classIndex) => (
+                                                    <div key={classIndex} className="class-entry">
+                                                        <h3>{classEntry.className}</h3>
+                                                        <h4>New Member Educators</h4>
+                                                        <div className="PCPD">
                                                             <p>PC: {classEntry.PC}</p>
                                                             <p>PD: {classEntry.PD}</p>
-                                                            {classEntry.image && (
-                                                                <img
-                                                                    src={classEntry.image}
-                                                                    alt={`${classEntry.className} Image`}
-                                                                    className="timeline-image"
-                                                                />
-                                                            )}
                                                         </div>
-                                                    ))}
-                                                </div>
+                                                        {classEntry.image && (
+                                                            <img
+                                                                src={classEntry.image}
+                                                                alt={`${classEntry.className} Image`}
+                                                                className="timeline-image"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
+                    </div>
 
-        {/* Positions Overlay */}
-        <AnimatePresence>
-            {overlayData && (
-                <PositionsOverlay
-                    positions={overlayData.positions}
-                    onClose={closeOverlay}
-                    name={overlayData.name}
-                    imageUrl={overlayData.imageUrl} // Pass imageUrl to PositionsOverlay
-                />
-            )}
-        </AnimatePresence>
-                    </>
-                )}
-
+                    {/* Positions Overlay */}
+                    <AnimatePresence>
+                        {overlayData && (
+                            <PositionsOverlay
+                                positions={overlayData.positions}
+                                onClose={closeOverlay}
+                                name={overlayData.name}
+                                imageUrl={overlayData.imageUrl} // Pass imageUrl to PositionsOverlay
+                            />
+                        )}
+                    </AnimatePresence>
+                </>
 
 
                 {/* Container to make space for the footer. */}
@@ -920,20 +1032,20 @@ const HeadshotCard = ({
                         </div>
                     )}
 
-    {/* New "View Positions" Button */}
-    <div className="view-positions-container">
-        <button
-            className="view-positions-button"
-            onClick={(e) => {
-                e.stopPropagation(); // Prevent triggering card click
-                openOverlay(person.positions || mockPositions, person.name, person.image_url); // Pass image_url
-                handleHeadshotClick(person.id);
-            }}
-            aria-label={`View positions for ${person.name}`}
-        >
-            <h2>View Service Record</h2>
-        </button>
-    </div>
+                    {/* New "View Positions" Button */}
+                    <div className="view-positions-container">
+                        <button
+                            className="view-positions-button"
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent triggering card click
+                                openOverlay(person.positions || mockPositions, person.name, person.image_url); // Pass image_url
+                                handleHeadshotClick(person.id);
+                            }}
+                            aria-label={`View positions for ${person.name}`}
+                        >
+                            <h2>View Service Record</h2>
+                        </button>
+                    </div>
 
 
                     {/* Course of study/Major label */}

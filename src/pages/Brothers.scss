@@ -935,10 +935,9 @@
 .timeline-section {
     padding: 60px 0;
     text-align: center;
-    overflow: hidden; /* Prevent scroll bars */
+    position: relative;
 
     .timeline-title {
-        margin-bottom: 40px;
 
         h2 {
             font-size: 3rem;
@@ -976,8 +975,8 @@
 
             .timeline-marker {
                 position: relative;
-                width: 60px;
-                height: 60px;
+                width: 40px;
+                height: 40px;
                 background-color: #ffffff;
                 border-radius: 50%;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -986,7 +985,7 @@
                 align-items: center;
                 justify-content: center;
                 z-index: 3;
-                transform-origin: center;
+
                 overflow: visible; /* Ensure children are visible */
 
                 .timeline-year {
@@ -999,22 +998,27 @@
                     font-weight: bold;
                 }
 
+                .PCPD {
+                    display: inline-flex;
+                    gap: 10px;
+                }
+
                 .timeline-popup {
                     position: absolute;
                     bottom: calc(100% + 10px);
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 300px;
                     padding: 20px;
-                    background-color: rgba(255, 255, 255, 0.95);
+                    background-color: rgba(235, 235, 235, 0.8);
+                    backdrop-filter: blur(3px);
                     border: 1px solid #ddd;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     text-align: center;
                     z-index: 4;
                     opacity: 0;
                     pointer-events: none;
-                    transform-origin: bottom center;
                     border-radius: 8px;
+                    color: #3a3a3a;
 
                     .popup-content {
                         display: flex; /* Add flex display to arrange classes side by side */
@@ -1050,9 +1054,6 @@
                             }
                         }
                     }
-
-                    /* Transition for GSAP */
-                    /* Remove CSS transitions to prevent conflicts with GSAP */
                 }
             }
         }
