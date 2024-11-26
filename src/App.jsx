@@ -5,11 +5,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home'
 import Recruitment from './pages/Recruitment'
 import Brothers from './pages/Brothers'
-import Legacy from './pages/Legacy'
 import LegacyRELOADED from './pages/LegacyRELOADED';
 import Media from './pages/Media'
-import CitationsPage from './pages/CitationsPage';
-import AddMember from './pages/AddMember';
+
 
 
 function App() {
