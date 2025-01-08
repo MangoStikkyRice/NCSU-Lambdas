@@ -840,13 +840,15 @@ const HeadshotCard = ({
     const { nationalities } = person;
 
     // Sort nationalities alphabetically by country name
-    const sortedNationalities = [...nationalities].sort((a, b) => {
-        const nameA = a.name.toUpperCase(); // Ignore case
-        const nameB = b.name.toUpperCase(); // Ignore case
+    const sortedNationalities = Array.isArray(nationalities)
+    ? [...nationalities].sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
         if (nameA < nameB) return -1;
         if (nameA > nameB) return 1;
-        return 0; // Names are equal
-    });
+        return 0;
+      })
+    : [];
 
     // State to track hover status
     const [hovered, setHovered] = useState(false);
