@@ -6,7 +6,7 @@ const client = new MongoClient(uri);
 exports.handler = async () => {
     try {
         await client.connect();
-        const database = client.db('LambdaPhiEpsilon');
+        const database = client.db('lambdas');
         const collection = database.collection('brothers');
         
         // Fetch all documents from the "brothers" collection
