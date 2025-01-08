@@ -906,6 +906,8 @@ const HeadshotCard = ({
 
 
 
+    const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
+    
     // Setup the individual headshot card.
     return (
 
