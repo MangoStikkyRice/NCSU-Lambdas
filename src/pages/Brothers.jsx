@@ -86,13 +86,15 @@ const Brothers = () => {
 
     const fetchBrothers = async () => {
         try {
-            // Fetch data from your Netlify serverless function
-            const response = await axios.get('/.netlify/functions/get_brothers'); 
-            setBrothers(response.data); // Update state with fetched data
+            const response = await axios.get('/.netlify/functions/get_brothers');
+            console.log('API Response:', response.data); // Log the response
+            setBrothers(response.data); // Assuming response.data is an array
         } catch (error) {
-            console.error("Error fetching brothers data:", error);
+            console.error('Error fetching brothers data:', error);
+            setBrothers([]); // Fallback to an empty array on error
         }
     };
+    
     
 
     // Function to handle link clicks within popups
