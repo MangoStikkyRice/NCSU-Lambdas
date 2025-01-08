@@ -907,7 +907,7 @@ const HeadshotCard = ({
 
 
     const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
-    
+
     // Setup the individual headshot card.
     return (
 
@@ -1063,34 +1063,34 @@ const HeadshotCard = ({
                         {person.major}
                     </p>
 
-                    {/* Hobbies Section */}
-                    {person.hobbies && person.hobbies.length > 0 && (
-                        <div className="hobbies-section">
-                            <h5>Hobbies:</h5>
-                            <div className="hobbies-container">
-                                {person.hobbies.map((hobby, index) => (
-                                    <span
-                                        key={index}
-                                        className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Prevent triggering other click events
-                                            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
-                                        }}
-                                        aria-label={`Filter by hobby: ${hobby}`}
-                                        role="button"
-                                        tabIndex="0"
-                                        onKeyPress={(e) => {
-                                            if (e.key === 'Enter') {
-                                                setHobbyFilter(hobby === hobbyFilter ? null : hobby);
-                                            }
-                                        }}
-                                    >
-                                        {hobby}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+{/* Hobbies Section */}
+{Array.isArray(person.hobbies) && person.hobbies.length > 0 && (
+  <div className="hobbies-section">
+    <h5>Hobbies:</h5>
+    <div className="hobbies-container">
+      {person.hobbies.map((hobby, index) => (
+        <span
+          key={index}
+          className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering other click events
+            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
+          }}
+          aria-label={`Filter by hobby: ${hobby}`}
+          role="button"
+          tabIndex="0"
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              setHobbyFilter(hobby === hobbyFilter ? null : hobby);
+            }
+          }}
+        >
+          {hobby}
+        </span>
+      ))}
+    </div>
+  </div>
+)}
 
                     {/* Graduation status (Alumni, Active, Associate) label. */}
                     <p>Status: <b>{person.status}</b></p>
