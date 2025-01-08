@@ -7,7 +7,7 @@ exports.handler = async () => {
     try {
         await client.connect();
         const database = client.db('lambdas');
-        const collection = database.collection('brothers');
+        const collection = database.collection('core_react');
         
         // Fetch all documents from the "brothers" collection
         const brothers = await collection.find().toArray();
