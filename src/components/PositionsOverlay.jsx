@@ -33,6 +33,10 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
         }
     };
 
+    // PositionsOverlay.jsx
+    console.log('PositionsOverlay rendering...', positions, name, imageUrl);
+
+
     useEffect(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
