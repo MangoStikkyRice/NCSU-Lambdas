@@ -9,10 +9,20 @@ import PositionsOverlay from './../components/PositionsOverlay';
 import StatisticsOverlay from './../components/StatisticsOverlay';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
 
-import class2016AImage from '../assets/images/panel2.jpg';
-import class2016BImage from '../assets/images/panel2.jpg';
-import class2017AImage from '../assets/images/panel2.jpg';
-import class2017BImage from '../assets/images/panel2.jpg';
+import class2016AImage from '../backend/media/charters.png';
+import class2016BImage from '../backend/media/alphas.jpg';
+import class2017AImage from '../backend/media/betas.jpg';
+import class2017BImage from '../backend/media/gammas.jpg';
+import class2017BImage from '../backend/media/deltas.jpg';
+import class2017BImage from '../backend/media/epsilon.jpg';
+import class2017BImage from '../backend/media/zetas.jpg';
+import class2017BImage from '../backend/media/etas.jpg';
+import class2017BImage from '../backend/media/thetas.jpg';
+import class2017BImage from '../backend/media/iotas.png';
+import class2017BImage from '../backend/media/kappas.png';
+import class2017BImage from '../backend/media/mus.png';
+import class2017BImage from '../backend/media/nus.png';
+import class2017BImage from '../backend/media/xis.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -231,8 +241,8 @@ const Brothers = () => {
 
                 {
                     className: 'Charter Conquest',
-                    PC: 'Mike Johnson',
-                    PD: 'Emily Davis',
+                    PM: 'Tim Wu',
+                    PD: 'Henry Lieu',
                     image: class2016BImage,
                 },
             ],
@@ -240,34 +250,34 @@ const Brothers = () => {
         {
             year: '2017',
             classes: [
-                {
-                    className: 'Alpha Ascension',
-                    PC: 'David Lee',
-                    PD: 'Chris Evans',
-                    image: class2017AImage,
-                },
-                {
-                    className: 'Beta Battalion',
-                    PC: 'Sarah Miller',
-                    PD: 'James Brown',
-                    image: class2017BImage,
-                },
-            ],
+                    {
+                        className: 'Alpha Ascension',
+                        PM: 'David Chang',
+                        PD: 'Terrance Touch',
+                        image: class2017AImage,
+                    },
+                    {
+                        className: 'Beta Battalion',
+                        PM: 'RJ Javier',
+                        PD: '[Term Void]',
+                        image: class2017BImage,
+                    }
+            ]
         },
         {
             year: '2018',
             classes: [
                 {
                     className: 'Gamma Guardians',
-                    PC: 'John Doe',
-                    PD: 'Jane Smith',
+                    PM: 'Timothy Wu',
+                    PD: 'Brody Zhao',
                     image: class2016AImage,
                 },
                 {
                     className: 'Delta Dimension',
-                    PC: 'Mike Johnson',
-                    PD: 'Emily Davis',
-                    image: class2016BImage,
+                    PM: 'Matthew Wright',
+                    PD: 'Tarun Salian',
+                    image: class2016AImage,
                 },
             ],
         },
@@ -275,16 +285,16 @@ const Brothers = () => {
             year: '2019',
             classes: [
                 {
-                    className: 'Zeta Zaibatsu',
-                    PC: 'David Lee',
-                    PD: 'Chris Evans',
-                    image: class2017AImage,
+                    className: 'Epsilon Eclipse',
+                    PM: 'Tye Rojanasoonthon',
+                    PD: 'Ye Htet',
+                    image: class2016BImage,
                 },
                 {
-                    className: 'Eta Evolution',
-                    PC: 'Sarah Miller',
-                    PD: 'James Brown',
-                    image: class2017BImage,
+                    className: 'Zeta Zaibatsu',
+                    PM: 'Alex Phan',
+                    PD: '[Term Void]',
+                    image: class2017AImage,
                 },
             ],
         },
@@ -292,15 +302,26 @@ const Brothers = () => {
             year: '2020',
             classes: [
                 {
+                    className: 'Eta Evolution',
+                    PM: 'Tarun Salian',
+                    PD: 'Benjamin Adams',
+                    image: class2017BImage,
+                },
+            ],
+        },
+        {
+            year: '2021',
+            classes: [
+                {
                     className: 'Theta Trinity',
-                    PC: 'John Doe',
-                    PD: 'Jane Smith',
+                    PM: 'Jeremy Dela Paz',
+                    PD: 'Miller Kahihu',
                     image: class2016AImage,
                 },
                 {
                     className: 'Iota Immortals',
-                    PC: 'Mike Johnson',
-                    PD: 'Emily Davis',
+                    PM: 'Michael Tran',
+                    PD: '[Term Void]',
                     image: class2016BImage,
                 },
             ],
@@ -310,14 +331,14 @@ const Brothers = () => {
             classes: [
                 {
                     className: 'Kappa Kazoku',
-                    PC: 'David Lee',
-                    PD: 'Chris Evans',
+                    PM: 'Charles Villazor',
+                    PD: 'Jared Javier',
                     image: class2017AImage,
                 },
                 {
                     className: 'Mu Monarchs',
-                    PC: 'Sarah Miller',
-                    PD: 'James Brown',
+                    PM: 'Richard Ngo',
+                    PD: 'Kunwoo Lee',
                     image: class2017BImage,
                 },
             ],
@@ -327,8 +348,8 @@ const Brothers = () => {
             classes: [
                 {
                     className: 'Nu Nen',
-                    PC: 'David Lee',
-                    PD: 'Chris Evans',
+                    PM: 'Maaz Khan',
+                    PD: 'Dylan Murray',
                     image: class2017AImage,
                 },
             ],
@@ -338,14 +359,14 @@ const Brothers = () => {
             classes: [
                 {
                     className: 'Xi Xin',
-                    PC: 'Sarah Miller',
-                    PD: 'James Brown',
+                    PM: 'Yucheng',
+                    PD: 'Christoffer Villazor',
                     image: class2017BImage,
                 },
                 {
                     className: 'Omicron Okami',
-                    PC: 'David Lee',
-                    PD: 'Chris Evans',
+                    PM: 'Austin Heyward',
+                    PD: 'San Phyo',
                     image: class2017AImage,
                 },
             ],
@@ -579,8 +600,8 @@ const Brothers = () => {
                                                     <div key={classIndex} className="class-entry">
                                                         <h3>{classEntry.className}</h3>
                                                         <h4>New Member Educators</h4>
-                                                        <div className="PCPD">
-                                                            <p>PC: {classEntry.PC}</p>
+                                                        <div className="PMPD">
+                                                            <p>PM: {classEntry.PM}</p>
                                                             <p>PD: {classEntry.PD}</p>
                                                         </div>
                                                         {classEntry.image && (
