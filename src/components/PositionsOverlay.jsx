@@ -5,6 +5,19 @@ import { createPortal } from 'react-dom';
 import { gsap } from 'gsap';
 import './PositionsOverlay.scss';
 
+// Helper function to format season and year
+const formatSeason = (month, year) => {
+    const springMonths = ["January", "February", "March", "April", "May", "June"];
+    const fallMonths = ["July", "August", "September", "October", "November", "December"];
+    
+    if (springMonths.includes(month)) {
+        return `Spring ${year}`;
+    } else if (fallMonths.includes(month)) {
+        return `Fall ${year}`;
+    }
+    return `${month} ${year}`;  // Default fallback
+};
+
 // Updated formatDateRange function
 const formatDateRange = (start_month, start_year, end_month, end_year) => {
     const start = formatSeason(start_month, start_year);
