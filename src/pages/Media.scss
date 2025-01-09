@@ -1,7 +1,7 @@
 /* src/components/Media.scss */
 
 body {
-  background: linear-gradient(to right, rgb(61, 61, 61) 0%, rgb(190, 189, 189) 50%, rgb(61, 61, 61) 100%);
+  background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 30%, white 70%, rgb(151, 151, 151) 100%);
 }
 
 .media-title {
@@ -12,8 +12,9 @@ body {
   justify-content: center;
   margin-top: 20px;
   font-size: 48px;
-  color: black;
-  text-shadow: 1px 1px 4px black;
+  color: white;
+  text-shadow: 2px 2px 3px black;
+  background: linear-gradient(to right, #203c79 0%, transparent 100%);
 }
 
 .carousel-container {
@@ -99,9 +100,10 @@ body {
 .gallery-title {
   margin-top: 0; /* Reset margin-top since it's handled by gallery-wrapper */
   text-align: center;
-  font-size: 36px;
-  color: black;
-  text-shadow: 1px 1px 4px black;
+  font-size: 48px;
+  color: white;
+  text-shadow: 2px 2px 3px black;
+  background: linear-gradient(to right, #203c79 0%, transparent 100%);
 }
 
 .windirstat-gallery {

@@ -28,7 +28,7 @@ function Home() {
 
     const handleOverlayComplete = () => {
         setOverlayVisible(false);
-        setLoading(false); // Show the content when overlay completes
+
     };
 
     // Function to handle fade out and navigation

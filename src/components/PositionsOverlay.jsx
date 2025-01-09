@@ -111,7 +111,6 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
                             <img
                                 src={imageUrl}
                                 alt={`${name} Headshot`}
-                                loading="lazy"
                                 onError={(e) => { e.target.src = '/path/to/default/image.png'; }}
                             />
                         </div>

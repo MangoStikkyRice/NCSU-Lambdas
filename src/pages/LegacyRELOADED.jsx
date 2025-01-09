@@ -347,7 +347,7 @@ const LegacyRELOADED = () => {
     
       // Draw the title
       textContext.font = 'Bold 48px Arial';
-      const titleMaxWidth = textCanvas.width - 450;
+      const titleMaxWidth = textCanvas.width * 0.9;
       let titleX = 10;
       let titleY = 10;
     
@@ -375,7 +375,7 @@ const LegacyRELOADED = () => {
       // Draw the blue banner behind the title text
       const bannerX = 0;
       const bannerY = titleY - 12; // Slight padding above
-      const bannerWidth = textCanvas.width - 480;
+      const bannerWidth = textCanvas.width * .8;
       const bannerHeight = titleHeight + 10; // Add padding below
     
       const gradient = textContext.createLinearGradient(
@@ -406,7 +406,7 @@ const LegacyRELOADED = () => {
       // Set font for paragraph text
       textContext.font = '18px Arial';
       textContext.fillStyle = 'white';
-      const maxWidth = textCanvas.width - 550;
+      const maxWidth = textCanvas.width * .7; // 90% of the total width
       let x = 10;
       let y = titleY + 10;
     
@@ -574,7 +574,11 @@ const LegacyRELOADED = () => {
         const buttonCanvas = document.createElement('canvas');
         const buttonCanvasWidth = 256;
         const buttonCanvasHeight = 64;
+        const baseButtonWidth = Math.min(window.innerWidth * 0.25, 256); 
+        const baseButtonHeight = baseButtonWidth / 4; // maintain ratio
         const dpr = window.devicePixelRatio || 1;
+        buttonCanvas.width = baseButtonWidth * dpr;
+        buttonCanvas.height = baseButtonHeight * dpr;
         buttonCanvas.width = buttonCanvasWidth * dpr;
         buttonCanvas.height = buttonCanvasHeight * dpr;
         const buttonContext = buttonCanvas.getContext('2d');
@@ -622,10 +626,9 @@ const LegacyRELOADED = () => {
         };
 
         // Position the button sprite below the image sprite within the group
-        const verticalSpacing = 0.5; // Adjust spacing as needed
         buttonSprite.position.set(
           0,
-          -spriteSize / 2 - buttonSpriteHeight / 2 - verticalSpacing,
+          -spriteSize / 2 - buttonSpriteHeight / 2,
           0
         );
 
@@ -650,20 +653,27 @@ const LegacyRELOADED = () => {
         }
 
         const offsetLeft = -4; // Distance to the left
-        imageGroup.position.copy(position).add(right.clone().multiplyScalar(offsetLeft));
+
+// Then place the entire group along the path
+imageGroup.position
+  .copy(position)
+  .add(right.clone().multiplyScalar(offsetLeft));
 
         // Rotate the group so that it faces towards the camera
         imageGroup.quaternion.copy(camera.quaternion);
 
         // Create text canvas
-        const textCanvasWidth = 512;
-        const textCanvasHeight = 512;
+        // For a good starting ratio, let’s do 80% of window’s width, capped at 1024
+        const baseCanvasWidth = Math.min(window.innerWidth * 0.8, 700);
+        const textCanvasWidth = baseCanvasWidth;
+        const textCanvasHeight = baseCanvasWidth; // Keep it square, or tweak as you like
         const textCanvas = document.createElement('canvas');
         const dprText = window.devicePixelRatio || 1;
         textCanvas.width = textCanvasWidth * dprText;
         textCanvas.height = textCanvasHeight * dprText;
         const textContext = textCanvas.getContext('2d');
         textContext.scale(dprText, dprText);
+        
 
         const textTexture = new THREE.CanvasTexture(textCanvas);
         textTexture.needsUpdate = true;
@@ -687,7 +697,7 @@ const LegacyRELOADED = () => {
         const textGroup = new THREE.Group();
         textGroup.add(textSprite);
 
-        const verticalOffset = -1; // Adjust this value as needed
+        const verticalOffset = -1.5; // Adjust this value as needed
         const offsetRight = 2.5; // Distance to the right
         textGroup.position.copy(position).add(right.clone().multiplyScalar(offsetRight)).add(new THREE.Vector3(0, verticalOffset, 0));
 
