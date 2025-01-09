@@ -1,11 +1,11 @@
-// PositionsOverlay.jsx
+// Updated PositionsOverlay.jsx
 
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { gsap } from 'gsap';
 import './PositionsOverlay.scss';
 
-// Helper function remains unchanged
+// Helper function to format season and year
 const formatSeason = (month, year) => {
     const springMonths = ["January", "February", "March", "April", "May", "June"];
     const fallMonths = ["July", "August", "September", "October", "November", "December"];
@@ -18,24 +18,26 @@ const formatSeason = (month, year) => {
     return `${month} ${year}`;  // Default fallback
 };
 
+// Helper function to display date range
+const formatDateRange = (start_month, start_year, end_month, end_year) => {
+    const start = formatSeason(start_month, start_year);
+    const end = end_month && end_year ? formatSeason(end_month, end_year) : "Present";
+    return `${start} - ${end}`;
+};
+
 const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
     const overlayRef = useRef(null);
     const timelineLineRef = useRef(null);
     const positionRefs = useRef([]);
     const [expandedIndex, setExpandedIndex] = useState(null);
 
-    // Clear refs on re-render
-    positionRefs.current = [];
+    positionRefs.current = []; // Clear refs on re-render
 
     const addToRefs = (el) => {
         if (el && !positionRefs.current.includes(el)) {
             positionRefs.current.push(el);
         }
     };
-
-    // PositionsOverlay.jsx
-    console.log('PositionsOverlay rendering...', positions, name, imageUrl);
-
 
     useEffect(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
@@ -49,7 +51,7 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
 
     const handleHoverIn = (el) => {
         const content = el.querySelector('.content-wrapper');
-        gsap.to(content, { scale: 1.05, duration: 0.3, ease: 'power2.out', transformOrigin: 'left center'});
+        gsap.to(content, { scale: 1.05, duration: 0.3, ease: 'power2.out', transformOrigin: 'left center' });
     };
 
     const handleHoverOut = (el) => {
@@ -75,18 +77,8 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
     };
 
     const handleClose = () => {
-        const tl = gsap.timeline({
-            onComplete: onClose
-        });
+        const tl = gsap.timeline({ onComplete: onClose });
         tl.to(overlayRef.current, { opacity: 0, y: '-100%', duration: 0.5, ease: 'power2.in' });
-    };
-
-    // Function to get the term and year from the position
-    const getTermAndYear = (start_month, start_year) => {
-        if (start_month && start_year) {
-            return formatSeason(start_month, start_year);
-        }
-        return 'Unknown';  // Fallback for missing data
     };
 
     return createPortal(
@@ -106,23 +98,20 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
                 <button className="close-button" onClick={handleClose} aria-label="Close Positions Overlay">
                     &times;
                 </button>
-                <h2 id="positions-overlay-title">{name}'s Career</h2> {/* Centered Title */}
-                
-                {/* Container for headshot and timeline */}
+                <h2 id="positions-overlay-title">{name}'s Career</h2>
+
                 <div className="positions-container">
-                    {/* Headshot Image */}
                     {imageUrl && (
                         <div className="headshot">
                             <img
                                 src={imageUrl}
                                 alt={`${name} Headshot`}
                                 loading="lazy"
-                                onError={(e) => { e.target.src = '/path/to/default/image.png'; }} // Fallback image
+                                onError={(e) => { e.target.src = '/path/to/default/image.png'; }}
                             />
                         </div>
                     )}
-                    
-                    {/* Timeline */}
+
                     <div className="positions-timeline">
                         <div className="timeline-line" ref={timelineLineRef}></div>
                         {positions.map((position, index) => (
@@ -134,18 +123,11 @@ const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
                                 onMouseEnter={() => handleHoverIn(positionRefs.current[index])}
                                 onMouseLeave={() => handleHoverOut(positionRefs.current[index])}
                             >
-                                    {/* Conditionally apply a class when the title is 'President' */}
-    <div className={`timeline-dot ${position.title === 'President' ? 'president-dot' : ''}`}></div>
-                                
+                                <div className={`timeline-dot ${position.title === 'President' ? 'president-dot' : ''}`}></div>
+
                                 <div className={`content-wrapper ${position.title === 'President' ? 'president-wrapper' : ''}`}>
                                     <h3>{position.title}</h3>
-                                    <p className="year">{getTermAndYear(position.start_month, position.start_year)}</p>
-                                    <div className="description">
-                                        <p>{position.description}</p>
-                                        {/* Example Button Inside Description */}
-                                        {/* Ensure buttons within the description are styled properly */}
-                                        {/* <button className="some-button">Action</button> */}
-                                    </div>
+                                    <p className="year">{formatDateRange(position.start_month, position.start_year, position.end_month, position.end_year)}</p>
                                 </div>
                             </div>
                         ))}
