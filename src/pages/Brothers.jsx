@@ -9,21 +9,21 @@ import PositionsOverlay from './../components/PositionsOverlay';
 import StatisticsOverlay from './../components/StatisticsOverlay';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
 
-import class2016BImage from '../backend/media/charters.png';
-import class2017AImage from '../backend/media/alphas.jpg';
-import class2017BImage from '../backend/media/betas.jpg';
-import class2018AImage from '../backend/media/gammas.jpg';
-import class2018BImage from '../backend/media/deltas.jpg';
-import class2019AImage from '../backend/media/epsilon.jpg';
-import class2019BImage from '../backend/media/zetas.jpg';
-import class2020AImage from '../backend/media/etas.jpg';
-import class2021AImage from '../backend/media/thetas.jpg';
-import class2021BImage from '../backend/media/iotas.png';
-import class2022AImage from '../backend/media/kappas.png';
-import class2022BImage from '../backend/media/mus.png';
-import class2023BImage from '../backend/media/nus.png';
-import class2024AImage from '../backend/media/xis.png';
-import class2024BImage from '../backend/media/omicrons.jpg';
+import class2016BImage from '../backend/media/class/charters.png';
+import class2017AImage from '../backend/media/class/alphas.jpg';
+import class2017BImage from '../backend/media/class/betas.jpg';
+import class2018AImage from '../backend/media/class/gammas.jpg';
+import class2018BImage from '../backend/media/class/deltas.jpg';
+import class2019AImage from '../backend/media/class/epsilon.jpg';
+import class2019BImage from '../backend/media/class/zetas.jpg';
+import class2020AImage from '../backend/media/class/etas.jpg';
+import class2021AImage from '../backend/media/class/thetas.jpg';
+import class2021BImage from '../backend/media/class/iotas.png';
+import class2022AImage from '../backend/media/class/kappas.png';
+import class2022BImage from '../backend/media/class/mus.png';
+import class2023BImage from '../backend/media/class/nus.png';
+import class2024AImage from '../backend/media/class/xis.png';
+import class2024BImage from '../backend/media/class/omicrons.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
