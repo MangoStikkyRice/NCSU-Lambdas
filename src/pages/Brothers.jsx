@@ -176,7 +176,7 @@ const Brothers = () => {
         return statusMatch && hobbyMatch;
     });
 
-    
+        {/* Country Map */}
         const countryMap = {
             AF: { name: "Afghanistan", code: "af" },
             AL: { name: "Albania", code: "al" },
@@ -370,6 +370,7 @@ const Brothers = () => {
             ZM: { name: "Zambia", code: "zm" },
             ZW: { name: "Zimbabwe", code: "zw" }
         };
+
 
 
     // Gets the title for the banner based on active filter
@@ -1286,13 +1287,17 @@ const HeadshotCard = ({
 
 {/* Nationality Flags */}
 <div className="flags-container" ref={flagsContainerRef}>
-    {person.nationality && countryMap[person.nationality] ? (
-        <span
-            key={countryMap[person.nationality].code}
-            className={`fi fi-${countryMap[person.nationality].code.toLowerCase()} flag-icon`}
-            aria-label={`${countryMap[person.nationality].name} flag`}
-            title={countryMap[person.nationality].name}
-        ></span>
+    {Array.isArray(person.nationalities) && person.nationalities.length > 0 ? (
+        person.nationalities.map((code) => (
+            countryMap[code] ? (
+                <span
+                    key={countryMap[code].code}
+                    className={`fi fi-${countryMap[code].code.toLowerCase()} flag-icon`}
+                    aria-label={`${countryMap[code].name} flag`}
+                    title={countryMap[code].name}
+                ></span>
+            ) : null
+        ))
     ) : (
         <span
             className="fi fi-un flag-icon"
@@ -1301,6 +1306,7 @@ const HeadshotCard = ({
         ></span>
     )}
 </div>
+
                 {/* Show a message to deselect a headshot when selected. */}
                 {isSelected(person.id) && (
                     <div className="deselect-instruction">
