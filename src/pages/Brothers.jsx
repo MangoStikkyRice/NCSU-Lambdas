@@ -176,202 +176,6 @@ const Brothers = () => {
         return statusMatch && hobbyMatch;
     });
 
-        {/* Country Map */}
-        const countryMap = {
-            AF: { name: "Afghanistan", code: "af" },
-            AL: { name: "Albania", code: "al" },
-            DZ: { name: "Algeria", code: "dz" },
-            AS: { name: "American Samoa", code: "as" },
-            AD: { name: "Andorra", code: "ad" },
-            AO: { name: "Angola", code: "ao" },
-            AI: { name: "Anguilla", code: "ai" },
-            AG: { name: "Antigua and Barbuda", code: "ag" },
-            AR: { name: "Argentina", code: "ar" },
-            AM: { name: "Armenia", code: "am" },
-            AU: { name: "Australia", code: "au" },
-            AT: { name: "Austria", code: "at" },
-            AZ: { name: "Azerbaijan", code: "az" },
-            BS: { name: "Bahamas", code: "bs" },
-            BH: { name: "Bahrain", code: "bh" },
-            BD: { name: "Bangladesh", code: "bd" },
-            BB: { name: "Barbados", code: "bb" },
-            BY: { name: "Belarus", code: "by" },
-            BE: { name: "Belgium", code: "be" },
-            BZ: { name: "Belize", code: "bz" },
-            BJ: { name: "Benin", code: "bj" },
-            BM: { name: "Bermuda", code: "bm" },
-            BT: { name: "Bhutan", code: "bt" },
-            BO: { name: "Bolivia", code: "bo" },
-            BA: { name: "Bosnia and Herzegovina", code: "ba" },
-            BW: { name: "Botswana", code: "bw" },
-            BR: { name: "Brazil", code: "br" },
-            BN: { name: "Brunei", code: "bn" },
-            BG: { name: "Bulgaria", code: "bg" },
-            BF: { name: "Burkina Faso", code: "bf" },
-            BI: { name: "Burundi", code: "bi" },
-            CV: { name: "Cabo Verde", code: "cv" },
-            KH: { name: "Cambodia", code: "kh" },
-            CM: { name: "Cameroon", code: "cm" },
-            CA: { name: "Canada", code: "ca" },
-            KY: { name: "Cayman Islands", code: "ky" },
-            CF: { name: "Central African Republic", code: "cf" },
-            TD: { name: "Chad", code: "td" },
-            CL: { name: "Chile", code: "cl" },
-            CN: { name: "China", code: "cn" },
-            CO: { name: "Colombia", code: "co" },
-            KM: { name: "Comoros", code: "km" },
-            CG: { name: "Congo (Brazzaville)", code: "cg" },
-            CD: { name: "Congo (Kinshasa)", code: "cd" },
-            CR: { name: "Costa Rica", code: "cr" },
-            HR: { name: "Croatia", code: "hr" },
-            CU: { name: "Cuba", code: "cu" },
-            CY: { name: "Cyprus", code: "cy" },
-            CZ: { name: "Czech Republic", code: "cz" },
-            DK: { name: "Denmark", code: "dk" },
-            DJ: { name: "Djibouti", code: "dj" },
-            DM: { name: "Dominica", code: "dm" },
-            DO: { name: "Dominican Republic", code: "do" },
-            EC: { name: "Ecuador", code: "ec" },
-            EG: { name: "Egypt", code: "eg" },
-            SV: { name: "El Salvador", code: "sv" },
-            GQ: { name: "Equatorial Guinea", code: "gq" },
-            ER: { name: "Eritrea", code: "er" },
-            EE: { name: "Estonia", code: "ee" },
-            SZ: { name: "Eswatini", code: "sz" },
-            ET: { name: "Ethiopia", code: "et" },
-            FJ: { name: "Fiji", code: "fj" },
-            FI: { name: "Finland", code: "fi" },
-            FR: { name: "France", code: "fr" },
-            GA: { name: "Gabon", code: "ga" },
-            GM: { name: "Gambia", code: "gm" },
-            GE: { name: "Georgia", code: "ge" },
-            DE: { name: "Germany", code: "de" },
-            GH: { name: "Ghana", code: "gh" },
-            GR: { name: "Greece", code: "gr" },
-            GD: { name: "Grenada", code: "gd" },
-            GT: { name: "Guatemala", code: "gt" },
-            GN: { name: "Guinea", code: "gn" },
-            GW: { name: "Guinea-Bissau", code: "gw" },
-            GY: { name: "Guyana", code: "gy" },
-            HT: { name: "Haiti", code: "ht" },
-            HN: { name: "Honduras", code: "hn" },
-            HU: { name: "Hungary", code: "hu" },
-            IS: { name: "Iceland", code: "is" },
-            IN: { name: "India", code: "in" },
-            ID: { name: "Indonesia", code: "id" },
-            IR: { name: "Iran", code: "ir" },
-            IQ: { name: "Iraq", code: "iq" },
-            IE: { name: "Ireland", code: "ie" },
-            IL: { name: "Israel", code: "il" },
-            IT: { name: "Italy", code: "it" },
-            JM: { name: "Jamaica", code: "jm" },
-            JP: { name: "Japan", code: "jp" },
-            JO: { name: "Jordan", code: "jo" },
-            KZ: { name: "Kazakhstan", code: "kz" },
-            KE: { name: "Kenya", code: "ke" },
-            KI: { name: "Kiribati", code: "ki" },
-            KR: { name: "Korea, South", code: "kr" },
-            KW: { name: "Kuwait", code: "kw" },
-            KG: { name: "Kyrgyzstan", code: "kg" },
-            LA: { name: "Laos", code: "la" },
-            LV: { name: "Latvia", code: "lv" },
-            LB: { name: "Lebanon", code: "lb" },
-            LS: { name: "Lesotho", code: "ls" },
-            LR: { name: "Liberia", code: "lr" },
-            LY: { name: "Libya", code: "ly" },
-            LI: { name: "Liechtenstein", code: "li" },
-            LT: { name: "Lithuania", code: "lt" },
-            LU: { name: "Luxembourg", code: "lu" },
-            MG: { name: "Madagascar", code: "mg" },
-            MW: { name: "Malawi", code: "mw" },
-            MY: { name: "Malaysia", code: "my" },
-            MV: { name: "Maldives", code: "mv" },
-            ML: { name: "Mali", code: "ml" },
-            MT: { name: "Malta", code: "mt" },
-            MH: { name: "Marshall Islands", code: "mh" },
-            MR: { name: "Mauritania", code: "mr" },
-            MU: { name: "Mauritius", code: "mu" },
-            MX: { name: "Mexico", code: "mx" },
-            FM: { name: "Micronesia", code: "fm" },
-            MD: { name: "Moldova", code: "md" },
-            MC: { name: "Monaco", code: "mc" },
-            MN: { name: "Mongolia", code: "mn" },
-            ME: { name: "Montenegro", code: "me" },
-            MA: { name: "Morocco", code: "ma" },
-            MZ: { name: "Mozambique", code: "mz" },
-            MM: { name: "Myanmar", code: "mm" },
-            NA: { name: "Namibia", code: "na" },
-            NR: { name: "Nauru", code: "nr" },
-            NP: { name: "Nepal", code: "np" },
-            NL: { name: "Netherlands", code: "nl" },
-            NZ: { name: "New Zealand", code: "nz" },
-            NI: { name: "Nicaragua", code: "ni" },
-            NE: { name: "Niger", code: "ne" },
-            NG: { name: "Nigeria", code: "ng" },
-            MK: { name: "North Macedonia", code: "mk" },
-            NO: { name: "Norway", code: "no" },
-            OM: { name: "Oman", code: "om" },
-            PK: { name: "Pakistan", code: "pk" },
-            PW: { name: "Palau", code: "pw" },
-            PS: { name: "Palestine", code: "ps" },
-            PA: { name: "Panama", code: "pa" },
-            PG: { name: "Papua New Guinea", code: "pg" },
-            PY: { name: "Paraguay", code: "py" },
-            PE: { name: "Peru", code: "pe" },
-            PH: { name: "Philippines", code: "ph" },
-            PL: { name: "Poland", code: "pl" },
-            PT: { name: "Portugal", code: "pt" },
-            QA: { name: "Qatar", code: "qa" },
-            RO: { name: "Romania", code: "ro" },
-            RU: { name: "Russia", code: "ru" },
-            RW: { name: "Rwanda", code: "rw" },
-            WS: { name: "Samoa", code: "ws" },
-            SA: { name: "Saudi Arabia", code: "sa" },
-            SN: { name: "Senegal", code: "sn" },
-            RS: { name: "Serbia", code: "rs" },
-            SC: { name: "Seychelles", code: "sc" },
-            SL: { name: "Sierra Leone", code: "sl" },
-            SG: { name: "Singapore", code: "sg" },
-            SK: { name: "Slovakia", code: "sk" },
-            SI: { name: "Slovenia", code: "si" },
-            SB: { name: "Solomon Islands", code: "sb" },
-            SO: { name: "Somalia", code: "so" },
-            ZA: { name: "South Africa", code: "za" },
-            ES: { name: "Spain", code: "es" },
-            LK: { name: "Sri Lanka", code: "lk" },
-            SD: { name: "Sudan", code: "sd" },
-            SR: { name: "Suriname", code: "sr" },
-            SE: { name: "Sweden", code: "se" },
-            CH: { name: "Switzerland", code: "ch" },
-            SY: { name: "Syria", code: "sy" },
-            TW: { name: "Taiwan", code: "tw" },
-            TJ: { name: "Tajikistan", code: "tj" },
-            TZ: { name: "Tanzania", code: "tz" },
-            TH: { name: "Thailand", code: "th" },
-            TL: { name: "Timor-Leste", code: "tl" },
-            TG: { name: "Togo", code: "tg" },
-            TO: { name: "Tonga", code: "to" },
-            TT: { name: "Trinidad and Tobago", code: "tt" },
-            TN: { name: "Tunisia", code: "tn" },
-            TR: { name: "Turkey", code: "tr" },
-            TM: { name: "Turkmenistan", code: "tm" },
-            TV: { name: "Tuvalu", code: "tv" },
-            UG: { name: "Uganda", code: "ug" },
-            UA: { name: "Ukraine", code: "ua" },
-            AE: { name: "United Arab Emirates", code: "ae" },
-            GB: { name: "United Kingdom", code: "gb" },
-            US: { name: "United States", code: "us" },
-            UY: { name: "Uruguay", code: "uy" },
-            UZ: { name: "Uzbekistan", code: "uz" },
-            VU: { name: "Vanuatu", code: "vu" },
-            VE: { name: "Venezuela", code: "ve" },
-            VN: { name: "Vietnam", code: "vn" },
-            YE: { name: "Yemen", code: "ye" },
-            ZM: { name: "Zambia", code: "zm" },
-            ZW: { name: "Zimbabwe", code: "zw" }
-        };
-
-
 
     // Gets the title for the banner based on active filter
     const getTitle = () => {
@@ -1097,6 +901,202 @@ const HeadshotCard = ({
 
     const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
 
+     {/* Country Map */}
+     const countryMap = {
+        AF: { name: "Afghanistan", code: "af" },
+        AL: { name: "Albania", code: "al" },
+        DZ: { name: "Algeria", code: "dz" },
+        AS: { name: "American Samoa", code: "as" },
+        AD: { name: "Andorra", code: "ad" },
+        AO: { name: "Angola", code: "ao" },
+        AI: { name: "Anguilla", code: "ai" },
+        AG: { name: "Antigua and Barbuda", code: "ag" },
+        AR: { name: "Argentina", code: "ar" },
+        AM: { name: "Armenia", code: "am" },
+        AU: { name: "Australia", code: "au" },
+        AT: { name: "Austria", code: "at" },
+        AZ: { name: "Azerbaijan", code: "az" },
+        BS: { name: "Bahamas", code: "bs" },
+        BH: { name: "Bahrain", code: "bh" },
+        BD: { name: "Bangladesh", code: "bd" },
+        BB: { name: "Barbados", code: "bb" },
+        BY: { name: "Belarus", code: "by" },
+        BE: { name: "Belgium", code: "be" },
+        BZ: { name: "Belize", code: "bz" },
+        BJ: { name: "Benin", code: "bj" },
+        BM: { name: "Bermuda", code: "bm" },
+        BT: { name: "Bhutan", code: "bt" },
+        BO: { name: "Bolivia", code: "bo" },
+        BA: { name: "Bosnia and Herzegovina", code: "ba" },
+        BW: { name: "Botswana", code: "bw" },
+        BR: { name: "Brazil", code: "br" },
+        BN: { name: "Brunei", code: "bn" },
+        BG: { name: "Bulgaria", code: "bg" },
+        BF: { name: "Burkina Faso", code: "bf" },
+        BI: { name: "Burundi", code: "bi" },
+        CV: { name: "Cabo Verde", code: "cv" },
+        KH: { name: "Cambodia", code: "kh" },
+        CM: { name: "Cameroon", code: "cm" },
+        CA: { name: "Canada", code: "ca" },
+        KY: { name: "Cayman Islands", code: "ky" },
+        CF: { name: "Central African Republic", code: "cf" },
+        TD: { name: "Chad", code: "td" },
+        CL: { name: "Chile", code: "cl" },
+        CN: { name: "China", code: "cn" },
+        CO: { name: "Colombia", code: "co" },
+        KM: { name: "Comoros", code: "km" },
+        CG: { name: "Congo (Brazzaville)", code: "cg" },
+        CD: { name: "Congo (Kinshasa)", code: "cd" },
+        CR: { name: "Costa Rica", code: "cr" },
+        HR: { name: "Croatia", code: "hr" },
+        CU: { name: "Cuba", code: "cu" },
+        CY: { name: "Cyprus", code: "cy" },
+        CZ: { name: "Czech Republic", code: "cz" },
+        DK: { name: "Denmark", code: "dk" },
+        DJ: { name: "Djibouti", code: "dj" },
+        DM: { name: "Dominica", code: "dm" },
+        DO: { name: "Dominican Republic", code: "do" },
+        EC: { name: "Ecuador", code: "ec" },
+        EG: { name: "Egypt", code: "eg" },
+        SV: { name: "El Salvador", code: "sv" },
+        GQ: { name: "Equatorial Guinea", code: "gq" },
+        ER: { name: "Eritrea", code: "er" },
+        EE: { name: "Estonia", code: "ee" },
+        SZ: { name: "Eswatini", code: "sz" },
+        ET: { name: "Ethiopia", code: "et" },
+        FJ: { name: "Fiji", code: "fj" },
+        FI: { name: "Finland", code: "fi" },
+        FR: { name: "France", code: "fr" },
+        GA: { name: "Gabon", code: "ga" },
+        GM: { name: "Gambia", code: "gm" },
+        GE: { name: "Georgia", code: "ge" },
+        DE: { name: "Germany", code: "de" },
+        GH: { name: "Ghana", code: "gh" },
+        GR: { name: "Greece", code: "gr" },
+        GD: { name: "Grenada", code: "gd" },
+        GT: { name: "Guatemala", code: "gt" },
+        GN: { name: "Guinea", code: "gn" },
+        GW: { name: "Guinea-Bissau", code: "gw" },
+        GY: { name: "Guyana", code: "gy" },
+        HT: { name: "Haiti", code: "ht" },
+        HN: { name: "Honduras", code: "hn" },
+        HU: { name: "Hungary", code: "hu" },
+        IS: { name: "Iceland", code: "is" },
+        IN: { name: "India", code: "in" },
+        ID: { name: "Indonesia", code: "id" },
+        IR: { name: "Iran", code: "ir" },
+        IQ: { name: "Iraq", code: "iq" },
+        IE: { name: "Ireland", code: "ie" },
+        IL: { name: "Israel", code: "il" },
+        IT: { name: "Italy", code: "it" },
+        JM: { name: "Jamaica", code: "jm" },
+        JP: { name: "Japan", code: "jp" },
+        JO: { name: "Jordan", code: "jo" },
+        KZ: { name: "Kazakhstan", code: "kz" },
+        KE: { name: "Kenya", code: "ke" },
+        KI: { name: "Kiribati", code: "ki" },
+        KR: { name: "Korea, South", code: "kr" },
+        KW: { name: "Kuwait", code: "kw" },
+        KG: { name: "Kyrgyzstan", code: "kg" },
+        LA: { name: "Laos", code: "la" },
+        LV: { name: "Latvia", code: "lv" },
+        LB: { name: "Lebanon", code: "lb" },
+        LS: { name: "Lesotho", code: "ls" },
+        LR: { name: "Liberia", code: "lr" },
+        LY: { name: "Libya", code: "ly" },
+        LI: { name: "Liechtenstein", code: "li" },
+        LT: { name: "Lithuania", code: "lt" },
+        LU: { name: "Luxembourg", code: "lu" },
+        MG: { name: "Madagascar", code: "mg" },
+        MW: { name: "Malawi", code: "mw" },
+        MY: { name: "Malaysia", code: "my" },
+        MV: { name: "Maldives", code: "mv" },
+        ML: { name: "Mali", code: "ml" },
+        MT: { name: "Malta", code: "mt" },
+        MH: { name: "Marshall Islands", code: "mh" },
+        MR: { name: "Mauritania", code: "mr" },
+        MU: { name: "Mauritius", code: "mu" },
+        MX: { name: "Mexico", code: "mx" },
+        FM: { name: "Micronesia", code: "fm" },
+        MD: { name: "Moldova", code: "md" },
+        MC: { name: "Monaco", code: "mc" },
+        MN: { name: "Mongolia", code: "mn" },
+        ME: { name: "Montenegro", code: "me" },
+        MA: { name: "Morocco", code: "ma" },
+        MZ: { name: "Mozambique", code: "mz" },
+        MM: { name: "Myanmar", code: "mm" },
+        NA: { name: "Namibia", code: "na" },
+        NR: { name: "Nauru", code: "nr" },
+        NP: { name: "Nepal", code: "np" },
+        NL: { name: "Netherlands", code: "nl" },
+        NZ: { name: "New Zealand", code: "nz" },
+        NI: { name: "Nicaragua", code: "ni" },
+        NE: { name: "Niger", code: "ne" },
+        NG: { name: "Nigeria", code: "ng" },
+        MK: { name: "North Macedonia", code: "mk" },
+        NO: { name: "Norway", code: "no" },
+        OM: { name: "Oman", code: "om" },
+        PK: { name: "Pakistan", code: "pk" },
+        PW: { name: "Palau", code: "pw" },
+        PS: { name: "Palestine", code: "ps" },
+        PA: { name: "Panama", code: "pa" },
+        PG: { name: "Papua New Guinea", code: "pg" },
+        PY: { name: "Paraguay", code: "py" },
+        PE: { name: "Peru", code: "pe" },
+        PH: { name: "Philippines", code: "ph" },
+        PL: { name: "Poland", code: "pl" },
+        PT: { name: "Portugal", code: "pt" },
+        QA: { name: "Qatar", code: "qa" },
+        RO: { name: "Romania", code: "ro" },
+        RU: { name: "Russia", code: "ru" },
+        RW: { name: "Rwanda", code: "rw" },
+        WS: { name: "Samoa", code: "ws" },
+        SA: { name: "Saudi Arabia", code: "sa" },
+        SN: { name: "Senegal", code: "sn" },
+        RS: { name: "Serbia", code: "rs" },
+        SC: { name: "Seychelles", code: "sc" },
+        SL: { name: "Sierra Leone", code: "sl" },
+        SG: { name: "Singapore", code: "sg" },
+        SK: { name: "Slovakia", code: "sk" },
+        SI: { name: "Slovenia", code: "si" },
+        SB: { name: "Solomon Islands", code: "sb" },
+        SO: { name: "Somalia", code: "so" },
+        ZA: { name: "South Africa", code: "za" },
+        ES: { name: "Spain", code: "es" },
+        LK: { name: "Sri Lanka", code: "lk" },
+        SD: { name: "Sudan", code: "sd" },
+        SR: { name: "Suriname", code: "sr" },
+        SE: { name: "Sweden", code: "se" },
+        CH: { name: "Switzerland", code: "ch" },
+        SY: { name: "Syria", code: "sy" },
+        TW: { name: "Taiwan", code: "tw" },
+        TJ: { name: "Tajikistan", code: "tj" },
+        TZ: { name: "Tanzania", code: "tz" },
+        TH: { name: "Thailand", code: "th" },
+        TL: { name: "Timor-Leste", code: "tl" },
+        TG: { name: "Togo", code: "tg" },
+        TO: { name: "Tonga", code: "to" },
+        TT: { name: "Trinidad and Tobago", code: "tt" },
+        TN: { name: "Tunisia", code: "tn" },
+        TR: { name: "Turkey", code: "tr" },
+        TM: { name: "Turkmenistan", code: "tm" },
+        TV: { name: "Tuvalu", code: "tv" },
+        UG: { name: "Uganda", code: "ug" },
+        UA: { name: "Ukraine", code: "ua" },
+        AE: { name: "United Arab Emirates", code: "ae" },
+        GB: { name: "United Kingdom", code: "gb" },
+        US: { name: "United States", code: "us" },
+        UY: { name: "Uruguay", code: "uy" },
+        UZ: { name: "Uzbekistan", code: "uz" },
+        VU: { name: "Vanuatu", code: "vu" },
+        VE: { name: "Venezuela", code: "ve" },
+        VN: { name: "Vietnam", code: "vn" },
+        YE: { name: "Yemen", code: "ye" },
+        ZM: { name: "Zambia", code: "zm" },
+        ZW: { name: "Zimbabwe", code: "zw" }
+    };
+
+
     // Setup the individual headshot card.
     return (
 
@@ -1132,7 +1132,6 @@ const HeadshotCard = ({
                     </p>
                 </div>
             )}
-
 
 
             {/* Popup Content */}
@@ -1252,60 +1251,61 @@ const HeadshotCard = ({
                         {person.major}
                     </p>
 
-{/* Hobbies Section */}
-{Array.isArray(person.hobbies) && person.hobbies.length > 0 && (
-  <div className="hobbies-section">
-    <h5>Hobbies:</h5>
-    <div className="hobbies-container">
-      {person.hobbies.map((hobby, index) => (
-        <span
-          key={index}
-          className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering other click events
-            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
-          }}
-          aria-label={`Filter by hobby: ${hobby}`}
-          role="button"
-          tabIndex="0"
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              setHobbyFilter(hobby === hobbyFilter ? null : hobby);
-            }
-          }}
-        >
-          {hobby}
-        </span>
-      ))}
-    </div>
-  </div>
-)}
+                {/* Hobbies Section */}
+                {Array.isArray(person.hobbies) && person.hobbies.length > 0 && (
+                <div className="hobbies-section">
+                    <h5>Hobbies:</h5>
+                    <div className="hobbies-container">
+                    {person.hobbies.map((hobby, index) => (
+                        <span
+                        key={index}
+                        className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent triggering other click events
+                            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
+                        }}
+                        aria-label={`Filter by hobby: ${hobby}`}
+                        role="button"
+                        tabIndex="0"
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                            setHobbyFilter(hobby === hobbyFilter ? null : hobby);
+                            }
+                        }}
+                        >
+                        {hobby}
+                        </span>
+                    ))}
+                    </div>
+                </div>
+                )}
 
                     {/* Graduation status (Alumni, Active, Associate) label. */}
                     <p>Status: <b>{person.status}</b></p>
                 </div>
 
-{/* Nationality Flags */}
-<div className="flags-container" ref={flagsContainerRef}>
-    {Array.isArray(person.nationalities) && person.nationalities.length > 0 ? (
-        person.nationalities.map((code) => (
-            countryMap[code] ? (
-                <span
-                    key={countryMap[code].code}
-                    className={`fi fi-${countryMap[code].code.toLowerCase()} flag-icon`}
-                    aria-label={`${countryMap[code].name} flag`}
-                    title={countryMap[code].name}
-                ></span>
-            ) : null
-        ))
-    ) : (
-        <span
-            className="fi fi-un flag-icon"
-            aria-label="No nationality specified"
-            title="Unknown"
-        ></span>
-    )}
-</div>
+
+                {/* Nationality Flags */}
+                <div className="flags-container" ref={flagsContainerRef}>
+                    {Array.isArray(person.nationalities) && person.nationalities.length > 0 ? (
+                        person.nationalities.map((code) => (
+                            countryMap[code] ? (
+                                <span
+                                    key={countryMap[code].code}
+                                    className={`fi fi-${countryMap[code].code.toLowerCase()} flag-icon`}
+                                    aria-label={`${countryMap[code].name} flag`}
+                                    title={countryMap[code].name}
+                                ></span>
+                            ) : null
+                        ))
+                    ) : (
+                        <span
+                            className="fi fi-un flag-icon"
+                            aria-label="No nationality specified"
+                            title="Unknown"
+                        ></span>
+                    )}
+                </div>
 
                 {/* Show a message to deselect a headshot when selected. */}
                 {isSelected(person.id) && (
