@@ -1132,7 +1132,7 @@ const HeadshotCard = ({
                 onMouseLeave={handleMouseLeave}
             >
                 <div className="image-container">
-                    <img src={person.image_url || '/path/to/default/image.png'} alt={person.name} />
+                    <img src={person.image || '/path/to/default/image.png'} alt={person.name} />
                 </div>
                 <h3>{person.name}</h3>
                 <p>{person.class_field}</p>
