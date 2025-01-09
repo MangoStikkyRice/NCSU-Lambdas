@@ -831,77 +831,6 @@ const HeadshotCard = ({
     const littles = getLittles(person);
 
     const { nationalities } = person;
-
-// Sort nationalities alphabetically by country name
-const sortedNationalities = Array.isArray(nationalities)
-    ? [...nationalities]
-          .filter((code) => countryMap[code]) // Filter out invalid codes
-          .sort((a, b) => {
-              const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
-              const nameB = countryMap[b]?.name?.toUpperCase() || "";
-              return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
-          })
-    : [];
-
-
-    // State to track hover status
-    const [hovered, setHovered] = useState(false);
-
-    // Reference to the position display div
-    const positionDisplayRef = useRef(null);
-
-    // GSAP animation for position display when hovered or selected
-    useEffect(() => {
-        const positionDisplay = positionDisplayRef.current;
-        gsap.killTweensOf(positionDisplay); // Kill any existing tweens
-
-        if (hovered || isSelected(person.id)) {
-            // Pop out with GSAP
-            gsap.to(positionDisplay, {
-                duration: 1,
-                y: '-140%',
-                scale: 1.4,
-                opacity: 1,
-                ease: 'expo',
-            });
-        } else {
-            // Hide with GSAP
-            gsap.to(positionDisplay, {
-                duration: 0.5,
-                y: '0%',
-                scale: 1,
-                opacity: 0,
-                ease: 'expo',
-            });
-        }
-    }, [hovered, isSelected(person.id)]);
-
-    // Helper function to parse month and determine "Fall" or "Spring"
-    const formatSeason = (dateString) => {
-        if (!dateString) return "Unknown";  // Return a default value if date is missing
-
-        // Extract the month and year from the string
-        const [month, year] = dateString.split(" ");
-
-        // Define months for "Spring" and "Fall"
-        const springMonths = ["January", "February", "March", "April", "May", "June"];
-        const fallMonths = ["July", "August", "September", "October", "November", "December"];
-
-        // Determine if the month is part of Spring or Fall
-        if (springMonths.includes(month)) {
-            return `Spring ${year}`;
-        } else if (fallMonths.includes(month)) {
-            return `Fall ${year}`;
-        }
-
-        // Default return if month is invalid
-        return dateString;
-    };
-
-
-
-    const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
-
      {/* Country Map */}
      const countryMap = {
         AF: { name: "Afghanistan", code: "af" },
@@ -1096,6 +1025,76 @@ const sortedNationalities = Array.isArray(nationalities)
         ZM: { name: "Zambia", code: "zm" },
         ZW: { name: "Zimbabwe", code: "zw" }
     };
+
+// Sort nationalities alphabetically by country name
+const sortedNationalities = Array.isArray(nationalities)
+    ? [...nationalities]
+          .filter((code) => countryMap[code]) // Filter out invalid codes
+          .sort((a, b) => {
+              const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
+              const nameB = countryMap[b]?.name?.toUpperCase() || "";
+              return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
+          })
+    : [];
+
+
+    // State to track hover status
+    const [hovered, setHovered] = useState(false);
+
+    // Reference to the position display div
+    const positionDisplayRef = useRef(null);
+
+    // GSAP animation for position display when hovered or selected
+    useEffect(() => {
+        const positionDisplay = positionDisplayRef.current;
+        gsap.killTweensOf(positionDisplay); // Kill any existing tweens
+
+        if (hovered || isSelected(person.id)) {
+            // Pop out with GSAP
+            gsap.to(positionDisplay, {
+                duration: 1,
+                y: '-140%',
+                scale: 1.4,
+                opacity: 1,
+                ease: 'expo',
+            });
+        } else {
+            // Hide with GSAP
+            gsap.to(positionDisplay, {
+                duration: 0.5,
+                y: '0%',
+                scale: 1,
+                opacity: 0,
+                ease: 'expo',
+            });
+        }
+    }, [hovered, isSelected(person.id)]);
+
+    // Helper function to parse month and determine "Fall" or "Spring"
+    const formatSeason = (dateString) => {
+        if (!dateString) return "Unknown";  // Return a default value if date is missing
+
+        // Extract the month and year from the string
+        const [month, year] = dateString.split(" ");
+
+        // Define months for "Spring" and "Fall"
+        const springMonths = ["January", "February", "March", "April", "May", "June"];
+        const fallMonths = ["July", "August", "September", "October", "November", "December"];
+
+        // Determine if the month is part of Spring or Fall
+        if (springMonths.includes(month)) {
+            return `Spring ${year}`;
+        } else if (fallMonths.includes(month)) {
+            return `Fall ${year}`;
+        }
+
+        // Default return if month is invalid
+        return dateString;
+    };
+
+
+
+    const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
 
 
     // Setup the individual headshot card.
