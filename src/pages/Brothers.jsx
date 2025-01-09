@@ -176,6 +176,15 @@ const Brothers = () => {
         return statusMatch && hobbyMatch;
     });
 
+        {/* Country Map */}
+    const countryMap = {
+        US: { name: "United States", code: "us" },
+        FR: { name: "France", code: "fr" },
+        JP: { name: "Japan", code: "jp" },
+        // Add more countries here...
+    };
+
+
     // Gets the title for the banner based on active filter
     const getTitle = () => {
         switch (filter) {
@@ -1088,26 +1097,23 @@ const HeadshotCard = ({
                     <p>Status: <b>{person.status}</b></p>
                 </div>
 
-                {/* Nationality Flags */}
-                <div className="flags-container" ref={flagsContainerRef}>
-                    {sortedNationalities && sortedNationalities.length > 0 ? (
-                        sortedNationalities.map((country) => (
-                            <span
-                                key={country.code}
-                                className={`fi fi-${country.code.toLowerCase()} flag-icon`}
-                                aria-label={`${country.name} flag`}
-                                title={country.name}
-                            ></span>
-                        ))
-                    ) : (
-                        <span
-                            className="fi fi-un flag-icon"
-                            aria-label="No nationality specified"
-                            title="Unknown"
-                        ></span>
-                    )}
-                </div>
-
+{/* Nationality Flags */}
+<div className="flags-container" ref={flagsContainerRef}>
+    {person.nationality && countryMap[person.nationality] ? (
+        <span
+            key={countryMap[person.nationality].code}
+            className={`fi fi-${countryMap[person.nationality].code.toLowerCase()} flag-icon`}
+            aria-label={`${countryMap[person.nationality].name} flag`}
+            title={countryMap[person.nationality].name}
+        ></span>
+    ) : (
+        <span
+            className="fi fi-un flag-icon"
+            aria-label="No nationality specified"
+            title="Unknown"
+        ></span>
+    )}
+</div>
                 {/* Show a message to deselect a headshot when selected. */}
                 {isSelected(person.id) && (
                     <div className="deselect-instruction">
