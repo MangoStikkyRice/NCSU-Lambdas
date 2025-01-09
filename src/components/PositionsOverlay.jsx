@@ -5,24 +5,16 @@ import { createPortal } from 'react-dom';
 import { gsap } from 'gsap';
 import './PositionsOverlay.scss';
 
-// Helper function to format season and year
-const formatSeason = (month, year) => {
-    const springMonths = ["January", "February", "March", "April", "May", "June"];
-    const fallMonths = ["July", "August", "September", "October", "November", "December"];
-    
-    if (springMonths.includes(month)) {
-        return `Spring ${year}`;
-    } else if (fallMonths.includes(month)) {
-        return `Fall ${year}`;
-    }
-    return `${month} ${year}`;  // Default fallback
-};
-
-// Helper function to display date range
+// Updated formatDateRange function
 const formatDateRange = (start_month, start_year, end_month, end_year) => {
     const start = formatSeason(start_month, start_year);
     const end = end_month && end_year ? formatSeason(end_month, end_year) : "Present";
-    return `${start} - ${end}`;
+
+    // Check if the start and end are in the same semester and year
+    if (start === end) {
+        return start; // Return a single term if they match
+    }
+    return `${start} - ${end}`; // Return range otherwise
 };
 
 const PositionsOverlay = ({ name, positions, imageUrl, onClose }) => {
