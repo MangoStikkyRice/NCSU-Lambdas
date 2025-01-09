@@ -832,16 +832,17 @@ const HeadshotCard = ({
 
     const { nationalities } = person;
 
-    // Sort nationalities alphabetically by country name
-    const sortedNationalities = Array.isArray(nationalities)
-    ? [...nationalities].sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-      })
+// Sort nationalities alphabetically by country name
+const sortedNationalities = Array.isArray(nationalities)
+    ? [...nationalities]
+          .filter((code) => countryMap[code]) // Filter out invalid codes
+          .sort((a, b) => {
+              const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
+              const nameB = countryMap[b]?.name?.toUpperCase() || "";
+              return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
+          })
     : [];
+
 
     // State to track hover status
     const [hovered, setHovered] = useState(false);
