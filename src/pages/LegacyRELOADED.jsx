@@ -347,7 +347,7 @@ const LegacyRELOADED = () => {
     
       // Draw the title
       textContext.font = 'Bold 48px Arial';
-      const titleMaxWidth = textCanvas.width * 0.9;
+      const titleMaxWidth = textCanvas.width * 0.6;
       let titleX = 10;
       let titleY = 10;
     
@@ -375,7 +375,7 @@ const LegacyRELOADED = () => {
       // Draw the blue banner behind the title text
       const bannerX = 0;
       const bannerY = titleY - 12; // Slight padding above
-      const bannerWidth = textCanvas.width * .8;
+      const bannerWidth = textCanvas.width * .6;
       const bannerHeight = titleHeight + 10; // Add padding below
     
       const gradient = textContext.createLinearGradient(
@@ -406,7 +406,7 @@ const LegacyRELOADED = () => {
       // Set font for paragraph text
       textContext.font = '18px Arial';
       textContext.fillStyle = 'white';
-      const maxWidth = textCanvas.width * .7; // 90% of the total width
+      const maxWidth = textCanvas.width / 2; // 90% of the total width
       let x = 10;
       let y = titleY + 10;
     
@@ -664,7 +664,7 @@ imageGroup.position
 
         // Create text canvas
         // For a good starting ratio, let’s do 80% of window’s width, capped at 1024
-        const baseCanvasWidth = Math.min(window.innerWidth * 0.8, 700);
+        const baseCanvasWidth = Math.min(window.innerWidth * 0.8, 900);
         const textCanvasWidth = baseCanvasWidth;
         const textCanvasHeight = baseCanvasWidth; // Keep it square, or tweak as you like
         const textCanvas = document.createElement('canvas');
@@ -697,7 +697,7 @@ imageGroup.position
         const textGroup = new THREE.Group();
         textGroup.add(textSprite);
 
-        const verticalOffset = -1.5; // Adjust this value as needed
+        const verticalOffset = -2; // Adjust this value as needed
         const offsetRight = 2.5; // Distance to the right
         textGroup.position.copy(position).add(right.clone().multiplyScalar(offsetRight)).add(new THREE.Vector3(0, verticalOffset, 0));
 
