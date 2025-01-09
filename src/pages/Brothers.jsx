@@ -547,7 +547,7 @@ const Brothers = () => {
                                     setHobbyFilter={setHobbyFilter}
                                     isInThirdColumn={isInThirdColumn}
                                     // Pass image_url when opening the overlay
-                                    openOverlay={() => openOverlay(person.positions || mockPositions, person.name, person.image_url)}
+                                    openOverlay={() => openOverlay(person.positions, person.name, person.image_url)}
                                 />
                             ))}
                         </div>
@@ -649,14 +649,6 @@ const HeadshotCard = ({
     isInThirdColumn,
     openOverlay,
 }) => {
-
-    const mockPositions = [
-        { title: 'President', description: 'Leads the chapter and oversees all activities.' },
-        { title: 'Vice President', description: 'Assists the President and steps in when needed.' },
-        { title: 'Treasurer', description: 'Manages the chapter\'s finances and budget.' },
-        { title: 'Secretary', description: 'Keeps records of meetings and official documents.' },
-        // Add more positions as needed
-    ];
 
     // State to track current casual image index
     const [currentCasualImageIndex, setCurrentCasualImageIndex] = useState(0);
@@ -1046,7 +1038,7 @@ const HeadshotCard = ({
                             className="view-positions-button"
                             onClick={(e) => {
                                 e.stopPropagation(); // Prevent triggering card click
-                                openOverlay(person.positions || mockPositions, person.name, person.image_url); // Pass image_url
+                                openOverlay(person.positions, person.name, person.image_url); // Pass image_url
                                 handleHeadshotClick(person.id);
                             }}
                             aria-label={`View positions for ${person.name}`}
