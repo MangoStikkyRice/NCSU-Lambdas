@@ -149,13 +149,14 @@ const LegacyRELOADED = () => {
     const tubeMaterial = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
       map: spaceTexture,
-      shininess: 20,
+      shininess: 100, // Increased shininess for more specular highlights
       bumpMap: bumpMap,
       bumpScale: -0.03,
-      specular: 0x0b2349,
+      specular: 0x555555, // Adjust specular color for better highlights
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.5, // Slightly increased opacity
     });
+    
 
     // Create and add the tube mesh
     const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
@@ -173,9 +174,27 @@ const LegacyRELOADED = () => {
     scene.add(wireframe);
 
     // Add point light to the scene
-    const light = new THREE.PointLight(0xffffff, 0.35, 4, 0);
+    const light = new THREE.PointLight(0xffffff, 1, 1000, 2); // Increased intensity and range
+
     light.castShadow = true;
     scene.add(light);
+// Point Light
+const pointLight = new THREE.PointLight(0xffffff, 2, 1000, 2); // Increased intensity from 1 to 2
+pointLight.castShadow = true;
+scene.add(pointLight);
+
+// Ambient Light
+const ambientLight = new THREE.AmbientLight(0x404040, 2); // Increased intensity from 1 to 2
+scene.add(ambientLight);
+
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Increased intensity from 0.5 to 1
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+
+
+
 
     // Function to update camera position based on percentage along the path
     const updateCameraPercentage = (percentage) => {
@@ -376,9 +395,9 @@ const drawTextCanvas = (contentSprite) => {
 
   // Set shadow for the text
   textContext.shadowColor = 'rgba(0, 0, 0, 1)';
-  textContext.shadowBlur = 5;
+  textContext.shadowBlur = 3;
   textContext.shadowOffsetX = 0;
-  textContext.shadowOffsetY = 5;
+  textContext.shadowOffsetY = 3;
 
   // Iterate over each title line and draw it
   titleLines.forEach(line => {
