@@ -5,7 +5,25 @@ function ToggleButton({ setOpen }) {
     /** Sets the click event for the SideBar button. */
     return (
 
-        <button onClick={() => setOpen((prev) => !prev)}>
+        <button
+            onClick={() => setOpen(prev => !prev)}
+            style={{
+                position: 'fixed',
+                top: '27px',
+                left: '25px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                zIndex: 1000,
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '50px',
+                height: '50px',
+            }}
+            onFocus={(e) => e.target.blur()} // To remove focus outline
+        >
 
             {/** Sets the properties of the SideBar button. */}
             <svg width="23" height="23" viewBox="0 0 23 23">

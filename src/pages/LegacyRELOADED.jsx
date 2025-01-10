@@ -21,6 +21,12 @@ const LegacyRELOADED = () => {
   const scrollTargetRef = useRef(null);
   const [showOverlay, setShowOverlay] = useState(true);
 
+  // Define fixed font sizes
+  const titleFontSize = 48; // px
+  const paragraphFontSize = 18; // px
+  const readMoreFontSize = 16; // px
+  const buttonFontSize = 20; // px
+
   // Helper function to paginate text
   const paginateText = (paragraph, maxCharsPerPage = 500) => {
     const words = paragraph.split(' ');
@@ -46,8 +52,8 @@ const LegacyRELOADED = () => {
   useEffect(() => {
     // Variables
     let hoveredObject = null;
-    const lineHeight = 23; // Adjust based on your font size
-    const titleLineHeight = 55; // Adjust based on your font size
+    const baseLineHeight = 23; // Base line height for paragraphs
+    const baseTitleLineHeight = 55; // Base line height for titles
 
     // Math utilities
     const Mathutils = {
@@ -63,6 +69,9 @@ const LegacyRELOADED = () => {
       },
       clamp: (value, min, max) => Math.max(min, Math.min(max, value)),
     };
+
+    // Get device pixel ratio
+    const dpr = window.devicePixelRatio || 1;
 
     // Variables accessible in event handlers
     let p1, p2;
@@ -322,171 +331,136 @@ const LegacyRELOADED = () => {
     // Compute Frenet frames for the path
     const frames = path.computeFrenetFrames(1000, false);
 
-    // Function to draw text on the canvas and update the texture
-    const drawTextCanvas = (contentSprite) => {
-      const {
-        textCanvas,
-        textContext,
-        content,
-        textTexture,
-        currentPage,
-      } = contentSprite;
-    
-      // Get current page content
-      const pageContent = content.pages[currentPage] || '';
-    
-      // Clear the canvas
-      textContext.clearRect(0, 0, textCanvas.width, textCanvas.height);
-    
-      // Save the context state
-      textContext.save();
-    
-      // Set common text properties
-      textContext.textAlign = 'left';
-      textContext.textBaseline = 'top';
-    
-      // Draw the title
-      textContext.font = 'Bold 48px Arial';
-      const titleMaxWidth = textCanvas.width * 0.6;
-      let titleX = 10;
-      let titleY = 10;
-    
-      const titleWords = content.text.split(' ');
-      let titleLine = '';
-      const titleLines = [];
-    
-      titleWords.forEach((word) => {
-        const testLine = titleLine + word + ' ';
-        const testWidth = textContext.measureText(testLine).width;
-    
-        if (testWidth > titleMaxWidth && titleLine !== '') {
-          titleLines.push(titleLine);
-          titleLine = word + ' ';
+// Function to draw text on the canvas and update the texture
+const drawTextCanvas = (contentSprite) => {
+  const { textCanvas, textContext, content, textTexture, currentPage } = contentSprite;
+
+  // Get current page content
+  const pageContent = content.pages[currentPage] || '';
+
+  // Clear the canvas
+  textContext.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+  // Save the context state
+  textContext.save();
+
+  // Set common text properties
+  textContext.textAlign = 'left';
+  textContext.textBaseline = 'top';
+
+  // Draw the title
+  textContext.font = `Bold ${titleFontSize}px Arial`;
+  const titleMaxWidth = 480; // Fixed maxWidth based on canvas size
+  let titleX = 10;
+  let titleY = 10;
+
+  const titleLines = wrapText(textContext, content.text, titleMaxWidth);
+
+  // **Draw the blue banner once, before iterating over title lines**
+  const bannerX = 0;
+  const bannerY = titleY - 12; // Slight padding above
+  const bannerWidth = 500; // Fixed banner width
+  const bannerHeight = titleLines.length * (titleFontSize + 10) + 10; // Fixed banner height
+
+  const gradient = textContext.createLinearGradient(
+    bannerX,
+    bannerY,
+    bannerX + bannerWidth,
+    bannerY
+  );
+  gradient.addColorStop(0, '#203c79'); // Darker blue at the top
+  gradient.addColorStop(1, 'rgba(32, 60, 121, 0)'); // Lighter blue at the bottom
+
+  textContext.fillStyle = gradient;
+  textContext.fillRect(bannerX, bannerY, bannerWidth, bannerHeight);
+
+  // Set shadow for the text
+  textContext.shadowColor = 'rgba(0, 0, 0, 1)';
+  textContext.shadowBlur = 5;
+  textContext.shadowOffsetX = 0;
+  textContext.shadowOffsetY = 5;
+
+  // Iterate over each title line and draw it
+  titleLines.forEach(line => {
+    textContext.fillStyle = 'white';
+    textContext.fillText(line, titleX + 10, titleY);
+    titleY += titleFontSize + 10; // Fixed line height
+  });
+
+  // **Remove the banner drawing from inside the loop**
+
+  // Draw the paragraph
+  textContext.font = `${paragraphFontSize}px Arial`;
+  textContext.fillStyle = 'white';
+  const maxWidth = 450; // Fixed maxWidth based on canvas size
+  let x = 10;
+  let y = titleY + 20; // Fixed spacing after title
+
+  // Define paragraph spacing
+  const paragraphSpacing = 10; // Fixed spacing
+
+  // Split content into paragraphs
+  const paragraphs = pageContent.split('\n\n');
+
+  paragraphs.forEach((paragraph, pIndex) => {
+    const lines = wrapText(textContext, paragraph, maxWidth);
+    lines.forEach(line => {
+      textContext.fillText(line, x, y);
+      y += paragraphFontSize + 10; // Fixed line height
+    });
+
+    // Add paragraph spacing after each paragraph except the last one
+    if (pIndex < paragraphs.length - 1) {
+      y += paragraphSpacing;
+    }
+  });
+
+  // Restore the context state
+  textContext.restore();
+
+  // Draw "Read more..." if applicable
+  const hasMorePages = contentSprite.currentPage < contentSprite.totalPages - 1;
+  if (hasMorePages && contentSprite.isHovered) {
+    textContext.font = `Italic ${readMoreFontSize}px Arial`;
+    textContext.fillStyle = 'yellow';
+    textContext.fillText('Read more...', x, y + 20); // Position below the last line
+  }
+
+  // Update the texture
+  textTexture.needsUpdate = true;
+};
+    // Helper function to wrap text
+    const wrapText = (context, text, maxWidth) => {
+      const words = text.split(' ');
+      const lines = [];
+      let currentLine = '';
+
+      words.forEach(word => {
+        const testLine = currentLine + word + ' ';
+        const metrics = context.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && currentLine !== '') {
+          lines.push(currentLine.trim());
+          currentLine = word + ' ';
         } else {
-          titleLine = testLine;
+          currentLine = testLine;
         }
       });
-      titleLines.push(titleLine);
-    
-      // Calculate title height
-      const titleHeight = titleLines.length * titleLineHeight;
-      contentSprite.titleHeight = titleHeight;
-    
-      // Draw the blue banner behind the title text
-      const bannerX = 0;
-      const bannerY = titleY - 12; // Slight padding above
-      const bannerWidth = textCanvas.width * .6;
-      const bannerHeight = titleHeight + 10; // Add padding below
-    
-      const gradient = textContext.createLinearGradient(
-        bannerX,
-        bannerY,
-        bannerX + bannerWidth,
-        bannerY
-      );
-      gradient.addColorStop(0, '#203c79'); // Darker blue at the top
-      gradient.addColorStop(1, 'rgba(32, 60, 121, 0)'); // Lighter blue at the bottom
-    
-      textContext.fillStyle = gradient;
-      textContext.fillRect(bannerX, bannerY, bannerWidth, bannerHeight);
-    
-      // Set shadow for the text
-      textContext.shadowColor = 'rgba(0, 0, 0, 1)';
-      textContext.shadowBlur = 5;
-      textContext.shadowOffsetX = 0;
-      textContext.shadowOffsetY = 5;
-    
-      // Draw the title text over the banner
-      textContext.fillStyle = 'white';
-      for (let i = 0; i < titleLines.length; i++) {
-        textContext.fillText(titleLines[i], titleX + 10, titleY);
-        titleY += titleLineHeight;
-      }
-    
-      // Set font for paragraph text
-      textContext.font = '18px Arial';
-      textContext.fillStyle = 'white';
-      const maxWidth = textCanvas.width / 2; // 90% of the total width
-      let x = 10;
-      let y = titleY + 10;
-    
-      // Define paragraph spacing
-      const paragraphSpacing = 10; // Adjust this value as needed
-    
-      // Split content into paragraphs
-      const paragraphs = pageContent.split('\n\n');
-    
-      paragraphs.forEach((paragraph, pIndex) => {
-        const words = paragraph.split(' ');
-        let line = '';
-        const lines = [];
-    
-        words.forEach((word) => {
-          const testLine = line + word + ' ';
-          const testWidth = textContext.measureText(testLine).width;
-    
-          if (testWidth > maxWidth && line !== '') {
-            lines.push(line);
-            line = word + ' ';
-          } else {
-            line = testLine;
-          }
-        });
-    
-        if (line !== '') {
-          lines.push(line);
-        }
-    
-        // Draw lines of the paragraph
-        lines.forEach((lineText) => {
-          textContext.fillText(lineText, x, y);
-          y += lineHeight;
-        });
-    
-        // Add paragraph spacing after each paragraph except the last one
-        if (pIndex < paragraphs.length - 1) {
-          y += paragraphSpacing;
-        }
-      });
-    
-      // Calculate total paragraph height
-      const totalParagraphHeight = y - (titleY + 10);
-      contentSprite.totalParagraphHeight = totalParagraphHeight;
-    
-      // Restore the context state
-      textContext.restore();
-    
-      // Draw "Read more..." if applicable
-      const hasMorePages = contentSprite.currentPage < contentSprite.totalPages - 1;
-      if (hasMorePages && contentSprite.isHovered) {
-        textContext.font = 'Italic 16px Arial';
-        textContext.fillStyle = 'yellow';
-        textContext.fillText('Read more...', x, y + 20); // Position below the last line
-      }
-    
-      // Update the texture
-      textTexture.needsUpdate = true;
+
+      lines.push(currentLine.trim());
+      return lines;
     };
-    
 
     // Function to draw the button on the canvas and update the texture
     const drawButtonCanvas = (contentSprite) => {
-      const {
-        buttonCanvas,
-        buttonContext,
-        buttonTexture,
-        buttonIsHovered,
-        content,
-        buttonCanvasWidth,
-        buttonCanvasHeight,
-      } = contentSprite;
+      const { buttonCanvas, buttonContext, buttonTexture, buttonIsHovered, content } = contentSprite;
 
       // Clear canvas
       buttonContext.clearRect(0, 0, buttonCanvas.width, buttonCanvas.height);
 
       // Draw button text
       buttonContext.fillStyle = buttonIsHovered ? 'yellow' : 'white';
-      buttonContext.font = 'Bold 20px Arial';
+      buttonContext.font = `Bold ${buttonFontSize}px Arial`;
       buttonContext.textAlign = 'center';
       buttonContext.textBaseline = 'middle';
 
@@ -498,8 +472,8 @@ const LegacyRELOADED = () => {
 
       buttonContext.fillText(
         content.buttonText,
-        buttonCanvasWidth / 2,
-        buttonCanvasHeight / 2
+        buttonCanvas.width / 2,
+        buttonCanvas.height / 2
       );
 
       // Update texture
@@ -508,6 +482,9 @@ const LegacyRELOADED = () => {
 
     // Function to create and setup content sprites
     const createContentSprites = () => {
+      const textCanvasWidth = 900; // Fixed width
+      const textCanvasHeight = 600; // Fixed height
+
       contentData.forEach((content) => {
         // Create image canvas
         const imageCanvas = document.createElement('canvas');
@@ -571,18 +548,12 @@ const LegacyRELOADED = () => {
         imageGroup.add(sprite);
 
         // Create button canvas
+        const buttonCanvasWidth = 300; // Fixed width
+        const buttonCanvasHeight = 50; // Fixed height
         const buttonCanvas = document.createElement('canvas');
-        const buttonCanvasWidth = 256;
-        const buttonCanvasHeight = 64;
-        const baseButtonWidth = Math.min(window.innerWidth * 0.25, 256); 
-        const baseButtonHeight = baseButtonWidth / 4; // maintain ratio
-        const dpr = window.devicePixelRatio || 1;
-        buttonCanvas.width = baseButtonWidth * dpr;
-        buttonCanvas.height = baseButtonHeight * dpr;
-        buttonCanvas.width = buttonCanvasWidth * dpr;
-        buttonCanvas.height = buttonCanvasHeight * dpr;
+        buttonCanvas.width = buttonCanvasWidth;
+        buttonCanvas.height = buttonCanvasHeight;
         const buttonContext = buttonCanvas.getContext('2d');
-        buttonContext.scale(dpr, dpr);
 
         // Create texture from canvas
         const buttonTexture = new THREE.CanvasTexture(buttonCanvas);
@@ -606,23 +577,21 @@ const LegacyRELOADED = () => {
           buttonSpriteHeight * (buttonCanvasWidth / buttonCanvasHeight);
         buttonSprite.scale.set(buttonSpriteWidth, buttonSpriteHeight, 1);
 
-        // Store original and hovered scales
-        const originalScale = new THREE.Vector3(
-          buttonSprite.scale.x,
-          buttonSprite.scale.y,
-          buttonSprite.scale.z
-        );
-        const hoveredScale = originalScale.clone().multiplyScalar(1.2);
-
         // Assign scales to contentSprite
         const contentSprite = {
-          buttonSpriteOriginalScale: originalScale,
-          buttonSpriteHoveredScale: hoveredScale,
           buttonCanvasWidth,
           buttonCanvasHeight,
           buttonCanvas,
           buttonContext,
           buttonTexture,
+          buttonSpriteMaterial,
+          buttonIsHovered: false,
+          isHovered: false,
+          needsButtonRedraw: true,
+          needsRedraw: true,
+          currentPage: 0,
+          totalPages: content.pages.length,
+          content,
         };
 
         // Position the button sprite below the image sprite within the group
@@ -652,28 +621,21 @@ const LegacyRELOADED = () => {
           right.copy(frames.binormals[index]).normalize();
         }
 
-        const offsetLeft = -4; // Distance to the left
+        const offsetLeft = -3; // Distance to the left
 
-// Then place the entire group along the path
-imageGroup.position
-  .copy(position)
-  .add(right.clone().multiplyScalar(offsetLeft));
+        // Then place the entire group along the path
+        imageGroup.position
+          .copy(position)
+          .add(right.clone().multiplyScalar(offsetLeft));
 
         // Rotate the group so that it faces towards the camera
         imageGroup.quaternion.copy(camera.quaternion);
 
         // Create text canvas
-        // For a good starting ratio, let’s do 80% of window’s width, capped at 1024
-        const baseCanvasWidth = Math.min(window.innerWidth * 0.8, 900);
-        const textCanvasWidth = baseCanvasWidth;
-        const textCanvasHeight = baseCanvasWidth; // Keep it square, or tweak as you like
         const textCanvas = document.createElement('canvas');
-        const dprText = window.devicePixelRatio || 1;
-        textCanvas.width = textCanvasWidth * dprText;
-        textCanvas.height = textCanvasHeight * dprText;
+        textCanvas.width = 900; // Fixed width
+        textCanvas.height = 600; // Fixed height
         const textContext = textCanvas.getContext('2d');
-        textContext.scale(dprText, dprText);
-        
 
         const textTexture = new THREE.CanvasTexture(textCanvas);
         textTexture.needsUpdate = true;
@@ -690,7 +652,7 @@ imageGroup.position
 
         const textSprite = new THREE.Sprite(textSpriteMaterial);
         const textSpriteHeight = 7.5; // Desired height
-        const textSpriteWidth = (textCanvasWidth / textCanvasHeight) * textSpriteHeight;
+        const textSpriteWidth = (textCanvas.width / textCanvas.height) * textSpriteHeight;
         textSprite.scale.set(textSpriteWidth, textSpriteHeight, 1);
 
         // Create group for text
@@ -698,15 +660,13 @@ imageGroup.position
         textGroup.add(textSprite);
 
         const verticalOffset = -2; // Adjust this value as needed
-        const offsetRight = 2.5; // Distance to the right
+        const offsetRight = 5.5; // Distance to the right
         textGroup.position.copy(position).add(right.clone().multiplyScalar(offsetRight)).add(new THREE.Vector3(0, verticalOffset, 0));
 
         // Ensure textGroup faces the camera
         textGroup.quaternion.copy(camera.quaternion);
 
-        // Create contentSprite object with pagination
-        const pages = content.pages;
-
+        // Assign additional properties to contentSprite
         Object.assign(contentSprite, {
           imageGroup,
           sprite,
@@ -718,17 +678,6 @@ imageGroup.position
           textTexture,
           textSpriteMaterial,
           textSpriteHeight,
-          textCanvasHeight,
-          content,
-          percentage: content.percentage,
-          currentPage: 0,
-          totalPages: pages.length,
-          totalParagraphHeight: 0,
-          buttonSpriteMaterial,
-          buttonIsHovered: false,
-          needsButtonRedraw: true,
-          isHovered: false,
-          needsRedraw: true,
         });
 
         // Link textSprite to contentSprite
@@ -881,9 +830,9 @@ imageGroup.position
                 cs.buttonIsHovered = true;
                 // Animate scale up using GSAP
                 gsap.to(cs.buttonSprite.scale, {
-                  x: cs.buttonSpriteHoveredScale.x,
-                  y: cs.buttonSpriteHoveredScale.y,
-                  z: cs.buttonSpriteHoveredScale.z,
+                  x: cs.buttonSprite.scale.x * 1.2,
+                  y: cs.buttonSprite.scale.y * 1.2,
+                  z: cs.buttonSprite.scale.z,
                   duration: 0.3,
                   ease: 'power2.out',
                 });
@@ -894,9 +843,9 @@ imageGroup.position
                 cs.buttonIsHovered = false;
                 // Animate scale back to original
                 gsap.to(cs.buttonSprite.scale, {
-                  x: cs.buttonSpriteOriginalScale.x,
-                  y: cs.buttonSpriteOriginalScale.y,
-                  z: cs.buttonSpriteOriginalScale.z,
+                  x: cs.buttonSprite.scale.x / 1.2,
+                  y: cs.buttonSprite.scale.y / 1.2,
+                  z: cs.buttonSprite.scale.z,
                   duration: 0.3,
                   ease: 'power2.out',
                 });
@@ -916,9 +865,9 @@ imageGroup.position
             cs.buttonIsHovered = false;
             // Animate scale back to original
             gsap.to(cs.buttonSprite.scale, {
-              x: cs.buttonSpriteOriginalScale.x,
-              y: cs.buttonSpriteOriginalScale.y,
-              z: cs.buttonSpriteOriginalScale.z,
+              x: cs.buttonSprite.scale.x / 1.2,
+              y: cs.buttonSprite.scale.y / 1.2,
+              z: cs.buttonSprite.scale.z,
               duration: 0.3,
               ease: 'power2.out',
             });
@@ -982,6 +931,8 @@ imageGroup.position
       camera.updateProjectionMatrix();
 
       renderer.setSize(width, height);
+
+      // Do NOT adjust text or button canvases here
     };
 
     const handleScroll = () => {
