@@ -5,38 +5,10 @@
     font-style: normal;
 }
 
-/* Root CSS Variables */
-:root {
-    --color1: rgba(255, 0, 150, 0.5);
-    --color2: rgba(0, 255, 150, 0.5);
-    --color3: rgba(0, 150, 255, 0.5);
-    --color4: rgba(255, 255, 0, 0.5);
-    --color5: rgba(255, 0, 255, 0.5);
-    /* Initial Positions */
-    --pos1-x: 20%;
-    --pos1-y: 80%;
-    --pos2-x: 80%;
-    --pos2-y: 20%;
-    --pos3-x: 50%;
-    --pos3-y: 50%;
-    --pos4-x: 30%;
-    --pos4-y: 70%;
-    --pos5-x: 70%;
-    --pos5-y: 30%;
-    /* Initial Sizes */
-    --size1: 30%;
-    --size2: 40%;
-    --size3: 50%;
-    --size4: 60%;
-    --size5: 70%;
-  }
-  
-  
-
 /* Main container for the page */
 .brothers-page {
     flex: 1;
-    padding: 100px 40px;
+    padding: 100px 10px;
     font-family: 'Arial', sans-serif;
     overflow-x: hidden;
     /* Hide horizontal scroll */
@@ -215,8 +187,24 @@
 
     .headshot-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
+        justify-content: center; /* Center the grid horizontally */
+        align-items: center;
+        grid-auto-rows: 1fr;
+    }
+
+    @media (max-width: 600px) {
+        .headshot-grid {
+            grid-template-columns: repeat(2, 250px); /* Force two columns on small screens */
+        }
+    }
+
+    @media (max-width: 420px) {
+        .headshot-grid {
+            gap: 5px;
+            grid-template-columns: repeat(2, minmax(120px, 1fr)); /* Force two columns on small screens */
+        }
     }
 }
 
@@ -244,6 +232,7 @@
     color: black;
     position: relative;
     perspective: 800px;
+    height: 100%;
 
     .view-positions-container {
         .view-positions-button {
@@ -338,7 +327,7 @@
         overflow: hidden;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         /* Optional: Adds subtle shadow */
-        z-index: 9!important;
+        z-index: 9;
 
         img {
             position: absolute;
@@ -409,17 +398,35 @@
         z-index: 2;
     }
 
+    @media (max-width: 420px) {
+        &.selected {
+            transform: scale(1);
+        }
+
+        &:hover {
+            transform: scale(1);
+        }
+    }
+
     h3 {
         margin-top: 15px;
         margin-bottom: -2px;
         font-family: 'Dotum', sans-serif;
         letter-spacing: 0.08rem;
         font-size: 2.2rem;
+
+        @media (max-width: 420px) {
+            font-size: .8rem;
+        }
     }
 
     p {
         font-size: 0.9rem;
         letter-spacing: 0.08rem;
+
+        @media (max-width: 420px) {
+            font-size: .7rem;
+        }
     }
 
     /* Popup Styling */
@@ -445,7 +452,7 @@
         flex-direction: column;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
-        z-index: 1;
+        z-index: 10!important;
 
         .flags-container {
             position: absolute;
@@ -656,6 +663,21 @@
                 font-size: 22px;
             }
 
+            @media (max-width: 420px) {
+                .line-name {
+                    font-size: 14px;
+                }
+            }
+
+        }
+
+        @media (max-width: 420px) {
+            .popup-header {
+                padding: 0px 5px 5px 5px;
+                margin-top: -5px;
+                /* Optional: Add padding */
+                text-align: center;
+            }
         }
 
         .NUM {
@@ -682,8 +704,18 @@
             text-shadow: 2px 2px #ffffff92;
             font-weight: bold;
             flex-shrink: 0;
-            z-index: 1;
+            z-index: 90000;
             /* Ensures it sits behind if overlapping is needed */
+        }
+
+        @media (max-width: 420px) {
+            .NUM {
+                position: absolute;
+                top: -16px;
+                right: -24px;
+                margin-right: 5px;
+                /* Spacing between circle and text */
+            }
         }
 
         /* Popup Info (Scrollable) */
@@ -878,6 +910,19 @@
     /* Move popup into view */
 }
 
+@media (hover: none) {
+    .headshot-card:hover .popup {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    .headshot-card.selected .popup {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(-50%) translateX(0) !important;
+    }
+}
+
 /* Loading Indicator Styles */
 .loading-indicator {
     display: flex;
@@ -1060,7 +1105,7 @@
         }
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 420px) {
     .timeline-popup {
         width: 100%;
         left: 0;
@@ -1070,7 +1115,7 @@
 
     /* Adjust headshot popup for smaller screens */
     .headshot-card .popup {
-        width: 200px;
+        width: 125px;
         /* Reduce width for smaller screens */
     }
 }

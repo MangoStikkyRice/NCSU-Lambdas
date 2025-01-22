@@ -40,38 +40,6 @@ const Brothers = () => {
         setShowStatistics(false);
     };
 
-    useEffect(() => {
-        const numGradients = 5;
-        const colors = [
-            'rgba(255, 0, 150, 0.5)',
-            'rgba(0, 255, 150, 0.5)',
-            'rgba(0, 150, 255, 0.5)',
-            'rgba(255, 255, 0, 0.5)',
-            'rgba(255, 0, 255, 0.5)',
-            'rgba(0, 255, 255, 0.5)',
-        ];
-
-        for (let i = 1; i <= numGradients; i++) {
-            animateGradient(i);
-        }
-
-        function animateGradient(i) {
-            const vars = {
-                [`--pos${i}-x`]: `${gsap.utils.random(0, 100)}%`,
-                [`--pos${i}-y`]: `${gsap.utils.random(0, 100)}%`,
-                [`--size${i}`]: `${gsap.utils.random(30, 80)}%`,
-                [`--color${i}`]: colors[gsap.utils.random(0, colors.length - 1)],
-            };
-
-            gsap.to(document.documentElement, {
-                duration: gsap.utils.random(10, 20),
-                ...vars,
-                ease: 'sine.inOut',
-                onComplete: () => animateGradient(i),
-            });
-        }
-    }, []);
-
     // States to hold brothers data
     const [brothers, setBrothers] = useState([]);
     const [selectedBrotherId, setSelectedBrotherId] = useState(null);
@@ -846,6 +814,8 @@ const HeadshotCard = ({
         }
     };
 
+    
+
     // Get the big brother
     const bigBrother = getBig(person);
 
@@ -1118,6 +1088,52 @@ const sortedNationalities = Array.isArray(nationalities)
 
     const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
 
+    const popupRef = useRef(null); // Reference to the popup
+    const adjustPopupPosition = () => {
+        const popup = popupRef.current;
+        const card = cardRef.current;
+    
+        if (!popup || !card) return;
+    
+        // Get bounding rectangles
+        const cardRect = card.getBoundingClientRect();
+        const popupRect = popup.getBoundingClientRect();
+    
+        // Check for overflows
+        const isOverflowingRight = cardRect.right + popupRect.width > window.innerWidth;
+        const isOverflowingLeft = cardRect.left - popupRect.width < 0;
+    
+        // Reset classes
+        popup.classList.remove('popup-left', 'popup-right');
+    
+        if (isOverflowingRight) {
+            popup.classList.add('popup-left'); // Align popup to the left
+        } else if (isOverflowingLeft) {
+            popup.classList.add('popup-right'); // Align popup to the right
+        } else {
+            popup.classList.add('popup-right'); // Default to right alignment
+        }
+    };
+    
+    useEffect(() => {
+        adjustPopupPosition();
+        window.addEventListener('resize', adjustPopupPosition);
+    
+        return () => {
+            window.removeEventListener('resize', adjustPopupPosition);
+        };
+    }, []);
+    
+
+    useEffect(() => {
+        // Adjust popup on mount and resize
+        adjustPopupPosition();
+        window.addEventListener('resize', adjustPopupPosition);
+
+        return () => {
+            window.removeEventListener('resize', adjustPopupPosition);
+        };
+    }, []);
 
     // Setup the individual headshot card.
     return (
@@ -1157,7 +1173,7 @@ const sortedNationalities = Array.isArray(nationalities)
 
 
             {/* Popup Content */}
-            <div className={`popup ${isInThirdColumn(index) ? 'popup-left' : 'popup-right'}`}>
+            <div className='popup' ref={popupRef}>
 
                 {/* Casual Images Carousel */}
                 <div className="popup-casual-carousel">
