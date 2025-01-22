@@ -1240,7 +1240,7 @@ const sortedNationalities = Array.isArray(nationalities)
                             >
                                 {bigBrother.name}
                             </button>
-                            <h>'s Little</h>
+                            <h5>'s Little</h5>
                         </div>
                     )}
 

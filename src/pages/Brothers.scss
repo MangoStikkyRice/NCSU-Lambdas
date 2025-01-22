@@ -111,6 +111,21 @@
         animation: shimmer 4s infinite;
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
     }
+
+    @media (max-width: 420px) {
+
+        .blue-strip1 {
+            height: 100%;
+        }
+        .legacy-title {
+            font-size: 60px;
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .legacy-title-container1 {
+    }
 }
 
 /* Apply the fade-in effect to the title */
@@ -246,7 +261,9 @@
             cursor: pointer;                 // Pointer cursor to indicate interactivity
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
             transition: all 0.5s ease;       // Smooth transition on hover and focus
-            margin-bottom: 8px;
+            margin-bottom: 80px;
+            display: flex;
+            margin: 0 auto;
 
             h2 {
                 font-size: 18px;
@@ -269,6 +286,17 @@
     
             &:active {
                 transform: translateY(1px);   // Slight press-in effect when clicked
+            }
+        }
+
+        @media (max-width: 420px) {
+            .view-positions-button {
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+
+            h2 {
+                font-size: 12px!important;
             }
         }
     }
@@ -416,7 +444,7 @@
         font-size: 2.2rem;
 
         @media (max-width: 420px) {
-            font-size: .8rem;
+            font-size: 1rem;
         }
     }
 
@@ -440,7 +468,7 @@
         /* Vertically centered and slightly offscreen */
         background-color: #20375acb;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.63);
-        padding: 12px;
+        padding: 8px;
         width: 250px;
         height: 100%;
         /* Matches the height of the headshot card */
@@ -749,12 +777,29 @@
 
             p {
                 font-size: 18px;
+                margin: 5px 0;
             }
 
             h {
                 font-size: 18px;
             }
 
+        }
+
+        @media (max-width: 420px) {
+            .popup-info {
+                padding: 0px 0px 0 0px;
+
+                p {
+                    font-size: 12px;
+                }
+            }
+
+            ul {
+                list-style-type: disc; /* Other options: circle, square, none */
+                padding-left: 20px; /* Adds space to indent */
+                margin: -3px 0 0 0; /* Adjusts space around the list */
+            }
         }
 
         .hobbies-section {
@@ -1187,12 +1232,19 @@ body {
 /* Related Brothers Section */
 .related-brothers {
     margin-bottom: 10px;
+    display: inline-flex;
 }
 
 .related-brothers h5 {
     margin-bottom: 5px;
     font-size: 18px;
     color: #ffffff;
+}
+
+@media (max-width: 420px) {
+    .related-brothers h5 {
+        font-size: 12px;
+    }
 }
 
 .related-brothers .related-link {
@@ -1228,6 +1280,15 @@ body {
     /* Optional: Add an icon or indicator */
     /* Example: Adding a right arrow icon using pseudo-element */
     position: relative;
+    
+}
+
+@media (max-width: 420px) {
+    .related-brothers .related-link {
+        font-size: 10px;
+        padding: 1px 5px;
+        margin-bottom: 0px;
+    }
 }
 
 .related-brothers .related-link:hover {
