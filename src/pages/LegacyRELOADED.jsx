@@ -981,6 +981,26 @@ const handleTouchMove = (e) => {
   touchStartX = touch.clientX;
 };
 
+const setFullViewportHeight = () => {
+  const vh = window.innerHeight * 0.01; // 1% of the viewport height
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+
+// Initialize and update on resize
+setFullViewportHeight();
+window.addEventListener('resize', setFullViewportHeight);
+
+document.addEventListener('scroll', () => {
+  if (window.scrollY <= 0) {
+    // At the top of the page
+    document.body.style.overflow = 'hidden';
+  } else {
+    // Allow normal scrolling
+    document.body.style.overflow = 'visible';
+  }
+});
+
+
     // Add event listeners
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
