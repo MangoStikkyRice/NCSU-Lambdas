@@ -963,12 +963,10 @@ const drawTextCanvas = (contentSprite) => {
     };
 
 let touchStartX = 0;
-let touchStartY = 0;
 
 const handleTouchStart = (e) => {
   const touch = e.touches[0];
   touchStartX = touch.clientX;
-  touchStartY = touch.clientY;
 };
 
 const handleTouchMove = (e) => {
@@ -976,14 +974,11 @@ const handleTouchMove = (e) => {
 
   const touch = e.touches[0];
   const deltaX = touch.clientX - touchStartX;
-  const deltaY = touch.clientY - touchStartY;
 
   // Adjust camera rotation based on swipe distance
   cameraRotationProxyX += deltaX * 0.005; // Adjust sensitivity as needed
-  cameraRotationProxyY += deltaY * 0.005;
 
   touchStartX = touch.clientX;
-  touchStartY = touch.clientY;
 };
 
     // Add event listeners
