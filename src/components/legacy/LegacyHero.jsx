@@ -1,9 +1,8 @@
 import './LegacyHero.scss'
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import HeroIMG from '../../assets/images/lo.png'
 import Hero from '../../assets/images/LegacyHero.png'
 import ScrollDown from '../../assets/images/scrolldown.png'
-import { easeIn, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const textVariants = {
     initial: {
@@ -94,7 +93,7 @@ function LegacyHero() {
                 </motion.div>
             </div>
             <motion.div className='slidingTextContainer' variants={sliderVariants} initial="initial" animate="animate">
-                Lambda Phi Epsilon
+                Lambdas
             </motion.div>
             <motion.div className="imageContainer" variants={imageVariants} initial="initial" animate="animate">
                 <img src={Hero} alt="Hero" />
