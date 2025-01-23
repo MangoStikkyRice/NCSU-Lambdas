@@ -52,6 +52,41 @@ const LegacyRELOADED = () => {
   useEffect(() => {
     // Variables
     let hoveredObject = null;
+     // Touch Swipe Support
+  let startX, startY;
+
+  const handleTouchStart = (event) => {
+    event.preventDefault();
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  };
+
+  const handleTouchMove = (event) => {
+    event.preventDefault();
+    const endX = event.touches[0].clientX;
+    const endY = event.touches[0].clientY;
+
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+
+    const sensitivity = 0.002;
+// Update camera rotation without snapping back to the center
+let rotationY = camera.rotation.y;
+let rotationX = camera.rotation.x;
+
+rotationY -= deltaX * sensitivity;
+rotationX -= deltaY * sensitivity;
+
+// Prevent camera from dipping too far up or down
+rotationX = THREE.MathUtils.clamp(rotationX, -Math.PI / 4, Math.PI / 4);
+
+camera.rotation.y = rotationY;
+camera.rotation.x = rotationX;
+
+
+    startX = endX;
+    startY = endY;
+  };
     const baseLineHeight = 23; // Base line height for paragraphs
     const baseTitleLineHeight = 55; // Base line height for titles
 
@@ -963,6 +998,9 @@ const drawTextCanvas = (contentSprite) => {
     };
 
     // Add event listeners
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     document.addEventListener('mousemove', handleMouseMove);
@@ -972,6 +1010,8 @@ const drawTextCanvas = (contentSprite) => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('mousemove', handleMouseMove);
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('click', handleCanvasClick);

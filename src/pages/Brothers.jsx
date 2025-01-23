@@ -472,16 +472,16 @@ const Brothers = () => {
                                 onChange={(e) => setFilter(e.target.value)}
                             >
                                 <option value="all brothers">All</option>
-                                <option value="Actives">Active House</option>
+                                <option value="Actives">Actives</option>
                                 <option value="Alumni">Alumni</option>
-                                <option value="Associates">Associate Members</option>
-                                <option value="Etas">Eta Evolution</option>
-                                <option value="Thetas">Theta Trinity</option>
-                                <option value="Iotas">Iota Immortals</option>
-                                <option value="Kappas">Kappa Kazoku</option>
-                                <option value="Mus">Mu Monarchs</option>
-                                <option value="Nus">Nu Nen</option>
-                                <option value="Xis">Xi Xin</option>
+                                <option value="Associates">Associates</option>
+                                <option value="Etas">Etas</option>
+                                <option value="Thetas">Thetas</option>
+                                <option value="Iotas">Iotas</option>
+                                <option value="Kappas">Kappas</option>
+                                <option value="Mus">Mus</option>
+                                <option value="Nus">Nus</option>
+                                <option value="Xis">Xis</option>
                             </select>
                         </div>
 

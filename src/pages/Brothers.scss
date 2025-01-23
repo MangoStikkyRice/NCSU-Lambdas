@@ -114,17 +114,14 @@
 
     @media (max-width: 420px) {
 
+        margin-bottom: -50px;
+
         .blue-strip1 {
             height: 100%;
         }
         .legacy-title {
             font-size: 60px;
         }
-    }
-}
-
-@media (max-width: 420px) {
-    .legacy-title-container1 {
     }
 }
 
@@ -190,6 +187,27 @@
         }
     }
 }
+
+@media (max-width: 420px) {
+    .filter-box {
+        width: 200px;
+
+        label {
+            font-size: 12px;
+        }
+
+        select {
+            font-size: 12px;
+            padding-right: 0;
+        }
+    }
+}
+}
+
+@media (max-width: 420px) {
+    .filter-container {
+        margin-bottom: -60px;
+    }
 }
 
 /* Color Box for Headshots */
@@ -234,6 +252,13 @@
 
     &:hover {
         background-color: #405b9e;  // Lighter blue on hover
+    }
+}
+
+@media (max-width: 420px) {
+    .statistics-button {
+        font-size: 12px;
+        width: 90px;
     }
 }
 
@@ -610,6 +635,12 @@
             &:hover {
                 background: rgba(255, 255, 255, 1);
                 transform: translateY(-50%) scale(1.1);
+            }
+
+            @media (max-width: 420px) {
+                &:hover {
+                    transform: 0;
+                }
             }
 
             &:focus {
