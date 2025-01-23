@@ -1,24 +1,40 @@
+/* Reset default margins/padding */
 html, body {
-  height: 100%;
   margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
+/* The parent container that controls the snap-scrolling */
+.snap-container {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  /* optional: scroll-behavior: smooth; // If you want a smooth snap effect */
+}
+
+/* Each section will snap to the top ("start") */
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh; /* allow the section to grow taller if needed */
+  width: 100vw;
+  overflow: hidden;  /* or remove if you want natural scroll within the section */
+}
+
+/* If you want to specifically allow the philanthropic section 
+   to scroll internally (e.g., you want only that section to 
+   handle big content internally), you can do: 
+*/
+#Philanthropy {
+  overflow: visible; /* or auto if you want its own scroll. 
+                        Usually 'visible' is simpler if it's part of one big page scroll */
+}
+
+/* Tweak background or color as you see fit */
 body {
   background-color: #76777c;
   color: lightgray;
-  scroll-snap-type: y mandatory;
-  overflow-y: auto;
-}
-
-section {
-  height: 100vh;
-  width: 100vw;
-  scroll-snap-align: center;
-  overflow: hidden;
-}
-
-.fuck {
-  height: auto;
-  scroll-snap-align: center;
-  overflow: hidden;
+  font-family: sans-serif;
 }
