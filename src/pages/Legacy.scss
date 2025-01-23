@@ -1,27 +1,26 @@
-/* Reset default margins/padding */
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
-/* The parent container that controls the snap-scrolling */
 .snap-container {
-  height: 100vh;
-  width: 100vw;
+  /* Try dynamic viewport height first */
+  height: 100dvh;
+  /* fallback for older iOS */
+  height: -webkit-fill-available;
+  
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  /* optional: scroll-behavior: smooth; // If you want a smooth snap effect */
+  scroll-snap-type: y proximity;
 }
 
-/* Each section will snap to the top ("start") */
 section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  min-height: 100vh; /* allow the section to grow taller if needed */
+  min-height: 100dvh;
   width: 100vw;
-  overflow: hidden;  /* or remove if you want natural scroll within the section */
+  /* Possibly remove overflow: hidden if you had it before */
 }
+
 
 /* If you want to specifically allow the philanthropic section 
    to scroll internally (e.g., you want only that section to 
