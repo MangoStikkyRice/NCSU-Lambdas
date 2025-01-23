@@ -140,60 +140,30 @@
     }
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .card-title {
-        font-size: 4vw; /* Adjust font size for smaller screens */
+@media (max-width: 468px) {
+    .custom-container {
+        padding: 0;
     }
-
-    /* Adjust positioning for medium screens if needed */
-    .left-column .small-card img,
-    .right-column .small-card img {
-        object-position: center 55%; /* Slightly less movement */
-    }
-
-    .right-column .large-card img {
-        object-position: center 35%; /* Slightly less movement */
-    }
-
-    .left-column .large-card img {
-        object-position: center 35%; /* Slightly less movement */
-    }
-}
-
-@media (max-width: 768px) {
     .image-grid {
-        flex-direction: column;
-        gap: 20px;
+        width: 90%;
+        gap: 10px;
     }
-
     .left-column,
     .right-column {
-        flex: none;
+    gap: 10px;
+}
+    /* Always show the title on mobile */
+    .image-card .card-title {
+        font-size: 22px;
+        opacity: .85; /* Force visible */
+        top: 50%;
     }
 
-    .image-card {
-        flex: none;
-        height: 30vh; /* Adjust height for mobile */
-    }
-
-    .card-title {
-        font-size: 6vw;
-    }
-
-    /* Move small cards downward on mobile */
-    .left-column .small-card img,
-    .right-column .small-card img {
-        object-position: center 65%; /* Move more downward */
-    }
-
-    /* Move the Media large card upward on mobile */
-    .right-column .large-card img {
-        object-position: center 30%; /* Move more upward */
-    }
-
-    /* Optional: Adjust the Recruitment large card if necessary */
-    .left-column .large-card img {
-        object-position: center 30%; /* Move more upward */
+    /* (Optional) If you also want the background 
+       image to stay dimmed/zoomed as if hovered, 
+       add the following: */
+    .image-card img {
+        transform: scale(1.1);
+        filter: brightness(80%) blur(.5px);
     }
 }
