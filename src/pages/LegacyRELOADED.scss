@@ -1,17 +1,7 @@
-body {
-  margin: 0;
-}
-
-/* Apply to the whole document to prevent overscroll */
 html, body {
-  overscroll-behavior: contain; /* Contain overscroll behavior within the viewport */
-}
-
-.scrollable-container {
-  overscroll-behavior: none; /* Prevent bouncing within this container */
-  overflow-y: scroll; /* Allow vertical scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
-  height: calc(var(--vh, 1vh) * 100); /* Dynamically set height without resizing issues */
+  margin: 0;
+  height: 100vh;  /* standard definition (as fallback) */
+  height: 100dvh; /* dynamic vh will make the trick on iOS */
 }
 
 
