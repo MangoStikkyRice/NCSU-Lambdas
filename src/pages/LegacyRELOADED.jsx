@@ -52,41 +52,6 @@ const LegacyRELOADED = () => {
   useEffect(() => {
     // Variables
     let hoveredObject = null;
-     // Touch Swipe Support
-  let startX, startY;
-
-  const handleTouchStart = (event) => {
-    event.preventDefault();
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
-  };
-
-  const handleTouchMove = (event) => {
-    event.preventDefault();
-    const endX = event.touches[0].clientX;
-    const endY = event.touches[0].clientY;
-
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
-
-    const sensitivity = 0.002;
-// Update camera rotation without snapping back to the center
-let rotationY = camera.rotation.y;
-let rotationX = camera.rotation.x;
-
-rotationY -= deltaX * sensitivity;
-rotationX -= deltaY * sensitivity;
-
-// Prevent camera from dipping too far up or down
-rotationX = THREE.MathUtils.clamp(rotationX, -Math.PI / 4, Math.PI / 4);
-
-camera.rotation.y = rotationY;
-camera.rotation.x = rotationX;
-
-
-    startX = endX;
-    startY = endY;
-  };
     const baseLineHeight = 23; // Base line height for paragraphs
     const baseTitleLineHeight = 55; // Base line height for titles
 
@@ -130,7 +95,7 @@ camera.rotation.x = rotationX;
     let cameraRotationProxyX = Math.PI;
     let cameraRotationProxyY = 0;
 
-    const camera = new THREE.PerspectiveCamera(45, ww / wh, 0.001, 200);
+    const camera = new THREE.PerspectiveCamera(75, ww / wh, 0.001, 200);
     camera.rotation.y = cameraRotationProxyX;
     camera.rotation.z = cameraRotationProxyY;
 
@@ -997,21 +962,44 @@ const drawTextCanvas = (contentSprite) => {
       }
     };
 
+let touchStartX = 0;
+let touchStartY = 0;
+
+const handleTouchStart = (e) => {
+  const touch = e.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+};
+
+const handleTouchMove = (e) => {
+  if (!e.touches.length) return;
+
+  const touch = e.touches[0];
+  const deltaX = touch.clientX - touchStartX;
+  const deltaY = touch.clientY - touchStartY;
+
+  // Adjust camera rotation based on swipe distance
+  cameraRotationProxyX += deltaX * 0.005; // Adjust sensitivity as needed
+  cameraRotationProxyY += deltaY * 0.005;
+
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+};
+
     // Add event listeners
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     document.addEventListener('mousemove', handleMouseMove);
+    // Touch-based swipe camera rotation
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+
     canvasRef.current.addEventListener('click', handleCanvasClick);
 
     // Cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('mousemove', handleMouseMove);
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('click', handleCanvasClick);
