@@ -962,63 +962,22 @@ const drawTextCanvas = (contentSprite) => {
       }
     };
 
-let touchStartX = 0;
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('mousemove', handleMouseMove);
+    canvasRef.current.addEventListener('click', handleCanvasClick);
 
-const handleTouchStart = (e) => {
-  const touch = e.touches[0];
-  touchStartX = touch.clientX;
-};
-
-const handleTouchMove = (e) => {
-  if (!e.touches.length) return;
-
-  const touch = e.touches[0];
-  const deltaX = touch.clientX - touchStartX;
-
-  // Adjust camera rotation based on swipe distance
-  cameraRotationProxyX += deltaX * 0.005; // Adjust sensitivity as needed
-
-  touchStartX = touch.clientX;
-};
-
-const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-window.addEventListener('scroll', handleScroll);
-window.addEventListener('resize', handleResize);
-document.addEventListener('touchstart', handleTouchStart, { passive: true });
-document.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-// Only add mouse-based movement for desktop
-if (!isMobile) {
-  document.addEventListener('mousemove', handleMouseMove);
-  // If you truly want to allow pinch/drag for tablets in desktop mode, you can also:
-  // document.addEventListener('touchstart', handleTouchStart, { passive: true });
-  // document.addEventListener('touchmove', handleTouchMove, { passive: true });
-}
-
-// Regardless of mobile vs. desktop, we still want clicks to paginate text
-// so the user can read pages. This does NOT move camera.
-if (canvasRef.current) {
-  canvasRef.current.addEventListener('click', handleCanvasClick);
-}
-
-return () => {
-  window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('resize', handleResize);
-  document.removeEventListener('touchstart', handleTouchStart);
-  document.removeEventListener('touchmove', handleTouchMove);
-
-  if (!isMobile) {
-    document.removeEventListener('mousemove', handleMouseMove);
-    // document.removeEventListener('touchstart', handleTouchStart);
-    // document.removeEventListener('touchmove', handleTouchMove);
-  }
-
-  if (canvasRef.current) {
-    canvasRef.current.removeEventListener('click', handleCanvasClick);
-  }
-};
-}, []);
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousemove', handleMouseMove);
+      if (canvasRef.current) {
+        canvasRef.current.removeEventListener('click', handleCanvasClick);
+      }
+    };
+  }, []);
 
   return (
     <>
