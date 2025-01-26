@@ -112,7 +112,7 @@
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 650px) {
 
         margin-bottom: -50px;
 
@@ -125,7 +125,7 @@
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .includeHeader {
         background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 50%, white 50%, rgb(151, 151, 151) 100%);
 
@@ -195,7 +195,7 @@
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .filter-box {
         width: 200px;
 
@@ -211,7 +211,7 @@
 }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .filter-container {
         margin-bottom: -60px;
     }
@@ -234,17 +234,10 @@
         grid-auto-rows: 1fr;
     }
 
-    @media (max-width: 600px) {
-        padding: 0%;
-        .headshot-grid {
-            grid-template-columns: repeat(2, 250px); /* Force two columns on small screens */
-        }
-    }
-
-    @media (max-width: 420px) {
+    @media (max-width: 650px) {
         .headshot-grid {
             gap: 5px;
-            grid-template-columns: repeat(2, minmax(120px, 1fr)); /* Force two columns on small screens */
+            grid-template-columns: repeat(2,  minmax(120px, 1fr)); /* Force two columns on small screens */
         }
     }
 }
@@ -263,7 +256,7 @@
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .statistics-button {
         font-size: 12px;
         width: 90px;
@@ -341,7 +334,7 @@
             }
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             .view-positions-button {
                 padding: 5px;
                 margin: 9px auto;
@@ -440,7 +433,7 @@
         z-index: 2;
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 650px) {
         &.selected {
             transform: scale(1);
         }
@@ -455,9 +448,9 @@
         margin-bottom: -2px;
         font-family: 'Dotum', sans-serif;
         letter-spacing: 0.08rem;
-        font-size: 2.2rem;
+        font-size: 1.8rem;
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             font-size: 1rem;
         }
     }
@@ -466,7 +459,7 @@
         font-size: 0.9rem;
         letter-spacing: 0.08rem;
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             font-size: .7rem;
         }
     }
@@ -626,7 +619,7 @@
                 transform: translateY(-50%) scale(1.1);
             }
 
-            @media (max-width: 420px) {
+            @media (max-width: 650px) {
                 &:hover {
                     transform: 0;
                 }
@@ -711,7 +704,7 @@
                 font-size: 22px;
             }
 
-            @media (max-width: 420px) {
+            @media (max-width: 650px) {
                 .line-name {
                     font-size: 14px;
                 }
@@ -719,7 +712,7 @@
 
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             .popup-header {
                 padding: 0px 5px 5px 5px;
                 margin-top: -5px;
@@ -756,7 +749,7 @@
             /* Ensures it sits behind if overlapping is needed */
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             .NUM {
                 position: absolute;
                 top: -16px;
@@ -807,7 +800,7 @@
 
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 650px) {
             .popup-info {
                 padding: 0px 0px 0 0px;
 
@@ -1171,7 +1164,7 @@
         }
     }
 }
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .timeline-popup {
         width: 100%;
         left: 0;
@@ -1277,7 +1270,7 @@ body {
     white-space: nowrap;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .related-brothers h5 {
         font-size: 12px;
     }
@@ -1320,7 +1313,7 @@ body {
     
 }
 
-@media (max-width: 420px) {
+@media (max-width: 650px) {
     .related-brothers .related-link {
         font-size: 10px;
         padding: 1px 5px;

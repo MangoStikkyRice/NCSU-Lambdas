@@ -65,6 +65,7 @@
     object-fit: cover; /* Ensures images cover the container */
     transition: transform 0.3s ease, filter 0.3s ease, opacity 1s ease-in;
     opacity: 0;
+    
 }
 
 .image-card img.loaded {
@@ -127,6 +128,20 @@
     }
     to {
         opacity: 0;
+    }
+}
+
+@media (max-width: 1000px) {
+    .custom-container {
+        padding: 0 10px;
+    }
+    .image-grid {
+        width: 90%;
+        gap: 10px;
+    }
+    .left-column,
+    .right-column {
+        gap: 10px;
     }
 }
 

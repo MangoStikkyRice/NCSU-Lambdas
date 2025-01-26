@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import panel1 from '../assets/images/panel1.jpeg';
 import panel2 from '../assets/images/panel2.jpg';
 import panel3 from '../assets/images/panel3.jpeg';
-import panel4 from '../assets/images/panel4.png';
+import panel4 from '../assets/images/panel4.jpg';
 import './Home.css';
 import StartupOverlay from '../components/startupoverlay/StartupOverlay';
 import NavBarNew from '../components/navbar/NavBarNew';

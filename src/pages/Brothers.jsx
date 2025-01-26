@@ -779,8 +779,10 @@ const HeadshotCard = ({
         setHovered(true);
         if (!isSelected(person.id) && flagsContainerRef.current) {
 
-            const fromX = isInThirdColumn(index) ? 50 : -50;
-
+            let fromX = -50;
+            if (popupRef.current.classList.contains('popup-left')) {
+              fromX = 50;
+            }
             // Animate flags to scale up
             gsap.fromTo(
                 flagsContainerRef.current.children,
