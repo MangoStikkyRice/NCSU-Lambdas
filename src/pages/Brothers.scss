@@ -16,7 +16,7 @@
 
 .includeHeader {
     position: relative;
-    overflow: hidden;
+
     background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 30%, white 70%, rgb(151, 151, 151) 100%);
     background-blend-mode: screen;
       
@@ -125,6 +125,13 @@
     }
 }
 
+@media (max-width: 420px) {
+    .includeHeader {
+        background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 50%, white 50%, rgb(151, 151, 151) 100%);
+
+    }
+}
+
 /* Apply the fade-in effect to the title */
 .legacy-title.fade-in {
     animation: fadeIn 0.5s forwards;
@@ -214,9 +221,9 @@
 .color-box-headshots {
     background-color: transparent;
     margin-bottom: 40px;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
 
     .headshot-grid {
         display: grid;
@@ -228,6 +235,7 @@
     }
 
     @media (max-width: 600px) {
+        padding: 0%;
         .headshot-grid {
             grid-template-columns: repeat(2, 250px); /* Force two columns on small screens */
         }
@@ -274,6 +282,26 @@
     perspective: 800px;
     height: 100%;
 
+    /* Defocus Notifier */
+    .deselect-instruction {
+        position: absolute;
+        top: 100%; /* Positions below the headshot box */
+        left: 50%; /* Centers horizontally */
+        transform: translate(-50%, 10px); /* Adjusts position with some spacing */
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 1rem;
+        white-space: nowrap; /* Prevents text wrapping */
+        z-index: 10; /* Ensures it appears above other elements */
+        opacity: 0;
+        animation: fadeIn 0.3s forwards;
+        pointer-events: none; /* Allows clicks to pass through */
+        /* Optional: Add box-shadow for better visibility */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
     .view-positions-container {
         .view-positions-button {
             padding: 10px 15px;              // Increased padding for a more substantial feel
@@ -286,9 +314,8 @@
             cursor: pointer;                 // Pointer cursor to indicate interactivity
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
             transition: all 0.5s ease;       // Smooth transition on hover and focus
-            margin-bottom: 80px;
             display: flex;
-            margin: 0 auto;
+            margin: 0 auto 15px auto;
 
             h2 {
                 font-size: 18px;
@@ -317,7 +344,7 @@
         @media (max-width: 420px) {
             .view-positions-button {
                 padding: 5px;
-                margin-bottom: 5px;
+                margin: 9px auto;
             }
 
             h2 {
@@ -405,44 +432,6 @@
             visibility: visible;
             transform: translateY(-50%) translateX(0);
             background: #203c79e6;
-
-
-            .deselect-instruction {
-                position: absolute;
-                bottom: -25%;
-                /* Adjust this value based on where you want the popup to appear */
-                left: 50%;
-                transform: translate(-50%, -100%);
-                /* Move the popup above the trigger element */
-                background-color: rgba(0, 0, 0, 0.91);
-                color: #ffffff;
-                padding: 6px 12px;
-                border-radius: 10px;
-                font-size: 1.2rem;
-                pointer-events: none;
-                /* Allows clicks to pass through */
-                opacity: 0.8;
-                white-space: nowrap;
-                z-index: 2;
-                /* Ensure it's above other elements */
-
-                /* Arrow pointing upwards */
-                &::before {
-                    content: '';
-                    position: absolute;
-                    bottom: 100%;
-                    /* Position the arrow at the top of the popup */
-                    left: 50%;
-                    /* Center the arrow horizontally */
-                    transform: translateX(-50%);
-                    /* Adjust for exact centering */
-                    border-left: 5px solid transparent;
-                    border-right: 5px solid transparent;
-                    border-bottom: 5px solid rgba(0, 0, 0, 0.91);
-                    /* Creates an upward-pointing arrow */
-                    border-width: 25px;
-                }
-            }
         }
     }
 
@@ -782,6 +771,7 @@
             text-align: left;
             padding: 5px 0 0 10px;
             overflow-y: scroll;
+            overflow-x: hidden;
             /* Changed from 'auto' to 'scroll' */
             flex: 1;
             /* Take up remaining space */
@@ -1257,19 +1247,34 @@ body {
     height: 100%;
     margin: 0px !important;
     padding: 0px !important;
-    overflow-x: hidden !important;
 }
 
-/* Related Brothers Section */
+/* General styles for related-brothers */
 .related-brothers {
+    display: flex; /* Default to flex to handle row layout */
+    flex-direction: row; /* Default horizontal layout */
+    align-items: center; /* Center items vertically */
+    gap: 8px; /* Spacing between items */
+}
+
+/* Modifier for Big Brother section */
+.related-brothers.big-brother {
+    display: inline-flex; /* Ensure content is inline and beside each other */
     margin-bottom: 10px;
-    display: inline-flex;
+}
+
+/* Modifier for Littles section */
+.related-brothers.littles {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+    gap: 0px; /* Add smaller spacing for vertical layout */
 }
 
 .related-brothers h5 {
     margin-bottom: 5px;
     font-size: 18px;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 @media (max-width: 420px) {
@@ -1311,6 +1316,7 @@ body {
     /* Optional: Add an icon or indicator */
     /* Example: Adding a right arrow icon using pseudo-element */
     position: relative;
+    white-space: nowrap;
     
 }
 

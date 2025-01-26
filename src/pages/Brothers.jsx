@@ -73,8 +73,8 @@ const Brothers = () => {
             setBrothers([]); // Fallback to an empty array on error
         }
     };
-    
-    
+
+
 
     // Function to handle link clicks within popups
     const handleLinkClick = (targetId) => {
@@ -219,18 +219,18 @@ const Brothers = () => {
         {
             year: '2017',
             classes: [
-                    {
-                        className: 'Alpha Ascension',
-                        PM: 'David Chang',
-                        PD: 'Terrance Touch',
-                        image: class2017AImage,
-                    },
-                    {
-                        className: 'Beta Battalion',
-                        PM: 'RJ Javier',
-                        PD: '[Term Void]',
-                        image: class2017BImage,
-                    }
+                {
+                    className: 'Alpha Ascension',
+                    PM: 'David Chang',
+                    PD: 'Terrance Touch',
+                    image: class2017AImage,
+                },
+                {
+                    className: 'Beta Battalion',
+                    PM: 'RJ Javier',
+                    PD: '[Term Void]',
+                    image: class2017BImage,
+                }
             ]
         },
         {
@@ -814,7 +814,7 @@ const HeadshotCard = ({
         }
     };
 
-    
+
 
     // Get the big brother
     const bigBrother = getBig(person);
@@ -823,8 +823,8 @@ const HeadshotCard = ({
     const littles = getLittles(person);
 
     const { nationalities } = person;
-     {/* Country Map */}
-     const countryMap = {
+    {/* Country Map */ }
+    const countryMap = {
         AF: { name: "Afghanistan", code: "af" },
         AL: { name: "Albania", code: "al" },
         DZ: { name: "Algeria", code: "dz" },
@@ -1018,16 +1018,16 @@ const HeadshotCard = ({
         ZW: { name: "Zimbabwe", code: "zw" }
     };
 
-// Sort nationalities alphabetically by country name
-const sortedNationalities = Array.isArray(nationalities)
-    ? [...nationalities]
-          .filter((code) => countryMap[code]) // Filter out invalid codes
-          .sort((a, b) => {
-              const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
-              const nameB = countryMap[b]?.name?.toUpperCase() || "";
-              return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
-          })
-    : [];
+    // Sort nationalities alphabetically by country name
+    const sortedNationalities = Array.isArray(nationalities)
+        ? [...nationalities]
+            .filter((code) => countryMap[code]) // Filter out invalid codes
+            .sort((a, b) => {
+                const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
+                const nameB = countryMap[b]?.name?.toUpperCase() || "";
+                return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
+            })
+        : [];
 
 
     // State to track hover status
@@ -1092,20 +1092,20 @@ const sortedNationalities = Array.isArray(nationalities)
     const adjustPopupPosition = () => {
         const popup = popupRef.current;
         const card = cardRef.current;
-    
+
         if (!popup || !card) return;
-    
+
         // Get bounding rectangles
         const cardRect = card.getBoundingClientRect();
         const popupRect = popup.getBoundingClientRect();
-    
+
         // Check for overflows
         const isOverflowingRight = cardRect.right + popupRect.width > window.innerWidth;
         const isOverflowingLeft = cardRect.left - popupRect.width < 0;
-    
+
         // Reset classes
         popup.classList.remove('popup-left', 'popup-right');
-    
+
         if (isOverflowingRight) {
             popup.classList.add('popup-left'); // Align popup to the left
         } else if (isOverflowingLeft) {
@@ -1114,16 +1114,16 @@ const sortedNationalities = Array.isArray(nationalities)
             popup.classList.add('popup-right'); // Default to right alignment
         }
     };
-    
+
     useEffect(() => {
         adjustPopupPosition();
         window.addEventListener('resize', adjustPopupPosition);
-    
+
         return () => {
             window.removeEventListener('resize', adjustPopupPosition);
         };
     }, []);
-    
+
 
     useEffect(() => {
         // Adjust popup on mount and resize
@@ -1146,6 +1146,13 @@ const sortedNationalities = Array.isArray(nationalities)
             onMouseEnter={handleCardMouseEnter}
             onMouseLeave={handleCardMouseLeave}
         >
+
+            {/* Show a message to deselect a headshot when selected. */}
+            {isSelected(person.id) && (
+                <div className="deselect-instruction">
+                    Click again to defocus
+                </div>
+            )}
 
             {/* Position Display */}
             {person.positions && person.positions.length > 0 && (
@@ -1230,7 +1237,7 @@ const sortedNationalities = Array.isArray(nationalities)
 
                     {/* Big */}
                     {bigBrother && (
-                        <div className="related-brothers">
+                        <div className="related-brothers big-brother">
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -1238,33 +1245,46 @@ const sortedNationalities = Array.isArray(nationalities)
                                 }}
                                 className="related-link"
                             >
-                                {bigBrother.name}
+                                {bigBrother.name.includes(' ')
+                                    ? `${bigBrother.name.split(' ')[0]} ${bigBrother.name.split(' ')[1][0]}.`
+                                    : bigBrother.name}
                             </button>
                             <h5>'s Little</h5>
                         </div>
                     )}
 
+
                     {/* Littles */}
                     {littles.length > 0 && (
-                        <div className="related-brothers">
+                        <div className="related-brothers littles">
                             <h5>Big brother of:</h5>
                             <ul>
-                                {littles.map(little => (
-                                    <li key={little.id}>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleLinkClick(little.id);
-                                            }}
-                                            className="related-link"
-                                        >
-                                            {little.name}
-                                        </button>
-                                    </li>
-                                ))}
+                                {littles.map(little => {
+                                    const [firstName, lastName] = little.name.split(' ');
+
+                                    // Since Yucheng does not have his last name in the system, we must check if the name field is two names or one.
+                                    const displayName = little.name.includes(' ')
+                                        ? `${little.name.split(' ')[0]} ${little.name.split(' ')[1][0]}.`
+                                        : little.name;
+
+                                    return (
+                                        <li key={little.id}>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleLinkClick(little.id);
+                                                }}
+                                                className="related-link"
+                                            >
+                                                {displayName}
+                                            </button>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     )}
+
 
                     {/* New "View Positions" Button */}
                     <div className="view-positions-container">
@@ -1289,34 +1309,34 @@ const sortedNationalities = Array.isArray(nationalities)
                         {person.major}
                     </p>
 
-                {/* Hobbies Section */}
-                {Array.isArray(person.hobbies) && person.hobbies.length > 0 && (
-                <div className="hobbies-section">
-                    <h5>Hobbies:</h5>
-                    <div className="hobbies-container">
-                    {person.hobbies.map((hobby, index) => (
-                        <span
-                        key={index}
-                        className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
-                        onClick={(e) => {
-                            e.stopPropagation(); // Prevent triggering other click events
-                            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
-                        }}
-                        aria-label={`Filter by hobby: ${hobby}`}
-                        role="button"
-                        tabIndex="0"
-                        onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                            setHobbyFilter(hobby === hobbyFilter ? null : hobby);
-                            }
-                        }}
-                        >
-                        {hobby}
-                        </span>
-                    ))}
-                    </div>
-                </div>
-                )}
+                    {/* Hobbies Section */}
+                    {Array.isArray(person.hobbies) && person.hobbies.length > 0 && (
+                        <div className="hobbies-section">
+                            <h5>Hobbies:</h5>
+                            <div className="hobbies-container">
+                                {person.hobbies.map((hobby, index) => (
+                                    <span
+                                        key={index}
+                                        className={`hobby-bubble ${hobbyFilter === hobby ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent triggering other click events
+                                            setHobbyFilter(hobby === hobbyFilter ? null : hobby); // Toggle hobby filter
+                                        }}
+                                        aria-label={`Filter by hobby: ${hobby}`}
+                                        role="button"
+                                        tabIndex="0"
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter') {
+                                                setHobbyFilter(hobby === hobbyFilter ? null : hobby);
+                                            }
+                                        }}
+                                    >
+                                        {hobby}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Graduation status (Alumni, Active, Associate) label. */}
                     <p>Status: <b>{person.status}</b></p>
@@ -1344,13 +1364,6 @@ const sortedNationalities = Array.isArray(nationalities)
                         ></span>
                     )}
                 </div>
-
-                {/* Show a message to deselect a headshot when selected. */}
-                {isSelected(person.id) && (
-                    <div className="deselect-instruction">
-                        Click again to defocus
-                    </div>
-                )}
             </div>
 
             {/* Content Layer */}

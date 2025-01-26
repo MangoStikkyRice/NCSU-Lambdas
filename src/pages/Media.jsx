@@ -1,3 +1,5 @@
+// src/components/Media.jsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import './Media.scss';
 import { gsap } from 'gsap';
@@ -38,13 +40,38 @@ const youtubeVideos = [
 ];
 
 const Media = () => {
+  // REFS AND STATE HOOKS
   const containerRef = useRef(null);
   const imgRefs = useRef([]);
   const leftArrowRef = useRef(null);
   const rightArrowRef = useRef(null);
+
+  // "Netflixy" references
+  const heroRef = useRef(null);
+  const scrollRowRef = useRef(null);
+
+  // DRAGGABLE code references (commented out usage later)
+  const videoGridRef = useRef(null);
+  const videoItemRefs = useRef([]);
+
+  // Treemap states from the old Windirstat approach (kept, but not used)
   const [expandedNode, setExpandedNode] = useState(null);
   const [treemapNodes, setTreemapNodes] = useState([]);
 
+  /*
+  // COMMENTING OUT: Old windirstat/treemap approach
+  useEffect(() => {
+    const width = 1000;
+    const height = 600;
+    const root = d3
+      .hierarchy({ name: 'root', children: photoGalleryImages })
+      .sum(d => d.value);
+    d3.treemap().size([width, height]).padding(2)(root);
+    setTreemapNodes(root.leaves());
+  }, []);
+  */
+
+  // SET UP THE IMAGES
   const imageUrls = [
     all1,
     all2,
@@ -59,233 +86,79 @@ const Media = () => {
 
   const photoGalleryImages = imageUrls.map((url) => ({
     url,
-    value: Math.floor(Math.random() * 100) + 50, // Random sizes between 50 and 149
+    value: Math.floor(Math.random() * 100) + 50,
   }));
 
-  useEffect(() => {
-    const width = 1000;
-    const height = 600;
+  // A "long" horizontally scrollable gallery
+  const repeatedImages = [...imageUrls, ...imageUrls, ...imageUrls];
+  const [selectedImage, setSelectedImage] = useState(null);
 
-    const root = d3
-      .hierarchy({ name: 'root', children: photoGalleryImages })
-      .sum(d => d.value);
-
-    d3.treemap()
-      .size([width, height])
-      .padding(2)(root);
-
-    setTreemapNodes(root.leaves());
-  }, []);
-
-  useEffect(() => {
-    const $imgs = imgRefs.current;
-    const l = $imgs.length;
-    const radius = 400;
-
-    // Initial GSAP setup
-    gsap.set(containerRef.current, {
-      transformStyle: 'preserve-3d',
-      perspective: 800,
-      perspectiveOrigin: '50% 50%',
-    });
-
-    const posArray = [];
-    const totalImgToView = 5;
-    const imgMinus = 0.6301;
-    let angle = 0;
-
-    // Initialize current view index
-    let curImgViewIndex = 0;
-
-    // Initial setup with correct autoAlpha
-    $imgs.forEach((item, i) => {
-      angle = i * 0.63;
-      const zPos = -Math.abs(angle * 100);
-      const xPos = Math.sin(angle) * radius;
-      posArray.push({ x: xPos, z: zPos, angle: angle });
-
-      let imgAlpha = (Math.ceil(0.5 * totalImgToView) * imgMinus) * 100;
-      imgAlpha = Math.abs(zPos) < imgAlpha ? 1 : 0;
-
-      gsap.set(item, { x: xPos, z: zPos, autoAlpha: imgAlpha });
-    });
-
-    let autoRotateInterval = null;
-
-    const rotate = (direction) => {
-      return new Promise((resolve) => {
-        const minusVal = direction === 'left' ? 0.6301 : -0.6301;
-
-        // Update curImgViewIndex before the loop
-        if (direction === 'left') {
-          curImgViewIndex = Math.max(curImgViewIndex - 1, 0);
-        } else {
-          curImgViewIndex = Math.min(curImgViewIndex + 1, youtubeVideos.length - 1);
-        }
-
-        let animationsCompleted = 0;
-
-        $imgs.forEach((item, i) => {
-          const pos = posArray[i];
-          pos.angle += minusVal;
-          const angleDistance = pos.angle * 100;
-          const zPos = -Math.abs(angleDistance);
-          const xPos = Math.sin(pos.angle) * radius;
-          let imgAlpha = (Math.ceil(0.5 * totalImgToView) * imgMinus) * 100;
-          imgAlpha = Math.abs(zPos) < imgAlpha ? 1 : 0;
-          let rotDeg = Math.round(angleDistance) >= 0 ? -30 : 30;
-          rotDeg = Math.round(angleDistance) === 0 ? 0 : rotDeg;
-
-          // Update z-index so that the current image has the highest value
-          const zIndex = l - Math.abs(i - curImgViewIndex);
-
-          // Set z-index immediately to avoid snapping effect
-          gsap.set(item, { zIndex: zIndex });
-
-          gsap.to(item, {
-            duration: 0.1, // Speed up the animation
-            x: xPos,
-            z: zPos,
-            ease: Expo.easeOut,
-            autoAlpha: imgAlpha,
-            rotationY: rotDeg,
-            onComplete: () => {
-              animationsCompleted++;
-              if (animationsCompleted === $imgs.length) {
-                resolve();
-              }
-            },
-          });
-        });
-      });
-    };
-
-    const showImgAt = async (index) => {
-      const deltaIndex = index - curImgViewIndex;
-      const steps = Math.abs(deltaIndex);
-      const direction = deltaIndex > 0 ? 'right' : 'left';
-
-      for (let i = 0; i < steps; i++) {
-        await rotate(direction);
-      }
-    };
-
-    const startAutoRotateLeft = () => {
-      clearInterval(autoRotateInterval);
-      autoRotateInterval = setInterval(() => {
-        if (curImgViewIndex > 0) {
-          rotate('left');
-        } else {
-          clearInterval(autoRotateInterval);
-        }
-      }, 100); // Faster interval
-    };
-
-    const startAutoRotateRight = () => {
-      clearInterval(autoRotateInterval);
-      autoRotateInterval = setInterval(() => {
-        if (curImgViewIndex < youtubeVideos.length - 1) {
-          rotate('right');
-        } else {
-          clearInterval(autoRotateInterval);
-        }
-      }, 100); // Faster interval
-    };
-
-    const stopAutoRotate = () => {
-      clearInterval(autoRotateInterval);
-    };
-
-    // Add event listeners to the arrows
-    leftArrowRef.current.addEventListener('mousedown', startAutoRotateLeft);
-    leftArrowRef.current.addEventListener('mouseup', stopAutoRotate);
-    leftArrowRef.current.addEventListener('mouseleave', stopAutoRotate);
-    leftArrowRef.current.addEventListener('touchstart', startAutoRotateLeft);
-    leftArrowRef.current.addEventListener('touchend', stopAutoRotate);
-
-    rightArrowRef.current.addEventListener('mousedown', startAutoRotateRight);
-    rightArrowRef.current.addEventListener('mouseup', stopAutoRotate);
-    rightArrowRef.current.addEventListener('mouseleave', stopAutoRotate);
-    rightArrowRef.current.addEventListener('touchstart', startAutoRotateRight);
-    rightArrowRef.current.addEventListener('touchend', stopAutoRotate);
-
-    // Click on images
-    $imgs.forEach((img, index) => {
-      img.addEventListener('click', () => {
-        showImgAt(index);
-      });
-    });
-
-    // Start up animation
-    (async () => {
-      await showImgAt(5);
-    })();
-
-    // Cleanup on unmount
-    return () => {
-      clearInterval(autoRotateInterval);
-
-      // Remove event listeners
-      leftArrowRef.current.removeEventListener('mousedown', startAutoRotateLeft);
-      leftArrowRef.current.removeEventListener('mouseup', stopAutoRotate);
-      leftArrowRef.current.removeEventListener('mouseleave', stopAutoRotate);
-      leftArrowRef.current.removeEventListener('touchstart', startAutoRotateLeft);
-      leftArrowRef.current.removeEventListener('touchend', stopAutoRotate);
-
-      rightArrowRef.current.removeEventListener('mousedown', startAutoRotateRight);
-      rightArrowRef.current.removeEventListener('mouseup', stopAutoRotate);
-      rightArrowRef.current.removeEventListener('mouseleave', stopAutoRotate);
-      rightArrowRef.current.removeEventListener('touchstart', startAutoRotateRight);
-      rightArrowRef.current.removeEventListener('touchend', stopAutoRotate);
-
-      $imgs.forEach((img) => img.removeEventListener('click', () => {}));
-    };
-  }, []);
+  // Identify the "latest" reveal
+  const latestVideo = youtubeVideos[youtubeVideos.length - 1];
+  // The rest (everything except the last item)
+  const otherVideos = youtubeVideos.slice(0, youtubeVideos.length - 1);
 
   return (
-    <div className='media-page'>
+    <div className="media-page">
       <NavBarNew />
-      <div className="media-title">Reveals</div>
-      <div className="carousel-container">
-        <div className="arrow left-arrow" ref={leftArrowRef}>❮</div>
-        <div className="container" ref={containerRef}>
-          {youtubeVideos.map((video, index) => (
-            <div
-              className="img-holder"
-              key={index}
-              ref={(el) => (imgRefs.current[index] = el)}
-            >
+
+      {/* Netflix-style HERO for the latest reveal */}
+      <div
+        className="hero"
+        ref={heroRef}
+        style={{ backgroundImage: `url(${latestVideo.thumbnail})` }}
+      >
+        <div className="hero-content">
+          <h1 className="hero-title">{latestVideo.title} Installs</h1>
+          <button
+            className="watch-now-button"
+            onClick={() => window.open(latestVideo.url, '_blank')}
+          >
+            Watch Now
+          </button>
+        </div>
+      </div>
+
+      <div className="video-row-title">
+        <h2>Watch Installs by Lambda Phi Epsilon</h2>
+        {/* A single horizontal row with the "other" reveals, scrollable */}
+        <div className="video-row" ref={scrollRowRef}>
+          {otherVideos.map((video, index) => (
+            <div className="video-card" key={index}>
               <img src={video.thumbnail} alt={video.title} />
-              <div className="video-title">{video.title}</div>
+              <div className="video-card-title">{video.title}</div>
             </div>
           ))}
         </div>
-        <div className="arrow right-arrow" ref={rightArrowRef}>❯</div>
       </div>
 
+      {/* The old windirstat gallery is commented out. */}
       <div className="gallery-wrapper">
-        <div className="gallery-title">Photo Gallery</div>
-        <div className="windirstat-gallery">
-          {treemapNodes.map((node, index) => (
+        <h2>Browse the Photo Gallery</h2>
+
+        {/* HORIZONTAL, SCROLLABLE GALLERY (200px tall, centered vertically) */}
+        <div className="infinite-gallery">
+          {repeatedImages.map((url, index) => (
             <div
+              className="image-card-media"
               key={index}
-              className={`treemap-node ${expandedNode === node ? 'expanded' : ''}`}
-              style={{
-                left: expandedNode === node ? 0 : node.x0,
-                top: expandedNode === node ? 0 : node.y0,
-                width: expandedNode === node ? '100%' : node.x1 - node.x0,
-                height: expandedNode === node ? '100%' : node.y1 - node.y0,
-                backgroundImage: `url(${node.data.url})`,
-              }}
-              onClick={() => {
-                // Toggle the expanded state
-                setExpandedNode(expandedNode === node ? null : node);
-              }}
-            ></div>
+              onClick={() => setSelectedImage(url)}
+            >
+              <img src={url} alt={`Gallery ${index}`} />
+            </div>
           ))}
         </div>
       </div>
-      {/* Container to make space for the footer. */}
+
+      {/* LIGHTBOX OVERLAY */}
+      {selectedImage && (
+        <div className="overlay" onClick={() => setSelectedImage(null)}>
+          <div className="overlay-content" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedImage} alt="Enlarged" />
+          </div>
+        </div>
+      )}
+
       <footer className="footer">
         <div className="footer-content">
           <p>&copy; 2024 NC State Lambda Phi Epsilon. All rights reserved.</p>

@@ -59,7 +59,9 @@ function Recruitment() {
         heroRefs.current.forEach((current, index) => {
             const next = heroRefs.current[(index + 1) % heroRefs.current.length];
             tl.to(current, { duration: 1, opacity: 0, delay: 3 })
-              .to(next, { duration: 1, opacity: 1 }, "-=1.5");
+            .to(next,    { duration: 1, opacity: 1 }, "-=0.5");
+          
+          
         });
 
         // Optional: Cleanup the timeline on component unmount

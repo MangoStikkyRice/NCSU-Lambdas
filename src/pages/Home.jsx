@@ -15,6 +15,22 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Set the --vh custom property to the viewport height
+        const setVh = () => {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+
+        setVh();
+        window.addEventListener('resize', setVh);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', setVh);
+        };
+    }, []);
+
+    useEffect(() => {
         // Check if the overlay has been shown in this session
         const overlayShown = sessionStorage.getItem('overlayShown');
         if (!overlayShown) {

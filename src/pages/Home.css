@@ -1,18 +1,9 @@
-/* Home.css */
-
-/* Reset box-sizing for consistency */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
 /* General Layout */
 #home {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full viewport height */
-    overflow-y: hidden; /* Prevent overflow */
+    height: calc(var(--vh, 1vh) * 100); /* Use the CSS variable instead of 100vh */
+    overflow-y: auto; /* Allow scrolling */
     background: linear-gradient(to right, rgb(177, 177, 177) 0%, white 50%, rgb(177, 177, 177) 100%);
 }
 
@@ -21,9 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 30px;
     box-sizing: border-box;
-    height: calc(100vh - 120px); /* Subtract navbar height */
+    height: calc(var(--vh, 1vh) * 100 - 120px); /* Subtract navbar height using CSS variable */
 }
 
 .image-grid {
@@ -55,10 +45,10 @@
     justify-content: center;
     transition: transform 0.3s ease, filter 0.3s ease, border 0.5s ease;
     background-color: #000; /* Fallback background */
+}
 
-    &:hover {
-        border: solid 2px #203c79;
-    }
+.image-card:hover {
+    border: solid 2px #203c79;
 }
 
 .large-card {
@@ -142,16 +132,16 @@
 
 @media (max-width: 468px) {
     .custom-container {
-        padding: 0;
+        padding: 0 10px;
     }
     .image-grid {
-        width: 90%;
+        width: 95%;
         gap: 10px;
     }
     .left-column,
     .right-column {
-    gap: 10px;
-}
+        gap: 10px;
+    }
     /* Always show the title on mobile */
     .image-card .card-title {
         font-size: 22px;
