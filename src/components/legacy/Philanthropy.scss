@@ -1,170 +1,110 @@
-/* App.scss or index.scss */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
-
-/* Rest of your styles... */
-
+/* Philanthropy.scss */
 
 .philanthropy {
-    position: relative;
-    background: linear-gradient(to right, rgb(151, 151, 151) 0%, white 50%, rgb(151, 151, 151) 100%);
-    font-family: 'Raleway', sans-serif;
-
-    .progress {
-        position: sticky;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        padding-top: 50px;
-        text-align: center;
-        color: #f3f3f3;
-        font-size: 36px;
+    background-color: #fff;
+  
+    h1 {
+      text-align: center;
+      color: #203c79;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+  
+    .phil-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    .phil-card {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  
+      .imageContainer {
+        width: 40%;
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: 4px;
+        }
+      }
+  
+      .textContainer {
+        width: 60%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        background-color: #203c79;
-        z-index: 2;
-        border-radius: 0;
-
-        .progressBar {
-            width: 80%;
-            height: 10px;
-            background-color: #92aed8;
-            transform: scaleX(0);
-            transform-origin: left center;
-
-            transition: background-color 2s ease-in-out; // Optional: Smooth color transition
+        justify-content: space-between;
+  
+        h2 {
+          font-size: 1.4rem;
+          margin-bottom: 10px;
+          color: #203c79;
         }
-
-        h1 {
-            font-weight: 800;
-            letter-spacing: 0.07em;
+  
+        .desc {
+          p {
+            margin: 0;
+            color: #555;
+            line-height: 1.5;
+          }
         }
+  
+        .readMoreContainer {
+          margin-top: 10px;
+  
+          button {
+            background: none;
+            border: none;
+            color: #203c79;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: underline;
+            padding: 0;
+          }
+        }
+  
+        .cta-button {
+          margin-top: 20px;
+          display: inline-flex;
+          align-items: center;
+          background-color: #203c79;
+          color: #fff;
+          padding: 12px 20px;
+          text-decoration: none;
+          border-radius: 6px;
+          border: none;
+          font-size: 1rem;
+          transition: background-color 0.3s ease;
+  
+          &:hover {
+            background-color: #1a2f5d;
+          }
+  
+          .button-logo {
+            width: 24px;
+            height: auto;
+            margin-left: 8px;
+            filter: brightness(0) invert(1); /* White icon */
+          }
+        }
+      }
     }
-
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: calc(100% - 100px);
-        overflow: hidden;
-
-        .wrapper {
-            max-width: 1366px;
-            height: 100%;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 50px;
-
-            .textAndReadMore {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .imageContainer {
-                flex: 1;
-                border: 2px solid rgb(54, 54, 54);
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-
-                }
-            }
-
-            .textContainer {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 20px; // Existing gap between h2, textAndReadMore, and button
-            
-                h2 {
-                    color: #203a74;
-                    font-size: 72px;
-                }
-            
-                .textAndReadMore {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px; // Space between paragraph and Read More container
-                    width: 100%;
-                }
-            
-                p {
-                    color: rgb(39, 39, 39);
-                    font-size: 20px;
-                    margin: 0; // Ensures no extra margin
-                }
-            
-                .readMoreContainer {
-                    display: flex;                // Enable flexbox
-                    flex-direction: row;          // Align items side by side
-                    align-items: center;          // Vertically center items
-                    justify-content: center;      // Horizontally center the container
-                    gap: 10px;                    // Space between Read More button and scroll indicator
-                    width: 100%;                  // Ensure the container spans the full width
-                }
-            
-                .read-more-btn {
-                    background-color: transparent;
-                    color: rgb(39, 39, 39);
-                    border: none;
-                    cursor: pointer;
-                    font-size: 20px;
-                    padding: 0; // Remove any default padding
-                    text-decoration: none;
-                    transition: transform 0.5s ease-in-out;
-
-                    &:hover {
-                        color: #203c79;
-                        transform: scale(1.1);
-                    }
-                }
-            
-                img {
-                    height: 7%;
-                    width: 7%;
-                }
-            
-                .button {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    align-self: center;
-                    padding: 20px;
-                    border: 1px solid rgb(54, 54, 54);
-                    border-radius: 10px;
-                    background-color: transparent;
-                    color: rgb(54, 54, 54);
-                    text-align: center;
-                    cursor: pointer;
-                    font-weight: 400;
-                    font-size: 30px;
-                    z-index: 1;
-                    width: 400px;
-                    text-decoration: none;
-                    transition: transform 0.5s ease-in-out, background-color 0.3s ease-in-out;
-            
-                    margin-top: 30px; // Add this line to increase space above the button
-            
-                    &:hover {
-                        background-color: #6d6d6d;
-                        transform: scale(1.1);
-                    }
-            
-                    .button-logo {
-                        width: 130px; // Adjust the size of the logo
-                        height: 100%;
-                        margin-left: 13px; // Add spacing between the text and the logo
-                        filter: invert(.8);
-                    }
-                }
-            }
+  
+    @media (max-width: 768px) {
+      .phil-card {
+        flex-direction: column;
+  
+        .imageContainer, .textContainer {
+          width: 100%;
         }
+      }
     }
-}            
+  }
+  

@@ -4,7 +4,7 @@
 /* Carousel, Draggable, etc. remain. New Netflixy styles appended below. */
 
 body {
-  background: linear-gradient(to right, rgb(67, 67, 67) 0%, rgb(137, 137, 137) 30%, rgb(137, 137, 137) 70%, rgb(67, 67, 67) 100%);
+  background: linear-gradient(to right, rgb(126, 126, 126) 0%, rgb(232, 232, 232) 30%, rgb(232, 232, 232) 70%, rgb(126, 126, 126) 100%);
 }
 
 .media-title {
@@ -16,7 +16,7 @@ body {
   margin-top: 20px;
   font-size: 48px;
   color: white;
-  text-shadow: 2px 2px 3px black;
+  text-shadow: 2px 2px 3px black, 0px 0px 4px black;;
   background: linear-gradient(to right, #203c79 0%, transparent 100%);
 }
 
@@ -83,7 +83,7 @@ body {
       text-align: center;
       font-size: 24px;
       color: rgb(31, 31, 31);
-      text-shadow: 1px 1px 4px rgb(88, 88, 88);
+      text-shadow: 1px 1px 4px rgb(88, 88, 88), 0px 0px 4px black;;
     }
 
     img {
@@ -100,9 +100,9 @@ body {
   h2 {
     flex-shrink: 0;
     white-space: nowrap;
-    text-shadow: 4px 4px 4px black;
-    font-size: 20px;
-    color: #cacaca;
+    text-shadow: 4px 4px 4px black, 0px 0px 4px black;;
+    font-size: 36px;
+    color: #ffffff;
     margin: 0 0 10px 20px;
   }
   /* Adds space above the gallery */
@@ -114,7 +114,7 @@ body {
   text-align: center;
   font-size: 48px;
   color: white;
-  text-shadow: 2px 2px 3px black;
+  text-shadow: 2px 2px 3px black, 0px 0px 4px black;;
   background: linear-gradient(to right, #707070 0%, transparent 100%);
 }
 
@@ -177,7 +177,7 @@ body {
   overflow-x: auto;
   white-space: nowrap;
   padding: 0 20px;
-  margin-bottom: 40px;
+
 }
 
 .image-card-media {
@@ -264,7 +264,7 @@ body {
       flex-shrink: 0;
       white-space: nowrap;
       font-size: 20px;
-      color: #cacaca;
+      color: #ffffff;
       margin: 0 0 10px 20px;
     }
 
@@ -344,9 +344,9 @@ body {
   h2 {
     flex-shrink: 0;
     white-space: nowrap;
-    font-size: 20px;
-    color: #cacaca;
-    text-shadow: 4px 4px 4px black;
+    font-size: 36px;
+    color: #ffffff;
+    text-shadow: 4px 4px 4px black, 0px 0px 4px black;
     margin: 0 0 10px 20px;
   }
 }
@@ -395,7 +395,10 @@ body {
       padding: 12px 24px;
     }
   }
-  h2 {
-    font-size: 20px;
+  .video-row-title {
+    h2 {
+      font-size: 20px;
+    }
   }
+
 }

@@ -109,7 +109,7 @@ const Media = () => {
         style={{ backgroundImage: `url(${latestVideo.thumbnail})` }}
       >
         <div className="hero-content">
-          <h1 className="hero-title">{latestVideo.title} Installs</h1>
+          <h1 className="hero-title">{latestVideo.title} Class Reveal</h1>
           <button
             className="watch-now-button"
             onClick={() => window.open(latestVideo.url, '_blank')}
@@ -120,7 +120,7 @@ const Media = () => {
       </div>
 
       <div className="video-row-title">
-        <h2>Watch Installs by Lambda Phi Epsilon</h2>
+        <h2>Watch Reveals by Lambda Phi Epsilon</h2>
         {/* A single horizontal row with the "other" reveals, scrollable */}
         <div className="video-row" ref={scrollRowRef}>
           {otherVideos.map((video, index) => (

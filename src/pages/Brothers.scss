@@ -139,7 +139,7 @@
 
 /* Filter Container */
 .filter-container {
-    padding: 20px 0 80px 0;
+    padding: 20px 0 50px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,17 +213,20 @@
 
 @media (max-width: 650px) {
     .filter-container {
-        margin-bottom: -60px;
+        margin-bottom: -20px;
     }
 }
 
 /* Color Box for Headshots */
 .color-box-headshots {
     background-color: transparent;
-    margin-bottom: 40px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 40px 60px 40px;
+
+    &.yearbook {
+        margin-bottom: 75px;
+    }
 
     .headshot-grid {
         display: grid;
@@ -242,18 +245,25 @@
     }
 
     @media (max-width: 430px) {
-        padding: 0%;
+        padding: 0 0px 30px 0px;
     }
 }
 
 .statistics-button {
-    padding: 10px 20px;
+    padding: 14px 20px;
     border-radius: 8px;
-    background-color: #203c79;  // Navy blue background
+    background: #203c79e0;
     color: white;               // White text
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;  // Smooth transition for hover effects
+
+    p {
+        font-size: 20px;
+        margin: 0;
+        font-weight: bold;
+        white-space: nowrap;
+    }
 
     &:hover {
         background-color: #405b9e;  // Lighter blue on hover
@@ -262,8 +272,9 @@
 
 @media (max-width: 650px) {
     .statistics-button {
-        font-size: 12px;
-        width: 90px;
+        p {
+            font-size: 14px;
+        }
     }
 }
 
@@ -278,6 +289,50 @@
     position: relative;
     perspective: 800px;
     height: 100%;
+
+    &.year-card {
+        background-color: #ffffff00 !important;    
+        // If you want to remove the “image container” portion altogether, 
+        // or make it blue as well, you can do:
+        .image-container {
+          background: #203c79;
+          // or keep it but also do background: #203c79 if you want
+          .year-container {
+            position: relative;
+            left: 25px;
+          }
+
+          .class-count-container {
+            position: absolute;
+            p {
+                font-size: 20px;
+                font-style: italic;
+                font-weight: bold;
+                letter-spacing: 10px;
+            }
+          }
+
+          h1 {
+            color: #92aed8;
+            font-weight: bold;
+            font-size: 220px;
+            letter-spacing: -.4rem;
+          }
+        }
+    
+        // If you do keep .image-container, you may also want to ensure
+        // child text is readable in white:
+        .card-content {
+          // any extra spacing or text color overrides
+          color: #000000;    
+          // And if you want an explicit height so each “card” is uniform:
+          // height: 200px; 
+          // display: flex; 
+          // flex-direction: column; 
+          // align-items: center; 
+          // justify-content: center;
+        }
+      }
 
     /* Defocus Notifier */
     .deselect-instruction {

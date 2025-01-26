@@ -35,7 +35,7 @@ function Links() {
         { name: "Legacy", link: "/legacy" },
         { name: "Brothers", link: "/brothers" },
         { name: "Media", link: "/media" },
-        { name: "LambdaLink", link: "/media" }, // Image link
+        // { name: "LambdaLink", link: "/media" }, // Image link
     ];
 
     return (

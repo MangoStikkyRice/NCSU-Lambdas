@@ -1,40 +1,28 @@
-/* Reset default margins/padding */
+/* Legacy.scss */
+
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  font-family: 'Raleway', sans-serif;
+  background-color: #f2f2f2; /* Overall page background */
+  color: #333;
 }
 
-/* The parent container that controls the snap-scrolling */
-.snap-container {
-  height: 100vh;
-  width: 100vw;
-  overflow-y: scroll;
-  scroll-snap-type: y proximity;
-  scroll-behavior: smooth; // If you want a smooth snap effect */
-}
+.legacy-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-/* Each section will snap to the top ("start") */
-section {
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  min-height: 100vh; /* allow the section to grow taller if needed */
-  width: 100vw;
-  overflow: hidden;  /* or remove if you want natural scroll within the section */
-}
+  section {
+    width: 100%;
+    max-width: 1366px;
+    margin: 0 auto;
+    padding: 60px 20px; /* Some breathing room around each section */
+    background-color: #fff; /* White card-like sections */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Small gap between sections */
 
-/* If you want to specifically allow the philanthropic section 
-   to scroll internally (e.g., you want only that section to 
-   handle big content internally), you can do: 
-*/
-#Philanthropy {
-  overflow: visible; /* or auto if you want its own scroll. 
-                        Usually 'visible' is simpler if it's part of one big page scroll */
-}
-
-/* Tweak background or color as you see fit */
-body {
-  background-color: #76777c;
-  color: lightgray;
-  font-family: sans-serif;
+    /* If you want them flush with no gap, remove margin-bottom. */
+  }
 }

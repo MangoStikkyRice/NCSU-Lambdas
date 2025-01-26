@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Brothers.scss';
 import NavBarNew from './../components/navbar/NavBarNew';
-import axios from 'axios'; // Import axios for HTTP requests
-import nureveal from '../assets/images/nureveal.jpg';
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PositionsOverlay from './../components/PositionsOverlay';
-import StatisticsOverlay from './../components/StatisticsOverlay';
-import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
+import { motion, AnimatePresence } from 'framer-motion';
 
+// We'll use static yearbook pics for now. Add to DB later.
 import class2016BImage from '../backend/media/class/charters.png';
 import class2017AImage from '../backend/media/class/alphas.jpg';
 import class2017BImage from '../backend/media/class/betas.jpg';
@@ -29,21 +29,34 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Brothers = () => {
 
-    const [showStatistics, setShowStatistics] = useState(false);
-    // Open statistics overlay
-    const openStatistics = () => {
-        setShowStatistics(true);
-    };
+    axiosRetry(axios, {
+        retries: 3,
+        retryDelay: (retryCount) => {
+          return retryCount * 2000; // Exponential backoff: 2s, 4s, 6s
+        },
+        retryCondition: (error) => {
+          // Retry on most 5xx errors and network issues
+          return error.response && error.response.status >= 500;
+        },
+      });
 
-    // Close statistics overlay
-    const closeStatistics = () => {
-        setShowStatistics(false);
-    };
+    // // States for statistics overlay data
+    // const [showStatistics, setShowStatistics] = useState(false);
+
+    // // Open statistics overlay
+    // const openStatistics = () => {
+    //     setShowStatistics(true);
+    // };
+
+    // // Close statistics overlay
+    // const closeStatistics = () => {
+    //     setShowStatistics(false);
+    // };
 
     // States to hold brothers data
     const [brothers, setBrothers] = useState([]);
     const [selectedBrotherId, setSelectedBrotherId] = useState(null);
-    const [overlayData, setOverlayData] = useState(null); // New state for overlay
+    const [overlayData, setOverlayData] = useState(null);
 
     // Function to handle opening the overlay
     const openOverlay = (positions, name, imageUrl) => {
@@ -66,15 +79,13 @@ const Brothers = () => {
     const fetchBrothers = async () => {
         try {
             const response = await axios.get('/.netlify/functions/get_brothers');
-            console.log('API Response:', response.data); // Log the response
-            setBrothers(response.data); // Assuming response.data is an array
+            console.log('API Response:', response.data);
+            setBrothers(response.data);
         } catch (error) {
             console.error('Error fetching brothers data:', error);
-            setBrothers([]); // Fallback to an empty array on error
+            setBrothers([]);
         }
     };
-
-
 
     // Function to handle link clicks within popups
     const handleLinkClick = (targetId) => {
@@ -87,7 +98,7 @@ const Brothers = () => {
             // Select the new brother
             setSelectedBrotherId(targetId);
 
-            // Scroll to the target headshot smoothly
+            // Scroll to the target headshot
             headshotRefs.current[targetId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
@@ -131,9 +142,6 @@ const Brothers = () => {
     // Default filter values on page load
     const [filter, setFilter] = useState('all brothers');
     const [hobbyFilter, setHobbyFilter] = useState(null);
-
-    // Checks the third column to assign a left-side popup instead of a right
-    const isInThirdColumn = (index) => (index + 1) % 3 === 0;
 
     // Filter brothers based on selected filter and hobby
     const filteredBrothers = brothers.filter(person => {
@@ -203,7 +211,7 @@ const Brothers = () => {
         return [];
     };
 
-    const timelineData = [
+    const yearGridData = [
         {
             year: '2016',
             classes: [
@@ -342,106 +350,26 @@ const Brothers = () => {
         },
     ];
 
-    // Refs for timeline
-    const markersRef = useRef([]);
-    const timelineRef = useRef(null);
+    // Track which year is selected for overlay
+    const [selectedYearData, setSelectedYearData] = useState(null);
 
-    useEffect(() => {
-        // Clear markersRef on re-render
-        markersRef.current = [];
-
-        // Initial animation for timeline markers
-        gsap.fromTo(
-            markersRef.current,
-            {
-                y: 50,
-                opacity: 0,
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: 0.2,
-                ease: 'expo',
-                scrollTrigger: {
-                    trigger: timelineRef.current,
-                    start: 'top 80%',
-                },
-            }
-        );
-        // Cleanup function
-        return () => {
-            // Clear any GSAP instances if necessary
-        };
-    }, []);
-
-    // Modify handleMarkerMouseEnter
-    const handleMarkerMouseEnter = (index) => {
-        const marker = markersRef.current[index];
-        const popup = marker.querySelector('.timeline-popup');
-
-        // Kill any ongoing tweens on marker and popup
-        gsap.killTweensOf([marker, popup]);
-
-        // Animate marker scaling
-        gsap.to(marker, {
-            scale: 1.2,
-            duration: 0.5,
-            ease: 'power2.out',
-        });
-
-        // Show the popup
-        gsap.to(popup, {
-            autoAlpha: 1,
-            y: -20,
-            duration: 0.3,
-            ease: 'power2.out',
-        });
-
-        // Adjust popup position for first and last markers
-        if (index === 0 || index === 1) {
-            // First marker: Align popup to the left
-            popup.style.left = '0%';
-            popup.style.transform = 'translateX(0%)';
-        } else if (index === timelineData.length - 1 || index === timelineData.length - 2) {
-            // Last marker: Align popup to the right
-            popup.style.left = '100%';
-            popup.style.transform = 'translateX(-100%)';
-        } else {
-            // Other markers: Center the popup
-            popup.style.left = '50%';
-            popup.style.transform = 'translateX(-50%)';
-        }
+    const openYearOverlay = (entry) => {
+        setSelectedYearData(entry);
     };
 
-    const handleMarkerMouseLeave = (index) => {
-        const marker = markersRef.current[index];
-        const popup = marker.querySelector('.timeline-popup');
-
-        // Kill any ongoing tweens on marker and popup
-        gsap.killTweensOf([marker, popup]);
-
-        // Animate marker scaling back to normal
-        gsap.to(marker, {
-            scale: 1,
-            duration: 0.3,
-            ease: 'power2.in',
-        });
-
-        // Hide the popup
-        gsap.to(popup, {
-            autoAlpha: 0,
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.in',
-            onComplete: () => {
-                // Reset popup position after the animation completes
-                popup.style.left = '';
-                popup.style.transform = '';
-            },
-        });
+    const closeYearOverlay = () => {
+        setSelectedYearData(null);
     };
 
+    // -----------
+    // NEW STATE & HANDLER: Toggle Yearbooks
+    // -----------
+    const [showYearbooks, setShowYearbooks] = useState(false);
+    const toggleYearbooks = () => {
+        setShowYearbooks((prev) => !prev);
+        // Also reset any selected brother if yearbooks are shown
+        setSelectedBrotherId(null);
+    };
 
 
     // Set up the Brothers page
@@ -458,53 +386,52 @@ const Brothers = () => {
                     {/* Container for the title strip. */}
                     <div className="legacy-title-container1">
                         <div className="blue-strip1"></div>
-                        <h2 className="legacy-title">{getTitle()}</h2>
+                        {/* If showYearbooks is true, show "Yearbooks", otherwise standard getTitle() */}
+                        <h2 className="legacy-title">
+                            {showYearbooks ? 'Yearbooks' : getTitle()}
+                        </h2>
                     </div>
 
-                    {/* Container for filter and statistics button */}
+                    {/* Filter container */}
                     <div className="filter-container">
-                        <div className="filter-box">
-                            {/* Filter Dropdown */}
-                            <label htmlFor="roleFilter">Filter by:</label>
-                            <select
-                                id="roleFilter"
-                                value={filter}
-                                onChange={(e) => setFilter(e.target.value)}
-                            >
-                                <option value="all brothers">All</option>
-                                <option value="Actives">Actives</option>
-                                <option value="Alumni">Alumni</option>
-                                <option value="Associates">Associates</option>
-                                <option value="Etas">Etas</option>
-                                <option value="Thetas">Thetas</option>
-                                <option value="Iotas">Iotas</option>
-                                <option value="Kappas">Kappas</option>
-                                <option value="Mus">Mus</option>
-                                <option value="Nus">Nus</option>
-                                <option value="Xis">Xis</option>
-                            </select>
-                        </div>
+                        {/** 
+           * Hide the entire filter box when `showYearbooks` is true 
+           */}
+                        {!showYearbooks && (
+                            <div className="filter-box">
+                                <label htmlFor="roleFilter">Filter by:</label>
+                                <select
+                                    id="roleFilter"
+                                    value={filter}
+                                    onChange={(e) => setFilter(e.target.value)}
+                                >
+                                    <option value="all brothers">All</option>
+                                    <option value="Actives">Actives</option>
+                                    <option value="Alumni">Alumni</option>
+                                    <option value="Associates">Associates</option>
+                                    <option value="Etas">Etas</option>
+                                    <option value="Thetas">Thetas</option>
+                                    <option value="Iotas">Iotas</option>
+                                    <option value="Kappas">Kappas</option>
+                                    <option value="Mus">Mus</option>
+                                    <option value="Nus">Nus</option>
+                                    <option value="Xis">Xis</option>
+                                </select>
+                            </div>
+                        )}
 
-                        {/* Button to trigger the statistics overlay */}
+                        {/* Yearbooks toggle button (always visible) */}
                         <button
-                            onClick={openStatistics}
+                            onClick={toggleYearbooks}
                             className="statistics-button"
-                            style={{
-                                padding: '10px 20px',
-                                borderRadius: '8px',
-                                backgroundColor: '#203c79',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                marginLeft: '20px' // Space it nicely next to the dropdown
-                            }}
+                            style={{ marginLeft: '20px' }}
                         >
-                            View Statistics
+                            <p>{showYearbooks ? 'Show Members' : 'Show Yearbooks'}</p>
                         </button>
                     </div>
 
-                    {/* Render statistics overlay */}
-                    {showStatistics && <StatisticsOverlay onClose={closeStatistics} brothers={brothers} />}
+                    {/* Render statistics overlay
+                    {showStatistics && <StatisticsOverlay onClose={closeStatistics} brothers={brothers} />} */}
 
                     {/* Strip that shows the active filter whenever a hobby is selected. */}
                     {(hobbyFilter) && (
@@ -518,77 +445,86 @@ const Brothers = () => {
                         </div>
                     )}
 
-                    {/* Container for all headshots, including the grid. */}
-                    <div className="color-box-headshots">
-
-                        {/* Grid to map headshots pulled from database. */}
-                        <div className="headshot-grid">
-                            {filteredBrothers.map((person, index) => (
-                                <HeadshotCard
-                                    key={person.id}
-                                    person={person}
-                                    index={index}
-                                    isSelected={isSelected}
-                                    handleHeadshotClick={handleHeadshotClick}
-                                    assignRef={assignRef}
-                                    handleLinkClick={handleLinkClick}
-                                    getBig={getBig}
-                                    getLittles={getLittles}
-                                    hobbyFilter={hobbyFilter}
-                                    setHobbyFilter={setHobbyFilter}
-                                    isInThirdColumn={isInThirdColumn}
-                                    // Pass image_url when opening the overlay
-                                    openOverlay={() => openOverlay(person.positions, person.name, person.image_url)}
-                                />
-                            ))}
+                    {/* --- CONDITIONAL RENDERING --- */}
+                    {/* If we are NOT showing yearbooks, display the headshots */}
+                    {!showYearbooks && (
+                        <div className="color-box-headshots">
+                            <div className="headshot-grid">
+                                {filteredBrothers.map((person, index) => (
+                                    <HeadshotCard
+                                        key={person.id}
+                                        person={person}
+                                        index={index}
+                                        isSelected={isSelected}
+                                        handleHeadshotClick={handleHeadshotClick}
+                                        assignRef={assignRef}
+                                        handleLinkClick={handleLinkClick}
+                                        getBig={getBig}
+                                        getLittles={getLittles}
+                                        hobbyFilter={hobbyFilter}
+                                        setHobbyFilter={setHobbyFilter}
+                                        openOverlay={() =>
+                                            openOverlay(person.positions, person.name, person.image_url)
+                                        }
+                                    />
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    {/* Timeline Section */}
-                    <div className="timeline-section">
-                        <div className="timeline-title">
-                            <h2>Chapter Timeline</h2>
-                        </div>
-                        <div className="timeline-container" ref={timelineRef}>
-                            <div className="timeline-line"></div>
-                            {timelineData.map((entry, index) => (
-                                <div key={index} className="timeline-entry">
+                    {/* If we are showing yearbooks, display just the yearbook grid */}
+                    {showYearbooks && (
+                        <div
+                            className="color-box-headshots yearbook"
+                        >
+                            <div className="headshot-grid">
+                                {yearGridData.map((entry, idx) => (
                                     <div
-                                        className="timeline-marker"
-                                        ref={(el) => (markersRef.current[index] = el)}
-                                        onMouseEnter={() => handleMarkerMouseEnter(index)}
-                                        onMouseLeave={() => handleMarkerMouseLeave(index)}
+                                        key={idx}
+                                        className="headshot-card year-card"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => openYearOverlay(entry)}
                                     >
-                                        <span className="timeline-year">{entry.year}</span>
-                                        <div
-                                            className="timeline-popup"
-                                            style={{ width: entry.classes.length === 1 ? '400px' : '800px' }}
-                                        >
-                                            <div className="popup-content">
-                                                {entry.classes.map((classEntry, classIndex) => (
-                                                    <div key={classIndex} className="class-entry">
-                                                        <h3>{classEntry.className}</h3>
-                                                        <h4>New Member Educators</h4>
-                                                        <div className="PMPD">
-                                                            <p>PM: {classEntry.PM}</p>
-                                                            <p>PD: {classEntry.PD}</p>
-                                                        </div>
-                                                        {classEntry.image && (
-                                                            <img
-                                                                src={classEntry.image}
-                                                                alt={`${classEntry.className} Image`}
-                                                                className="timeline-image"
-                                                            />
-                                                        )}
+                                        <div className="card-content">
+                                            <div className="image-container">
+                                                <div
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '120px',
+                                                        backgroundColor: '#203c79',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        color: '#fff',
+                                                    }}
+                                                >
+                                                    <div className="year-container">
+                                                        <h1>{entry.year.split(/0(.*)/s)[1]}</h1>
                                                     </div>
-                                                ))}
+                                                    <div className="class-count-container">
+                                                        <p>
+                                                            {entry.classes.length} Class
+                                                            {entry.classes.length !== 1 && 'es'}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
+
+                    {/* Simple Overlay for Year/Class Info */}
+                    <AnimatePresence>
+                        {selectedYearData && (
+                            <YearOverlay
+                                yearData={selectedYearData}
+                                onClose={closeYearOverlay}
+                            />
+                        )}
+                    </AnimatePresence>
 
                     {/* Positions Overlay */}
                     <AnimatePresence>
@@ -637,7 +573,6 @@ const HeadshotCard = ({
     getLittles,
     hobbyFilter,
     setHobbyFilter,
-    isInThirdColumn,
     openOverlay,
 }) => {
 
@@ -781,7 +716,7 @@ const HeadshotCard = ({
 
             let fromX = -50;
             if (popupRef.current.classList.contains('popup-left')) {
-              fromX = 50;
+                fromX = 50;
             }
             // Animate flags to scale up
             gsap.fromTo(
@@ -1020,18 +955,6 @@ const HeadshotCard = ({
         ZW: { name: "Zimbabwe", code: "zw" }
     };
 
-    // Sort nationalities alphabetically by country name
-    const sortedNationalities = Array.isArray(nationalities)
-        ? [...nationalities]
-            .filter((code) => countryMap[code]) // Filter out invalid codes
-            .sort((a, b) => {
-                const nameA = countryMap[a]?.name?.toUpperCase() || ""; // Get country name or fallback to ""
-                const nameB = countryMap[b]?.name?.toUpperCase() || "";
-                return nameA.localeCompare(nameB); // Use localeCompare for safe string comparison
-            })
-        : [];
-
-
     // State to track hover status
     const [hovered, setHovered] = useState(false);
 
@@ -1085,10 +1008,6 @@ const HeadshotCard = ({
         // Default return if month is invalid
         return dateString;
     };
-
-
-
-    const hobbies = Array.isArray(person.hobbies) ? person.hobbies : [];
 
     const popupRef = useRef(null); // Reference to the popup
     const adjustPopupPosition = () => {
@@ -1383,6 +1302,76 @@ const HeadshotCard = ({
             </div>
 
         </div>
+    );
+};
+
+/*-------------------------------------
+  YearOverlay for the new color grid
+--------------------------------------*/
+const YearOverlay = ({ yearData, onClose }) => {
+    return (
+        <motion.div
+            className="overlay-backdrop"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+                position: 'fixed',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 9999
+            }}
+        >
+            <motion.div
+                className="overlay-content"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ y: '-50px', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 50, opacity: 0 }}
+                style={{
+                    backgroundColor: '#fff',
+                    borderRadius: '8px',
+                    width: '80%',
+                    maxWidth: '800px',
+                    margin: '100px auto',
+                    padding: '20px',
+                    position: 'relative'
+                }}
+            >
+                <button
+                    onClick={onClose}
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '20px',
+                        background: 'transparent',
+                        border: 'none',
+                        fontSize: '1.4rem',
+                        cursor: 'pointer'
+                    }}
+                    aria-label="Close Year Overlay"
+                >
+                    &times;
+                </button>
+                <h2 style={{ marginBottom: '20px' }}>Year: {yearData.year}</h2>
+                {yearData.classes.map((cls, idx) => (
+                    <div key={idx} style={{ marginBottom: '30px' }}>
+                        <h3>{cls.className}</h3>
+                        <h4>New Member Educators</h4>
+                        <p><strong>PM:</strong> {cls.PM}</p>
+                        <p><strong>PD:</strong> {cls.PD}</p>
+                        {cls.image && (
+                            <img
+                                src={cls.image}
+                                alt={`${cls.className} class`}
+                                style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '4px' }}
+                            />
+                        )}
+                    </div>
+                ))}
+            </motion.div>
+        </motion.div>
     );
 };
 

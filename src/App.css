@@ -27,7 +27,7 @@ html, body {
   body.home-page {
     background-color: #ffffff; /* Example: Different background color */
     color: #000000;            /* Example: Different text color */
-    scroll-snap-type: none;    /* Disable scroll snapping on homepage */
+    scroll-snap-type: y proximity;    /* Disable scroll snapping on homepage */
     overflow-y: auto;          /* Adjust overflow behavior if needed */
   }
   

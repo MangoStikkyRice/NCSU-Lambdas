@@ -4,16 +4,12 @@ import NavBarNew from '../components/navbar/NavBarNew';
 import LegacyHero from '../components/legacy/LegacyHero';
 import Philanthropy from '../components/legacy/Philanthropy';
 import Info from '../components/legacy/Info';
-import '../App.css';
 
 function Legacy() {
   return (
-    // Snap container for the entire page
-    <div className="snap-container">
-      <section id="Top">
-        <NavBarNew />
-        <LegacyHero />
-      </section>
+    <div className="legacy-page">
+      <NavBarNew />
+      <LegacyHero />
 
       <section id="Contact">
         <Info />
