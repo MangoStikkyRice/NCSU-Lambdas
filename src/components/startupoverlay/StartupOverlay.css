@@ -1,14 +1,17 @@
 @font-face {
-    font-family: 'Dotum';
-    src: url('../../assets/fonts/dotum.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'UniversCnBold';
-    src: url('../../assets/fonts/UniversCnBold.ttf') format('truetype');
-    font-weight: bold;
+    font-family: 'Microsoft Sans Serif Regular';
     font-style: normal;
-}
+    font-weight: normal;
+    src: local('Microsoft Sans Serif Regular'), url('micross.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Microsoft Sans Serif';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Microsoft Sans Serif'), url('micross.woff') format('woff');
+    }
 
 .startup-overlay {
     position: fixed;
@@ -64,12 +67,13 @@
 }
 
 .leaders-text {
-    font-family: Dotum;
-    font-size: 7rem;
+    font-family: 'Microsoft Sans Serif';
+    font-size: 6rem;
     font-weight: bold;
     text-align: center;
-    color: #333;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+    color: #d7d7d7;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.40);
+    white-space: nowrap;
 }
 
 @keyframes zoomOut {
@@ -90,7 +94,7 @@
 .leaders-text span {
     display: inline-block;
     opacity: 0;
-    margin-right: -25px;
+    margin: 0 10px;
 }
 
 @keyframes fadeIn {
@@ -111,11 +115,11 @@
 }
 
 .leaders-text span.delay-2 {
-    animation-delay: 0.2s;
+    animation-delay: 0.5s;
 }
 
 .leaders-text span.delay-3 {
-    animation-delay: 0.3s;
+    animation-delay: 1s;
 }
 
 /* Add more delay classes as needed */
@@ -129,17 +133,17 @@
 .lambda-text {
     letter-spacing: .06em;
     font-size: 4.3rem;
-    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.5), -1px -1px 15px rgba(255, 255, 255, 0.5);
-    transform: translateY(-30%);
+    text-shadow: 1px 1px 25px rgb(255, 255, 255);
     font-weight: bold;
+    transform: translateY(-30%);
 }
 
 .since-text {
-    font-family: 'Dotum';
+    font-family: 'Microsoft Sans Serif';
     font-size: 2rem;
-    color: #333;
+    color: #d7d7d7;
     margin-top: 10px; /* Space between Beta Eta Chapter and Since 2016 */
-    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.5), -1px -1px 15px rgba(255, 255, 255, 0.5);
+    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5);
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 2.3s;
@@ -148,47 +152,101 @@
     font-weight: bold;
 }
 
-.since-text-bottom {
-    font-family: 'Dotum';
-    font-size: 2.5rem;
-    color: #333;
-    position: absolute;
-    bottom: 20px; /* Position it at the bottom */
-    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 2s;
-    text-align: center;
-    width: 100%; /* Ensure it is centered */
-    font-weight: bold;
-}
-
 /* Beta Eta Chapter in old location */
 .chapter-text {
-    font-family: 'Dotum';
+    font-family: 'Microsoft Sans Serif';
     font-size: 3.5rem; /* Adjust size if needed */
-    color: #333;
-    margin-left: 25px;
-    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
+    margin-left: 8px;
+    text-shadow: 1px 1px 15px white;
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 1.8s;
-    word-spacing: -1rem;
+    color: #d7d7d7;
 }
 
 .logo {
     font-family: 'UniversCnBold';
     font-size: 4rem; /* Adjust size if needed */
-    color: #333;
-    text-shadow: 1px 1px 15px white, 0 0 15px white, -1px -1px 15px white;
+    text-shadow: 1px 1px 25px white;
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     animation-delay: 1.8s;
-    transform: translateY(1%);
+    color: #d7d7d7;
 }
 
 .logo-since-container {
     display: flex;
     align-items: flex-end; /* Align items to the bottom */
     justify-content: center;
+    
 }
+
+/* Existing CSS here... */
+
+/* Add responsiveness for smaller screens */
+@media (max-width: 900px) {
+    .leaders-text {
+      font-size: 3rem;
+      span {
+        margin: 0 6px;
+      }
+    }
+  
+    .lambda-text {
+      font-size: 2.5rem;
+    }
+  
+    .logo {
+      font-size: 2.5rem;
+    }
+  
+    .chapter-text {
+      font-size: 2.2rem;
+    }
+  
+    .since-text {
+      font-size: 1.8rem;
+    }
+  
+    .full-page-logo {
+      width: 70%;
+      height: 70%;
+    }
+  }
+  
+  /* Even smaller screens, e.g. under 480px */
+  @media (max-width: 480px) {
+    .leaders-text {
+      font-size: 2rem;
+      word-spacing: 5px;
+
+      span {
+        margin: 0 5px;
+      }
+    }
+  
+    .lambda-text {
+      font-size: 1.8rem;
+      transform: translateY(60%);
+
+    }
+  
+    .logo {
+      font-size: 1.8rem;
+    }
+  
+    .chapter-text {
+      font-size: 1.8rem;
+      word-spacing: 0;
+    }
+  
+    .since-text {
+      font-size: 1.3rem;
+    }
+  
+    .full-page-logo {
+      width: 80%;
+      height: 80%;
+    }
+  }
+  
