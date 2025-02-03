@@ -9,11 +9,6 @@ function Recruitment() {
     // Reference for the main container to apply fade-in animation
     const containerRef = useRef(null);
 
-    // Set the background gradient
-    useEffect(() => {
-        document.body.style.background = "linear-gradient(to right, rgb(177, 177, 177) 0%, white 50%, rgb(177, 177, 177) 100%)";
-    }, []);
-
     // Initial fade-in animation for all elements
     useEffect(() => {
         const ctx = gsap.context(() => {

@@ -32,13 +32,13 @@ const Brothers = () => {
     axiosRetry(axios, {
         retries: 3,
         retryDelay: (retryCount) => {
-          return retryCount * 2000; // Exponential backoff: 2s, 4s, 6s
+            return retryCount * 2000; // Exponential backoff: 2s, 4s, 6s
         },
         retryCondition: (error) => {
-          // Retry on most 5xx errors and network issues
-          return error.response && error.response.status >= 500;
+            // Retry on most 5xx errors and network issues
+            return error.response && error.response.status >= 500;
         },
-      });
+    });
 
     // // States for statistics overlay data
     // const [showStatistics, setShowStatistics] = useState(false);
@@ -377,6 +377,7 @@ const Brothers = () => {
 
         // Container for the entire page, including the navbar.
         <div className="includeHeader">
+            <meta name="theme-color" content="#203c79" />
             <NavBarNew />
 
             {/* Container for the entire page, excluding the navbar. */}

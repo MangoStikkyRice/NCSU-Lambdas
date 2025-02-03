@@ -1,75 +1,150 @@
 /* Info.scss */
 
+$primary-color: #203c79;
+$secondary-color: #f0f4f8;
+$accent-color: #ff7f50;
+$text-color: #ffffff;
+$button-active-bg: rgba(255, 255, 255, 0.2);
+$transition-speed: 0.3s;
+
 .info-container {
-    display: flex;
-    flex-direction: row;
+    position: relative;
     width: 100%;
-    background-color: #fff;
-  
-    .buttons-column {
-      width: 25%;
-      min-width: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 20px;
-      background-color: #f8f8f8;
-  
-      .info-button {
-        background-color: #fff;
-        color: #333;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 12px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: 0.2s;
-  
-        &.active {
-          border-color: #203c79;
-          background-color: #ebf0fa;
-        }
-  
-        &:hover {
-          background-color: #f2f2f2;
-        }
-      }
-    }
-  
-    .info-content {
-      flex: 1;
-      padding: 20px;
-  
-      .info-details {
-        h2 {
-          font-size: 1.8rem;
-          color: #203c79;
-          margin-bottom: 20px;
-        }
-  
-        p {
-          font-size: 1rem;
-          line-height: 1.6;
-        }
-      }
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .info-container {
-      flex-direction: column;
-  
-      .buttons-column {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-color;
+    font-family: 'Roboto', sans-serif;
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-      }
-  
-      .info-content {
-        padding: 20px;
-      }
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
     }
-  }
-  
+
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        max-width: 1200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        gap: 20px;
+
+        .buttons-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 25%;
+            min-width: 200px;
+
+            .info-button {
+                background: transparent;
+                color: $text-color;
+                border: 2px solid $primary-color;
+                border-radius: 8px;
+                padding: 12px 20px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background $transition-speed, color $transition-speed, transform $transition-speed;
+                backdrop-filter: blur(5px);
+
+                &.active {
+                    background: $primary-color;
+                    color: $secondary-color;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+
+        .info-content {
+            flex: 1;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+
+            .info-details {
+                h2 {
+                    font-size: 2rem;
+                    margin-bottom: 15px;
+                    color: $secondary-color;
+                }
+
+                p {
+                    font-size: 1.1rem;
+                    line-height: 1.8;
+                    color: #e0e0e0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        .content-wrapper {
+            flex-direction: column;
+
+            .buttons-column {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+
+                .info-button {
+                    flex: 1;
+                    text-align: center;
+                }
+            }
+
+            .info-content {
+                width: 100%;
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        .content-wrapper {
+            padding: 15px;
+
+            .buttons-column {
+                gap: 10px;
+
+                .info-button {
+                    padding: 10px 15px;
+                    font-size: 0.9rem;
+                }
+            }
+
+            .info-content {
+                padding: 15px;
+
+                .info-details {
+                    h2 {
+                        font-size: 1.5rem;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}

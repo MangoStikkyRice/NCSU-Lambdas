@@ -9,35 +9,27 @@ import CORE_VALUES from './../../assets/images/CORE_VALUES.jpg';
 // Array of background images to cycle through
 const backgroundImages = [NATIONAL_HISTORY, MISSION, THE_VISION, CORE_VALUES];
 
-// Button and Content Data (Removed backgroundImage)
+// Button and Content Data
 const infoData = [
     {
         id: 1,
         title: 'National History',
-        description:
-            `Lambda Phi Epsilon was founded on February 25, 1981 by a group of nineteen dedicated men led by principal founder Mr. Craig Ishigo. Hoping to transcend the traditional boundaries of national origins, the founders aimed to create an organization that would set new standards of excellence within the Asian American community, develop leaders within each of the member’s respective community, and bridge the gaps between those communities. While the initial charter was comprised of Asian Pacific Americans, the brotherhood was open to all who were interested in supporting these goals. Mr. Craig Ishigo and Mr. Darryl L. Mu signed the charter as President and Vice President, respectively.
-
-On May 28th, 1990, the fraternity, now with six chapters total, convened on the campus of the University of California, Irvine for the first annual National Convention, which to this day has been held regularly over Memorial Day weekend. A national governing body was established to oversee the development of individual chapters and the fraternity as a whole, with Mr. Robert Mimaki, Mr. Eric Naritomi, and Mr. Doug Nishida appointed as National President, Northern Governor and Southern Governor, respectively. On September 8th, 1990, Lambda Phi Epsilon reached another milestone and became the first and only nationally recognized Asian American interest fraternity in the United States with the admission to the National Interfraternity Conference. In 2006, Lambda Phi Epsilon joined the National Asian Pacific Islander American Panhellenic Association to increase collaboration and partnership between fellow APIA Greek organizations.
-
-Today, Lambda Phi Epsilon is widely renown as the preeminent international Asian interest fraternal organization, providing outstanding leadership, philanthropy, and advocacy in the community.`,
+        description: `Lambda Phi Epsilon was founded on February 25, 1981 by a group of nineteen dedicated men led by principal founder Mr. Craig Ishigo...`,
     },
     {
         id: 2,
         title: 'Our Mission',
-        description:
-            'To guide men on a lifelong discovery of authenticity and personal growth.',
+        description: 'To guide men on a lifelong discovery of authenticity and personal growth.',
     },
     {
         id: 3,
         title: 'The Vision',
-        description:
-            'A world where lambda men live fulfilling lives and contribute through the pursuit of their noble purpose.',
+        description: 'A world where lambda men live fulfilling lives and contribute through the pursuit of their noble purpose.',
     },
     {
         id: 4,
         title: 'Core Values',
-        description:
-            'Authenticity, Courageous Leadership, Cultural Heritage, Love, and Wisdom.',
+        description: 'Authenticity, Courageous Leadership, Cultural Heritage, Love, and Wisdom.',
     },
 ];
 
@@ -49,64 +41,64 @@ function Info() {
     const [bgIndex, setBgIndex] = useState(0);
     const bgLength = backgroundImages.length;
 
-    // useEffect to cycle background images every 5 seconds
+    // Cycle background images every 6 seconds
     useEffect(() => {
         const interval = setInterval(() => {
             setBgIndex((prevIndex) => (prevIndex + 1) % bgLength);
-        }, 6000); // 5000ms = 5 seconds
+        }, 6000);
 
-        // Cleanup interval on component unmount
         return () => clearInterval(interval);
     }, [bgLength]);
 
     return (
-        <div className="info-container">
-            {/* Background Layer */}
-            <AnimatePresence>
-                <motion.div
-                    key={bgIndex}
-                    className="background-layer"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
-                    style={{
-                        backgroundImage: `linear-gradient(to right, rgba(5, 5, 5, 1), rgba(35, 35, 35, 0.7)), url(${backgroundImages[bgIndex]})`
-                    }}
-                />
-            </AnimatePresence>
+        <div
+            className="info-container"
+            style={{
+                backgroundImage: `linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImages[bgIndex]})`,
+            }}
+        >
+            {/* Overlay for better text readability */}
+            <div className="overlay"></div>
 
-            {/* Left Column: Buttons */}
-            <div className="buttons-column">
-                {infoData.map((item) => (
-                    <motion.button
-                        key={item.id}
-                        className={`info-button ${activeId === item.id ? 'active' : ''}`}
-                        onClick={() => setActiveId(item.id)}
-                        whileHover={{ scale: 1.05, backgroundColor: '#f0f0f0' }}
-                        whileTap={{ scale: 0.95 }}
-                        aria-pressed={activeId === item.id}
-                    >
-                        {item.title}
-                    </motion.button>
-                ))}
-            </div>
+            {/* Content Wrapper */}
+            <div className="content-wrapper">
+                {/* Sidebar: Buttons */}
+                <motion.nav
+                    className="buttons-column"
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {infoData.map((item) => (
+                        <motion.button
+                            key={item.id}
+                            className={`info-button ${activeId === item.id ? 'active' : ''}`}
+                            onClick={() => setActiveId(item.id)}
+                            whileHover={{ scale: 1.05, backgroundColor: '#fff' }}
+                            whileTap={{ scale: 0.95 }}
+                            aria-pressed={activeId === item.id}
+                        >
+                            {item.title}
+                        </motion.button>
+                    ))}
+                </motion.nav>
 
-            {/* Right Column: Info Display */}
-            <div className="info-content">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={activeInfo.id}
-                        className="info-details"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h2>{activeInfo.title}</h2>
-                        <p>{activeInfo.description}</p>
-                    </motion.div>
-                </AnimatePresence>
+                {/* Main Content */}
+                <main className="info-content">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeInfo.id}
+                            className="info-details"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <h2>{activeInfo.title}</h2>
+                            <p>{activeInfo.description}</p>
+                        </motion.div>
+                    </AnimatePresence>
+                </main>
             </div>
         </div>
     );

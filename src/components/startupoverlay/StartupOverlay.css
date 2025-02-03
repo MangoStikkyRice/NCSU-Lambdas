@@ -1,252 +1,234 @@
-@font-face {
-    font-family: 'Microsoft Sans Serif Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Microsoft Sans Serif Regular'), url('micross.woff') format('woff');
-    }
-    
-
-    @font-face {
-    font-family: 'Microsoft Sans Serif';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Microsoft Sans Serif'), url('micross.woff') format('woff');
-    }
-
 .startup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1001; /* Ensure it's on top of all other content */
-    opacity: 1;
-    transition: opacity 0.5s ease; /* Only opacity transition */
-    animation: backgroundFade 3s ease forwards; /* Background color transition */
-    animation-delay: 2s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001; /* Ensure it's on top of all other content */
+  opacity: 1;
+  transition: opacity 0.5s ease; /* Only opacity transition */
+  animation: backgroundFade 3s ease forwards; /* Background color transition */
+  animation-delay: 2s;
 }
 
 @keyframes backgroundFade {
-    0% {
-        background-color: rgba(255, 255, 255, 1);
-    }
-    100% {
-        background-color: #203c79;
-    }
+  0% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  100% {
+    background-color: #203c79;
+  }
 }
 
 .startup-overlay.hide {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .full-page-logo {
-    position: absolute;
-    width: 60%; /* Adjust width as needed */
-    height: 60%; /* Adjust height as needed */
-    opacity: 0;
-    background-size: contain; /* Ensure the entire logo is visible */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-position: center center; /* Center the image */
-    z-index: -1;
-    animation: fadeInLogo 3s forwards 2s; /* Fade in logo after delay */
+  position: absolute;
+  width: 60%; /* Adjust width as needed */
+  height: 60%; /* Adjust height as needed */
+  opacity: 0;
+  background-size: contain; /* Ensure the entire logo is visible */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-position: center center; /* Center the image */
+  z-index: -1;
+  animation: fadeInLogo 3s forwards 2s; /* Fade in logo after delay */
 }
 
 @keyframes fadeInLogo {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.1; /* Adjust opacity as needed */
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.1; /* Adjust opacity as needed */
+  }
 }
 
 .leaders-text {
-    font-family: 'Microsoft Sans Serif';
-    font-size: 6rem;
-    font-weight: bold;
-    text-align: center;
-    color: #d7d7d7;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.40);
-    white-space: nowrap;
+  font-family: "Microsoft Sans Serif";
+  font-size: 6rem;
+  font-weight: bold;
+  text-align: center;
+  color: #d7d7d7;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
 }
 
 @keyframes zoomOut {
-    from {
-        opacity: 0;
-        transform: scale(4);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: scale(4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .leaders-text span.zoom-out {
-    animation: zoomOut 0.2s forwards;
+  animation: zoomOut 0.2s forwards;
 }
 
 .leaders-text span {
-    display: inline-block;
-    opacity: 0;
-    margin: 0 10px;
+  display: inline-block;
+  opacity: 0;
+  margin: 0 10px;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .leaders-text span.fade-in {
-    animation: fadeIn 0.5s forwards;
+  animation: fadeIn 0.5s forwards;
 }
 
 .leaders-text span.delay-1 {
-    animation-delay: 0.1s;
+  animation-delay: 0.1s;
 }
 
 .leaders-text span.delay-2 {
-    animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 
 .leaders-text span.delay-3 {
-    animation-delay: 1s;
+  animation-delay: 1s;
 }
 
 /* Add more delay classes as needed */
 
 .logo-fade-in {
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 1.33s;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 1.33s;
 }
 
 .lambda-text {
-    letter-spacing: .06em;
-    font-size: 4.3rem;
-    text-shadow: 1px 1px 25px rgb(255, 255, 255);
-    font-weight: bold;
-    transform: translateY(-30%);
+  letter-spacing: 0.06em;
+  font-size: 4.3rem;
+  text-shadow: 1px 1px 25px rgb(255, 255, 255);
+  font-weight: bold;
+  transform: translateY(-30%);
 }
 
 .since-text {
-    font-family: 'Microsoft Sans Serif';
-    font-size: 2rem;
-    color: #d7d7d7;
-    margin-top: 10px; /* Space between Beta Eta Chapter and Since 2016 */
-    text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 2.3s;
-    text-align: center;
-    transform: translateY(-60%);
-    font-weight: bold;
+  font-family: "Microsoft Sans Serif";
+  font-size: 2rem;
+  color: #d7d7d7;
+  margin-top: 10px; /* Space between Beta Eta Chapter and Since 2016 */
+  text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 2.3s;
+  text-align: center;
+  transform: translateY(-60%);
+  font-weight: bold;
 }
 
 /* Beta Eta Chapter in old location */
 .chapter-text {
-    font-family: 'Microsoft Sans Serif';
-    font-size: 3.5rem; /* Adjust size if needed */
-    margin-left: 8px;
-    text-shadow: 1px 1px 15px white;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 1.8s;
-    color: #d7d7d7;
+  font-family: "Microsoft Sans Serif";
+  font-size: 3.5rem; /* Adjust size if needed */
+  margin-left: 8px;
+  text-shadow: 1px 1px 15px white;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 1.8s;
+  color: #d7d7d7;
 }
 
 .logo {
-    font-family: 'UniversCnBold';
-    font-size: 4rem; /* Adjust size if needed */
-    text-shadow: 1px 1px 25px white;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 1.8s;
-    color: #d7d7d7;
+  font-family: "UniversCnBold";
+  font-size: 4rem; /* Adjust size if needed */
+  text-shadow: 1px 1px 25px white;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 1.8s;
+  color: #d7d7d7;
 }
 
 .logo-since-container {
-    display: flex;
-    align-items: flex-end; /* Align items to the bottom */
-    justify-content: center;
-    
+  display: flex;
+  align-items: flex-end; /* Align items to the bottom */
+  justify-content: center;
 }
 
 /* Existing CSS here... */
 
 /* Add responsiveness for smaller screens */
 @media (max-width: 900px) {
-    .leaders-text {
-      font-size: 3rem;
-      span {
-        margin: 0 6px;
-      }
-    }
-  
-    .lambda-text {
-      font-size: 2.5rem;
-    }
-  
-    .logo {
-      font-size: 2.5rem;
-    }
-  
-    .chapter-text {
-      font-size: 2.2rem;
-    }
-  
-    .since-text {
-      font-size: 1.8rem;
-    }
-  
-    .full-page-logo {
-      width: 70%;
-      height: 70%;
+  .leaders-text {
+    font-size: 3rem;
+    span {
+      margin: 0 6px;
     }
   }
-  
-  /* Even smaller screens, e.g. under 480px */
-  @media (max-width: 480px) {
-    .leaders-text {
-      font-size: 2rem;
-      word-spacing: 5px;
 
-      span {
-        margin: 0 5px;
-      }
-    }
-  
-    .lambda-text {
-      font-size: 1.8rem;
-      transform: translateY(60%);
+  .lambda-text {
+    font-size: 2.5rem;
+  }
 
-    }
-  
-    .logo {
-      font-size: 1.8rem;
-    }
-  
-    .chapter-text {
-      font-size: 1.8rem;
-      word-spacing: 0;
-    }
-  
-    .since-text {
-      font-size: 1.3rem;
-    }
-  
-    .full-page-logo {
-      width: 80%;
-      height: 80%;
+  .logo {
+    font-size: 2.5rem;
+  }
+
+  .chapter-text {
+    font-size: 2.2rem;
+  }
+
+  .since-text {
+    font-size: 1.8rem;
+  }
+
+  .full-page-logo {
+    width: 70%;
+    height: 70%;
+  }
+}
+
+/* Even smaller screens, e.g. under 480px */
+@media (max-width: 480px) {
+  .leaders-text {
+    font-size: 2rem;
+    word-spacing: 5px;
+
+    span {
+      margin: 0 5px;
     }
   }
-  
+
+  .lambda-text {
+    font-size: 1.8rem;
+    transform: translateY(60%);
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .chapter-text {
+    font-size: 1.8rem;
+    word-spacing: 0;
+  }
+
+  .since-text {
+    font-size: 1.3rem;
+  }
+
+  .full-page-logo {
+    width: 80%;
+    height: 80%;
+  }
+}

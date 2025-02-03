@@ -4,7 +4,6 @@
     flex-direction: column;
     height: calc(var(--vh, 1vh) * 100); /* Use the CSS variable instead of 100vh */
     overflow-y: auto; /* Allow scrolling */
-    background: linear-gradient(to right, rgb(177, 177, 177) 0%, white 50%, rgb(177, 177, 177) 100%);
 }
 
 .custom-container {
@@ -95,7 +94,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Dotum', sans-serif;
     font-size: 3vw; /* Responsive font size */
     color: white;
     text-shadow: 0px 0px 20px lightgray;
