@@ -14,7 +14,7 @@ const infoData = [
     {
         id: 1,
         title: 'National History',
-        description: `Lambda Phi Epsilon was founded on February 25, 1981 by a group of nineteen dedicated men led by principal founder Mr. Craig Ishigo...`,
+        description: `Lambda Phi Epsilon was founded on February 25, 1981 by a group of nineteen dedicated men led by principal founder Mr. Craig Ishigo. Hoping to transcend the traditional boundaries of national origins, the founders aimed to create an organization that would set new standards of excellence within the Asian American community, develop leaders within each of the member’s respective community, and bridge the gaps between those communities. While the initial charter was comprised of Asian Pacific Americans, the brotherhood was open to all who were interested in supporting these goals. Mr. Craig Ishigo and Mr. Darryl L. Mu signed the charter as President and Vice President, respectively.\n\nOn May 28th, 1990, the fraternity, now with six chapters total, convened on the campus of the University of California, Irvine for the first annual National Convention, which to this day has been held regularly over Memorial Day weekend. A national governing body was established to oversee the development of individual chapters and the fraternity as a whole, with Mr. Robert Mimaki, Mr. Eric Naritomi, and Mr. Doug Nishida appointed as National President, Northern Governor and Southern Governor, respectively. On September 8th, 1990, Lambda Phi Epsilon reached another milestone and became the first and only nationally recognized Asian American interest fraternity in the United States with the admission to the National Interfraternity Conference. In 2006, Lambda Phi Epsilon joined the National Asian Pacific Islander American Panhellenic Association to increase collaboration and partnership between fellow APIA Greek organizations.\n\nToday, Lambda Phi Epsilon is widely renown as the preeminent international Asian interest fraternal organization, providing outstanding leadership, philanthropy, and advocacy in the community.`,
     },
     {
         id: 2,
@@ -51,6 +51,8 @@ function Info() {
     }, [bgLength]);
 
     return (
+        <div className="info-title">
+            <h1>History</h1>
         <div
             className="info-container"
             style={{
@@ -78,7 +80,7 @@ function Info() {
                             whileTap={{ scale: 0.95 }}
                             aria-pressed={activeId === item.id}
                         >
-                            {item.title}
+                            <h4>{item.title}</h4>
                         </motion.button>
                     ))}
                 </motion.nav>
@@ -89,9 +91,9 @@ function Info() {
                         <motion.div
                             key={activeInfo.id}
                             className="info-details"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
+                            initial={{ opacity: 0}}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0}}
                             transition={{ duration: 0.5 }}
                         >
                             <h2>{activeInfo.title}</h2>
@@ -100,6 +102,7 @@ function Info() {
                     </AnimatePresence>
                 </main>
             </div>
+        </div>
         </div>
     );
 }

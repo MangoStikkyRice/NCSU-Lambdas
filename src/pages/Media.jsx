@@ -58,19 +58,6 @@ const Media = () => {
   const [expandedNode, setExpandedNode] = useState(null);
   const [treemapNodes, setTreemapNodes] = useState([]);
 
-  /*
-  // COMMENTING OUT: Old windirstat/treemap approach
-  useEffect(() => {
-    const width = 1000;
-    const height = 600;
-    const root = d3
-      .hierarchy({ name: 'root', children: photoGalleryImages })
-      .sum(d => d.value);
-    d3.treemap().size([width, height]).padding(2)(root);
-    setTreemapNodes(root.leaves());
-  }, []);
-  */
-
   // SET UP THE IMAGES
   const imageUrls = [
     all1,
@@ -98,6 +85,13 @@ const Media = () => {
   // The rest (everything except the last item)
   const otherVideos = youtubeVideos.slice(0, youtubeVideos.length - 1);
 
+  // A helper function to try to use the higher-res thumbnail if available
+  const getHighResThumbnail = (thumbnailUrl) => {
+    if (thumbnailUrl.includes('hqdefault')) {
+      return thumbnailUrl.replace('hqdefault', 'maxresdefault');
+    }
+    return thumbnailUrl;
+  };
   return (
     <div className="media-page">
       <NavBarNew />
@@ -106,7 +100,12 @@ const Media = () => {
       <div
         className="hero"
         ref={heroRef}
-        style={{ backgroundImage: `url(${latestVideo.thumbnail})` }}
+        style={{
+          backgroundImage: `url(${getHighResThumbnail(latestVideo.thumbnail)})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'top',
+          filter: 'brightness(1.4)'
+        }}
       >
         <div className="hero-content">
           <h1 className="hero-title">{latestVideo.title} Class Reveal</h1>

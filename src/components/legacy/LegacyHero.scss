@@ -18,7 +18,7 @@
 
             h2 {
                 font-size: 28px;
-                color: #203c79c2;
+                color: #203c79;
                 letter-spacing: 10px;
             }
 
@@ -32,9 +32,10 @@
                 display: flex; /* Ensure buttons are aligned properly */
 
                 a {
+                    font-size: 12px;
                     position: relative; /* Enable z-index */
                     z-index: 3; /* Higher than slidingTextContainer */
-                    padding: 20px;
+                    padding: 15px;
                     border: 1px solid black;
                     border-radius: 10px;
                     background-color: transparent;

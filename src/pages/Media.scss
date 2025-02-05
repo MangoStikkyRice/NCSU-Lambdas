@@ -107,56 +107,6 @@
   text-shadow: 2px 2px 3px black, 0px 0px 4px black;;
 }
 
-/* --------------------------------------------- */
-/* OLD WINDIRSTAT/TREEMAP GALLERY (commented out)*/
-/* --------------------------------------------- */
-/*
-.windirstat-gallery {
-  position: relative;
-  width: 1000px;
-  height: 600px;
-  margin: 20px auto 50px auto;
-}
-
-.treemap-node {
-  position: absolute;
-  border: 1px solid #000000;
-  background-size: cover;
-  background-position: center;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.treemap-node:hover {
-  transform: scale(1.05);
-  z-index: 3;
-}
-
-.treemap-node.expanded {
-  left: 0 !important;
-  top: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: 2;
-  transform: none;
-}
-
-.treemap-node.expanded::after {
-  content: 'Click to close';
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-}
-*/
-
 /* ------------------------------------------- */
 /* HORIZONTAL GALLERY (200px high, centered)  */
 /* ------------------------------------------- */

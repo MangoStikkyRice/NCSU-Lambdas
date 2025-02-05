@@ -287,6 +287,8 @@
 
 /* Headshot Card */
 .headshot-card {
+    display: flex;
+    flex-direction: column;
     background-color: #ffffff;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -302,16 +304,21 @@
         // If you want to remove the “image container” portion altogether, 
         // or make it blue as well, you can do:
         .image-container {
-            background: #203c79;
+            background: #305096;
+            height: 385px;
+            min-width: 250px;
+
 
             // or keep it but also do background: #203c79 if you want
             .year-container {
-                position: relative;
-                left: 25px;
+                position: absolute;
+                left: 10px;
+                top: 150px;
             }
 
             .class-count-container {
                 position: absolute;
+                bottom: 50px;
 
                 p {
                     font-size: 20px;
@@ -324,22 +331,62 @@
             h1 {
                 color: #92aed8;
                 font-weight: bold;
-                font-size: 220px;
+                font-size: 260px;
                 letter-spacing: -.4rem;
             }
         }
+    }
 
-        // If you do keep .image-container, you may also want to ensure
-        // child text is readable in white:
-        .card-content {
-            // any extra spacing or text color overrides
-            color: #000000;
-            // And if you want an explicit height so each “card” is uniform:
-            // height: 200px; 
-            // display: flex; 
-            // flex-direction: column; 
-            // align-items: center; 
-            // justify-content: center;
+    .card-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        /* Stack elements vertically */
+        /* Center contents vertically */
+        align-items: center;
+        /* Center contents horizontally */
+        text-align: center;
+
+        h3 {
+            margin-top: 15px;
+            margin-bottom: -2px;
+            font-family: 'Dotum', sans-serif;
+            letter-spacing: 0.08rem;
+            font-size: 1.8rem;
+
+            @media (max-width: 650px) {
+                font-size: 1rem;
+            }
+        }
+
+        p {
+            font-size: 0.9rem;
+            letter-spacing: 0.08rem;
+
+            @media (max-width: 650px) {
+                font-size: .7rem;
+            }
+        }
+
+        /* Ensure the image is at the top */
+        .image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            /* Align image to the top */
+        }
+
+        /* Ensure text is centered within remaining space */
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Center text vertically */
+            align-items: center;
+            flex-grow: 1;
+            /* Takes up remaining space */
+            height: 100%;
         }
     }
 
@@ -517,27 +564,6 @@
         }
     }
 
-    h3 {
-        margin-top: 15px;
-        margin-bottom: -2px;
-        font-family: 'Dotum', sans-serif;
-        letter-spacing: 0.08rem;
-        font-size: 1.8rem;
-
-        @media (max-width: 650px) {
-            font-size: 1rem;
-        }
-    }
-
-    p {
-        font-size: 0.9rem;
-        letter-spacing: 0.08rem;
-
-        @media (max-width: 650px) {
-            font-size: .7rem;
-        }
-    }
-
     /* Popup Styling */
     .popup {
         position: absolute;
@@ -550,7 +576,7 @@
         background-color: #20375acb;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.63);
         padding: 8px;
-        width: 250px;
+        width: 180px;
         height: 100%;
         /* Matches the height of the headshot card */
         opacity: 0;
@@ -779,16 +805,29 @@
                 letter-spacing: 0.08rem;
             }
 
-            /* Line Name Text */
-            .line-name {
-                flex: 1;
-                /* Takes up remaining space */
-                font-size: 22px;
+            .line-name-container {
+                display: inline-block;
+                max-width: 150px; // adjust as needed
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: none; // Firefox (optional)
             }
 
+            .line-name-container::-webkit-scrollbar {
+                display: none; // Chrome, Safari
+            }
+
+            .line-name {
+                display: inline-block;
+            }
+
+
             @media (max-width: 650px) {
+                .line-name-container {
+                    margin: 0 auto; /* This centers the element horizontally */
+                }
                 .line-name {
-                    font-size: 12px;
+                    font-size: 18px;
                 }
             }
 

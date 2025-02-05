@@ -488,26 +488,14 @@ const Brothers = () => {
                                     >
                                         <div className="card-content">
                                             <div className="image-container">
-                                                <div
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '120px',
-                                                        backgroundColor: '#203c79',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        color: '#fff',
-                                                    }}
-                                                >
-                                                    <div className="year-container">
-                                                        <h1>{entry.year.split(/0(.*)/s)[1]}</h1>
-                                                    </div>
-                                                    <div className="class-count-container">
-                                                        <p>
-                                                            {entry.classes.length} Class
-                                                            {entry.classes.length !== 1 && 'es'}
-                                                        </p>
-                                                    </div>
+                                                <div className="year-container">
+                                                    <h1>{entry.year.split(/0(.*)/s)[1]}</h1>
+                                                </div>
+                                                <div className="class-count-container">
+                                                    <p>
+                                                        {entry.classes.length} Class
+                                                        {entry.classes.length !== 1 && 'es'}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -576,6 +564,48 @@ const HeadshotCard = ({
     setHobbyFilter,
     openOverlay,
 }) => {
+
+    // Ref for the container wrapping the line name
+    const lineNameContainerRef = useRef(null);
+    const lineNameTimeline = useRef(null);
+
+    // GSAP animation: Scroll the line name into view if it overflows.
+    const startLineNameScroll = () => {
+        const el = lineNameContainerRef.current;
+        if (!el) return;
+        // Only animate if the text overflows
+        if (el.scrollWidth <= el.clientWidth) return;
+
+        // If no timeline exists yet, create one
+        if (!lineNameTimeline.current) {
+            lineNameTimeline.current = gsap.timeline({
+                delay: 1,           // 1-second delay before the first scroll starts
+                repeat: -1,
+                repeatDelay: 1,     // 1-second delay at the end of each cycle (optional)
+                yoyo: true,
+                ease: "linear",
+            });
+            lineNameTimeline.current.to(el, {
+                scrollLeft: el.scrollWidth - el.clientWidth,
+                duration: 3,
+            });
+        } else {
+            // If the timeline exists but is paused, resume it.
+            lineNameTimeline.current.play();
+        }
+    };
+
+    const resetLineNameScroll = () => {
+        // Kill the timeline if it exists and reset the scroll position.
+        if (lineNameTimeline.current) {
+            lineNameTimeline.current.kill();
+            lineNameTimeline.current = null;
+        }
+        const el = lineNameContainerRef.current;
+        if (el) {
+            gsap.set(el, { scrollLeft: 0 });
+        }
+    };
 
     // State to track current casual image index
     const [currentCasualImageIndex, setCurrentCasualImageIndex] = useState(0);
@@ -736,6 +766,7 @@ const HeadshotCard = ({
                 }
             );
         }
+        startLineNameScroll();
     };
 
     // Function to handle headshot hover leave (mouse leave)
@@ -749,6 +780,7 @@ const HeadshotCard = ({
                 stagger: 0.05,
                 ease: 'power2.in',
             });
+            resetLineNameScroll();
         }
     };
 
@@ -1064,9 +1096,13 @@ const HeadshotCard = ({
         <div
             className={`headshot-card ${isSelected(person.id) ? 'selected' : ''}`}
             ref={(el) => assignRef(person.id, el)}
-            onClick={() => handleHeadshotClick(person.id)}
             onMouseEnter={handleCardMouseEnter}
             onMouseLeave={handleCardMouseLeave}
+            onClick={() => {
+                handleHeadshotClick(person.id);
+                // Also trigger the scroll on click if desired
+                startLineNameScroll();
+            }}
         >
 
             {/* Show a message to deselect a headshot when selected. */}
@@ -1149,8 +1185,11 @@ const HeadshotCard = ({
                 {/* Fixed Header (Non-Scrollable) */}
                 <div className="popup-header">
                     <h4>
-                        <span className='NUM'>{person.id}</span>
-                        <span className='line-name'>'{person.line_name}'</span>
+                        <span className="NUM">{person.id}</span>
+                        {/* Wrap the line name in a container with a fixed width */}
+                        <span className="line-name-container" ref={lineNameContainerRef}>
+                            <span className="line-name">'{person.line_name}'</span>
+                        </span>
                     </h4>
                 </div>
 
@@ -1298,8 +1337,10 @@ const HeadshotCard = ({
                 <div className="image-container">
                     <img src={person.image || '/path/to/default/image.png'} alt={person.name} />
                 </div>
-                <h3>{person.name}</h3>
-                <p>{person.class_field}</p>
+                <div className="text-container">
+                    <h3>{person.name}</h3>
+                    <p>{person.class_field}</p>
+                </div>
             </div>
 
         </div>
