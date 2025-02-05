@@ -67,7 +67,7 @@
         }
 
 
-        @media (max-width: 420px) {
+        @media (max-width: 430px) {
             height: 90px;
             .logo-image {
                 width: 80px;
@@ -79,13 +79,27 @@
             span { 
                 gap: 10px;
             }
-            .social {
+            .wrapper {
+                position: relative;  // Ensure that absolutely positioned children are relative to this container
+
+              }
+              
+              .social {
+                position: absolute;
+                right: 30px;  // This anchors it to the container’s right padding edge
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 0;  // Remove the inherited margin
+              }
+              
+              /* Hide extra social icons as before */
+              .social {
                 a:nth-child(1),
                 a:nth-child(2),
                 a:nth-child(4) {
-                    display: none;
+                  display: none;
                 }
-            }
+              }
         }
     }
 }
