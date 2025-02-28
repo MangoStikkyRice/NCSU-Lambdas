@@ -1,105 +1,103 @@
 .navbar {
     height: 100px;
-    background-color: transparent; /* Slight transparency, you can adjust this */
+    background-color: transparent;
     z-index: 4;
-    
+  
     .logo-image {
-        width: 100px;
-        height: auto;
-        filter:invert(.2) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
-        padding-top: 20px;
-        cursor: pointer;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-
-        &:hover {
-            opacity: 50%;
-            transform: scale(1.2);
-        }
+      width: 100px;
+      height: auto;
+      filter: invert(0.2) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+      padding-top: 20px;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+  
+      &:hover {
+        opacity: 50%;
+        transform: scale(1.2);
+      }
     }
-
+  
     .logo-image2 {
-        width: 130px; /* Adjust the size as needed */
-        height: auto;
-        filter:brightness(0%) invert(.25) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
-        padding-top: 30px;
-        cursor: pointer;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-
-        &:hover {
+      width: 130px;
+      height: auto;
+      filter: brightness(0%) invert(0.25) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+      padding-top: 30px;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+  
+      &:hover {
+        opacity: 50%;
+        transform: scale(1.2);
+      }
+    }
+  
+    .wrapper {
+      max-width: 1366px;
+      width: 100%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 95px;
+      height: 100%;
+  
+      .logo-group {
+        font-weight: bold;
+        display: flex;
+        gap: 30px;
+      }
+  
+      .social {
+        display: flex;
+        gap: 20px;
+        margin-left: 50px;
+  
+        img {
+          width: 30px;
+          height: 30px;
+          margin-left: 10px;
+          filter: grayscale(100%) brightness(80%) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+          transition: opacity 0.3s ease, transform 0.3s ease;
+  
+          &:hover {
             opacity: 50%;
             transform: scale(1.2);
+          }
         }
-    }
-
-    .wrapper {
-        max-width: 1366px;
-        width: 100%;
-        margin: auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 95px;
-        height: 100%;
-
-        span {
-            font-weight: bold;
-            display: flex;
-            gap: 30px;
+      }
+  
+      @media (max-width: 430px) {
+        height: 90px;
+        .logo-image {
+          width: 80px;
         }
-
+  
+        .logo-image2 {
+          width: 90px;
+        }
+        .logo-group { 
+          gap: 10px;
+        }
+        .wrapper {
+          position: relative;
+        }
+        
         .social {
-            display: flex;
-            gap: 20px;
-            margin-left: 50px;
-
-            img {
-                width: 30px;
-                height: 30px;
-                margin-left: 10px;
-                filter: grayscale(100%) brightness(80%) drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
-                transition: opacity 0.5s ease, transform 0.5s ease;
-
-                &:hover {
-                    opacity: 50%;
-                    transform: scale(1.2);
-                }
-            }
+          position: absolute;
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-left: 0;
         }
-
-
-        @media (max-width: 430px) {
-            height: 90px;
-            .logo-image {
-                width: 80px;
-            }
-    
-            .logo-image2 {
-                width: 90px;
-            }
-            span { 
-                gap: 10px;
-            }
-            .wrapper {
-                position: relative;  // Ensure that absolutely positioned children are relative to this container
-
-              }
-              
-              .social {
-                position: absolute;
-                right: 30px;  // This anchors it to the container’s right padding edge
-                top: 50%;
-                transform: translateY(-50%);
-                margin-left: 0;  // Remove the inherited margin
-              }
-              
-              /* Hide extra social icons as before */
-              .social {
-                a:nth-child(1),
-                a:nth-child(2),
-                a:nth-child(4) {
-                  display: none;
-                }
-              }
+        
+        .social {
+          a:nth-child(1),
+          a:nth-child(2),
+          a:nth-child(4) {
+            display: none;
+          }
         }
+      }
     }
-}
+  }
+  

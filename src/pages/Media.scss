@@ -7,25 +7,28 @@
   margin-top: 20px;
   font-size: 48px;
   color: white;
-  text-shadow: 2px 2px 3px black, 0px 0px 4px black;;
+  text-shadow: 2px 2px 3px black, 0px 0px 4px black;
 }
 
+// Center the carousel containers and constrain their width
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 1000px; // Match the container width
-  margin: 0 auto; // Center the container
+  max-width: 1200px;
+  margin: 0 auto 10px;
+  height: 200px;
 }
 
 .arrow {
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   font-size: 48px;
-  color: #000;
+  color: #ffffff;
+  text-shadow: 0px 0px 4px rgb(255, 255, 255);
   cursor: pointer;
   user-select: none;
-  z-index: 10; // Ensure arrows are above other elements
+  z-index: 10;
 
   &:hover {
     color: #555;
@@ -33,118 +36,116 @@
 }
 
 .left-arrow {
-  left: 10px;
+  left: -42px;
 }
 
 .right-arrow {
-  right: 10px;
+  right: -42px;
 }
 
-.container {
-  position: relative;
-  height: 350px;
-  width: 100%;
-  max-width: 1000px; // Match the container width
-  top: 40px;
-  font-weight: bold;
-  overflow: hidden;
-  margin: 0 auto; // Center the container
-
-  .img-holder {
-    width: 250px;
-    height: auto;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0px 1px 6px 3px #ccc;
-    visibility: hidden;
-    opacity: 0;
-    top: 50px;
-    left: 375px;
-    cursor: pointer;
-    z-index: 99;
-    transform-style: preserve-3d;
-
-    .video-title {
-      position: absolute;
-      top: -45px; // Adjust as needed
-      left: 50%;
-      width: 100%;
-      transform: translateX(-50%);
-      text-align: center;
-      font-size: 24px;
-      color: rgb(31, 31, 31);
-      text-shadow: 1px 1px 4px rgb(88, 88, 88), 0px 0px 4px black;;
-    }
-
-    img {
-      margin-bottom: 1px;
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-  }
-}
-
+// Adjust row titles to match margins
+.video-row-title,
 .gallery-wrapper {
-  margin-top: 20px;
-  h2 {
-    flex-shrink: 0;
-    white-space: nowrap;
-    text-shadow: 4px 4px 4px black, 0px 0px 4px black;;
-    font-size: 36px;
-    color: #ffffff;
-    margin: 0 0 10px 20px;
-  }
-  /* Adds space above the gallery */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.gallery-title {
-  margin-top: 0;
-  /* Reset margin-top since it's handled by gallery-wrapper */
-  text-align: center;
-  font-size: 48px;
-  color: white;
-  text-shadow: 2px 2px 3px black, 0px 0px 4px black;;
+.video-row-title h2,
+.gallery-wrapper h2 {
+  margin: 0 auto 10px 20px;
+  white-space: nowrap;
+  text-shadow: 0px 0px 4px rgb(255, 255, 255);
+  font-size: 24px;
+  color: #ffffff;
 }
 
-/* ------------------------------------------- */
-/* HORIZONTAL GALLERY (200px high, centered)  */
-/* ------------------------------------------- */
+// Photo gallery carousel
 .infinite-gallery {
   width: 100%;
   height: 200px;
   overflow-x: auto;
   white-space: nowrap;
   padding: 0 20px;
-
 }
 
 .image-card-media {
   display: inline-block;
   width: 200px;
-  height: 150px;       /* Enforce a fixed height */
+  height: 150px;
   margin-right: 16px;
   vertical-align: middle;
+  border: 1px solid #fdfdfd;
   cursor: pointer;
+  will-change: opacity;
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image fills container without stretching */
+    object-fit: cover;
     display: block;
     box-shadow: 0px 1px 6px 3px #000000;
   }
+
+  // Initial state: hidden
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
+// Video row carousel
+.video-row {
+  width: 100%;
+  height: 200px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 20px;
+}
 
-/* LIGHTBOX OVERLAY */
+.video-card {
+  display: inline-block;
+  width: 200px;
+  height: 150px;
+  margin-right: 16px;
+  vertical-align: top;
+  border: 1px solid #fdfdfd;
+  cursor: pointer;
+  will-change: opacity;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    box-shadow: 0px 1px 6px 3px #000000;
+  }
+
+  .video-card-title {
+    margin-top: -35px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: #ffffff;
+    text-shadow: 0px 0px 4px rgb(255, 255, 255);
+    background: radial-gradient(ellipse, rgba(114, 114, 114, 0.493) 5%, rgba(78, 78, 78, 0.61) 7%, rgba(0, 0, 0, 0) 60%);
+    background-position: 0px -4px;
+    text-align: center;
+  }
+
+  // Initial state: hidden
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+// Fade-in animation class
+.animate {
+  opacity: 1;
+}
+
+// Lightbox overlay
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +156,7 @@
 .overlay-content {
   max-width: 90%;
   max-height: 90%;
-  cursor: auto; /* so the child image doesn't appear clickable */
+  cursor: auto;
 
   img {
     width: auto;
@@ -167,111 +168,93 @@
   }
 }
 
-/* MEDIA QUERIES FOR SMALLER SCREENS */
-@media (max-width: 430px) {
-  .media-title {
-    font-size: 32px;
-    margin-top: 10px;
-  }
-
-  .carousel-container {
-    max-width: 100%;
-
-    .arrow {
-      font-size: 36px;
-    }
-
-    .container {
-      overflow-x: hidden;
-
-      height: 300px;
-
-      .img-holder {
-        .video-title {
-          font-size: 18px;
-          top: -35px;
-        }
-      }
-    }
-  }
-
-  .gallery-wrapper {
-    .gallery-title {
-      font-size: 32px;
-    }
-    h2 {
-      flex-shrink: 0;
-      white-space: nowrap;
-      font-size: 20px;
-      color: #ffffff;
-      margin: 0 0 10px 20px;
-    }
-
-    .infinite-gallery {
-      height: 200px; /* Keep a consistent mobile height if you like */
-      padding: 0 20px;
-      width: 100%;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  }
-
-  .footer {
-    .footer-content {
-      p {
-        font-size: 14px;
-      }
-    }
-  }
+// Hide native scrollbars
+.video-row::-webkit-scrollbar,
+.infinite-gallery::-webkit-scrollbar {
+  display: none;
 }
 
-/* ------------------------------------------------- */
-/* NEW NETFLIXY STYLES: HERO + HORIZONTAL VIDEO ROW  */
-/* ------------------------------------------------- */
+.video-row,
+.infinite-gallery {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
+// HERO section
 .hero {
-  width: 100%;
-  height: 60vh;
-  min-height: 825px;
-  background-size: cover;
-  background-position: center;
   position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto 40px auto;
+  height: 40vh;
+  min-height: 500px;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: left;
   color: #e7e7e7;
-  margin: 10px 0 40px 0;
   box-shadow: 0px 0px 20px 5px #000000;
+  overflow: hidden;
+
+  // Initial state: hidden
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
-.hero::before {
-  content: "";
+.hero.animate {
+  opacity: 1;
+}
+
+.hero-background {
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  text-align: center;
-  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  padding: 20px;
 
   .hero-title {
-    font-size: 86px;
-    margin-bottom: 20px;
+    font-size: 64px;
+    margin: 0 0 0 25px;
     text-shadow: 4px 4px 6px rgb(0, 0, 0);
   }
 
+  .hero-text {
+    max-width: 600px;
+  }
+
+  .hero-description {
+    font-size: 20px;
+    color: #dbdbdb;
+    margin: 10px 0 0 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-wrap: balance;
+  }
+
   .watch-now-button {
-    font-size: 24px;
-    padding: 24px 36px;
+    font-size: 18px;
+    padding: 10px 15px;
     background-color: #203c79;
     border: none;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    margin: 40px 0 0 25px;
 
     &:hover {
       background-color: #92aed8;
@@ -279,65 +262,115 @@
   }
 }
 
-.video-row-title {
-  h2 {
-    flex-shrink: 0;
-    white-space: nowrap;
-    font-size: 36px;
-    color: #ffffff;
-    text-shadow: 4px 4px 4px black, 0px 0px 4px black;
-    margin: 0 0 10px 20px;
-  }
+.webgl-container {
+  opacity: 0;
+  transition: opacity 1s ease; // Adjust duration and easing as needed
 }
 
-.video-row {
-  width: 100%;
-  height: 200px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 0 20px;
+.webgl-container.fade {
+  opacity: 1;
+}
 
+/* Existing CSS above remains unchanged */
+
+/* Mobile adjustments for tablets and phones */
+@media (max-width: 768px) {
+  .carousel-container {
+    height: 120px; // slightly lower carousel height
+  }
+  
+  .video-row,
+  .infinite-gallery {
+    height: 150px;
+    padding: 0 10px;
+  }
+  
+  .arrow {
+    font-size: 32px;  // smaller arrows for mobile
+    top: 50%;
+  }
+  
+  .left-arrow {
+    left: 5px;  // bring arrow inside the container
+  }
+  
+  .right-arrow {
+    right: 5px;
+  }
+  
+  .image-card-media {
+    width: 150px;   // scale down image cards
+    height: 100px;
+    margin-right: 8px;
+  }
+  
   .video-card {
-    display: inline-block;
-    width: 200px;
-    margin-right: 16px;
-    vertical-align: top;
-    cursor: pointer;
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      box-shadow: 0px 1px 6px 3px #000000;
-    }
+    width: 150px;   // scale down video cards
+    height: 100px;
+    margin-right: 8px;
 
     .video-card-title {
-      margin-top: 6px;
-      font-size: 18px;
-      color: #000000;
-      text-shadow: 0px 0px 4px rgb(255, 255, 255);
-      text-align: center;
+      margin-top: -25px;
+      font-size: 14px;
     }
+  }
+  
+  .hero {
+    margin: 10px auto;
+    height: auto;      // let the hero section adjust naturally
+    min-height: auto;
+  }
+  
+  .hero-content {
+    padding: 10px;
+  }
+  
+  .hero-content .hero-title {
+    font-size: 48px;      // adjust title size for mobile
+    margin: 0 0 10px 10px;
+  }
+  
+  .hero-content .hero-description {
+    font-size: 12px;
+    margin: 0 0 10px 10px;
+    max-width: 260px;
+  }
+
+  .arrow {
+    visibility: hidden;
   }
 }
 
+/* Existing adjustments for very small screens */
 @media (max-width: 430px) {
-
   .hero {
     min-height: auto;
   }
+  
   .hero-content {
     .hero-title {
-      font-size: 48px;
+      margin-top: 30px;
+      font-size: 26px;
     }
+  
     .watch-now-button {
-      padding: 12px 24px;
+      padding: 10px 20px;
+      margin: 20px 0 10px 10px;
+      font-size: 14px;
     }
   }
-  .video-row-title {
-    h2 {
-      font-size: 20px;
-    }
+  
+  .video-row-title h2 {
+    font-size: 20px;
+    margin-left: 10px;
   }
 
+  .gallery-wrapper h2 {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  .carousel-container .arrow {
+    font-size: 36px;
+  }
 }

@@ -11,6 +11,7 @@
     padding: 100px 10px;
     font-family: 'Arial', sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
     /* Hide horizontal scroll */
 }
 
@@ -124,6 +125,7 @@
     @media (max-width: 650px) {
 
         margin-bottom: -50px;
+        margin-top: -50px;
 
         .blue-strip1 {
             height: 100%;
@@ -240,6 +242,7 @@
         /* Center the grid horizontally */
         align-items: center;
         grid-auto-rows: 1fr;
+        justify-content: center; // centers the grid as a whole
     }
 
     @media (max-width: 650px) {
@@ -288,6 +291,7 @@
 /* Headshot Card */
 .headshot-card {
     display: flex;
+    max-width: 250px;
     flex-direction: column;
     background-color: #ffffff;
     text-align: center;
@@ -301,15 +305,10 @@
     &.year-card {
         background-color: #ffffff00 !important;
 
-        // If you want to remove the “image container” portion altogether, 
-        // or make it blue as well, you can do:
         .image-container {
             background: #305096;
             height: 385px;
-            min-width: 250px;
 
-
-            // or keep it but also do background: #203c79 if you want
             .year-container {
                 position: absolute;
                 left: 10px;
@@ -324,7 +323,7 @@
                     font-size: 20px;
                     font-style: italic;
                     font-weight: bold;
-                    letter-spacing: 10px;
+                    letter-spacing: 8px;
                 }
             }
 
@@ -333,6 +332,17 @@
                 font-weight: bold;
                 font-size: 260px;
                 letter-spacing: -.4rem;
+            }
+
+            @media (max-width: 430px) {
+                .year-container {
+                    top: 70px;
+                    left: 0px;
+                }
+
+                h1 {
+                    font-size: 200px;
+                }
             }
         }
     }
@@ -420,6 +430,7 @@
         .view-positions-button {
             padding: 10px 15px; // Increased padding for a more substantial feel
             border-radius: 25px; // Rounded corners for a modern look
+            max-width: 95%;
             background: linear-gradient(45deg, #92aed8, #203c79); // Gradient background
             color: #fff; // White text for contrast
             border: none; // Remove border for a cleaner look
@@ -432,7 +443,7 @@
             margin: 0 auto 15px auto;
 
             h2 {
-                font-size: 18px;
+                font-size: 16px;
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.719);
                 text-align: center;
                 margin: 0;
@@ -506,6 +517,7 @@
         transform-style: preserve-3d;
         transition: transform 0.3s ease;
         z-index: 9;
+        max-width: 175px;
     }
 
     .headshot-card .card-inner * {
@@ -576,7 +588,7 @@
         background-color: #20375acb;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.63);
         padding: 8px;
-        width: 180px;
+        width: 200px;
         height: 100%;
         /* Matches the height of the headshot card */
         opacity: 0;
@@ -604,12 +616,18 @@
 
             .flag-icon {
                 height: auto;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 background-color: transparent;
 
                 &:hover {
                     transform: scale(1.1);
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                }
+            }
+
+            @media (max-width: 430px) {
+                .flag-icon {
+                    height: auto;
+                    width: 15px;
                 }
             }
         }
@@ -626,7 +644,7 @@
                 position: absolute;
                 bottom: 0px;
                 /* Adjust as needed */
-                left: 80px;
+                left: 60px;
                 /* Adjust as needed */
                 display: flex;
                 gap: 5px;
@@ -649,8 +667,8 @@
         /* Casual Images Carousel */
         .popup-casual-carousel {
             position: relative;
-            width: 100%;
-            margin-bottom: 15px;
+            width: 95%;
+            margin: 0px auto 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -798,6 +816,7 @@
                 align-items: center;
                 /* Vertically centers the NUM and text */
                 margin: 0;
+                padding-left: 2px;
                 /* Removes default margin */
                 font-size: 1.5rem;
                 color: #ffffff;
@@ -824,10 +843,12 @@
 
             @media (max-width: 650px) {
                 .line-name-container {
-                    margin: 0 auto; /* This centers the element horizontally */
+                    margin: 0 auto;
+                    /* This centers the element horizontally */
                 }
+
                 .line-name {
-                    font-size: 18px;
+                    font-size: 14px;
                 }
             }
 
@@ -911,7 +932,7 @@
             }
 
             p {
-                font-size: 18px;
+                font-size: 14px;
                 margin: 5px 0;
             }
 
@@ -935,15 +956,17 @@
                 /* Other options: circle, square, none */
                 padding-left: 20px;
                 /* Adds space to indent */
-                margin: -3px 0 0 0;
+                margin: 0;
                 /* Adjusts space around the list */
+                line-height: 1.2;
             }
         }
 
         .hobbies-section {
+            padding-top: 6px;
 
             h5 {
-                font-size: 18px;
+                font-size: 14px;
                 line-height: 16px;
             }
 
@@ -966,7 +989,7 @@
                 padding: 5px 10px;
                 border-radius: 20px;
                 /* Makes the edges round */
-                font-size: 0.9rem;
+                font-size: 12px;
                 font-weight: 500;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 /* Optional: adds a subtle shadow */
@@ -993,6 +1016,19 @@
 
         }
     }
+
+
+    @media (max-width: 430px) {
+        /* Target flags in the default (right‑aligned) popup */
+        .popup:not(.popup-left) .flags-container {
+          right: 0px; // Adjust for right-aligned popup
+        }
+        
+        /* Target flags in the left-aligned popup */
+        .popup.popup-left .flags-container {
+          left: 40px; // Adjust for left-aligned popup
+        }
+      }
 
 
     /* Popup Footer (Optional) */
@@ -1082,6 +1118,9 @@
     }
 }
 
+.status {
+    padding-bottom: 20px;
+}
 
 
 
@@ -1360,6 +1399,7 @@
 
                 li {
                     a {
+                        font-size: 12px;
                         color: white;
                         text-decoration: none;
 
@@ -1389,14 +1429,13 @@ body {
     /* Default horizontal layout */
     align-items: center;
     /* Center items vertically */
-    gap: 8px;
+    gap: 2px;
     /* Spacing between items */
 }
 
 /* Modifier for Big Brother section */
 .related-brothers.big-brother {
-    display: inline-flex;
-    /* Ensure content is inline and beside each other */
+    display: flex;
     margin-bottom: 10px;
 }
 
@@ -1411,10 +1450,15 @@ body {
 }
 
 .related-brothers h5 {
-    margin-bottom: 5px;
-    font-size: 18px;
-    color: #ffffff;
-    white-space: nowrap;
+    white-space: normal;
+    /* Allow wrapping */
+    word-break: break-word;
+    flex-basis: 100%;
+    /* Forces h5 to take full width when wrapping */
+    text-align: center;
+    /* Center the text when it wraps */
+    font-size: 16px;
+    margin: 0;
 }
 
 @media (max-width: 650px) {
@@ -1424,13 +1468,20 @@ body {
 }
 
 .related-brothers .related-link {
-    display: inline-flex;
+    display: inline-block;
+    max-width: 94%;
+    /* Prevents overflow */
+    white-space: normal;
+    /* Allows wrapping */
+    word-break: break-word;
+    /* Break long words if necessary */
+    text-align: center;
+    /* Center the text when it wraps */
     /* Aligns content horizontally */
     align-items: center;
     /* Vertically centers content */
     justify-content: center;
     /* Horizontally centers content */
-    padding: 0 5px;
     /* Increased padding for better click area */
     background-color: #445d80;
     /* Primary button color */
@@ -1443,21 +1494,55 @@ body {
     /* Rounded corners for a modern look */
     cursor: pointer;
     /* Pointer cursor on hover */
-    font-size: 1rem;
+    font-size: 16px;
     /* Consistent font size */
     font-weight: 600;
     /* Slightly bold text */
     text-decoration: none;
     /* Removes underline */
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     /* Smooth transitions */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
-    /* Optional: Add an icon or indicator */
-    /* Example: Adding a right arrow icon using pseudo-element */
     position: relative;
-    white-space: nowrap;
+    line-height: 1.2;
+}
 
+.related-link-littles {
+    display: inline-block;
+    white-space: normal;
+    /* Allows wrapping */
+    word-break: break-word;
+    /* Break long words if necessary */
+    text-align: center;
+    /* Center the text when it wraps */
+    /* Aligns content horizontally */
+    align-items: center;
+    /* Vertically centers content */
+    justify-content: center;
+    /* Horizontally centers content */
+    /* Increased padding for better click area */
+    background-color: #445d80;
+    /* Primary button color */
+    color: #ffffff;
+    /* Text color */
+    border: none;
+    /* Removes default border */
+    border-radius: 8px;
+    margin-bottom: 5px;
+    /* Rounded corners for a modern look */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    font-size: .9rem;
+    /* Consistent font size */
+    font-weight: 600;
+    /* Slightly bold text */
+    text-decoration: none;
+    /* Removes underline */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth transitions */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    line-height: 1.2;
 }
 
 @media (max-width: 650px) {
@@ -1468,10 +1553,25 @@ body {
     }
 }
 
+@media (max-width: 650px) {
+    .related-brothers .related-link-littles {
+        font-size: 10px;
+        padding: 1px 5px;
+        margin-bottom: 0px;
+    }
+}
+
 .related-brothers .related-link:hover {
     background-color: #6e8bb5;
     /* Darker shade on hover */
-    transform: translate3d(4px, 2px, 0) scale(1.05);
+    /* Slight upward movement */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    /* Enhanced shadow on hover */
+}
+
+.related-brothers .related-link-littles:hover {
+    background-color: #6e8bb5;
+    /* Darker shade on hover */
     /* Slight upward movement */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     /* Enhanced shadow on hover */
@@ -1510,4 +1610,13 @@ body {
 .related-brothers .related-link:hover::after {
     transform: translateX(4px);
     /* Move icon to the right on hover */
+}
+
+@media (max-width: 430px) {
+    .headshot-card.year-card {
+      .image-container {
+        height: 250px; // Adjust this value as needed
+      }
+      // If there are other elements (like title or class info) you can also tweak their padding or margins here.
+    }
 }

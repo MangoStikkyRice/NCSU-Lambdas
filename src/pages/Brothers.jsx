@@ -1046,28 +1046,32 @@ const HeadshotCard = ({
     const adjustPopupPosition = () => {
         const popup = popupRef.current;
         const card = cardRef.current;
-
         if (!popup || !card) return;
-
-        // Get bounding rectangles
+      
         const cardRect = card.getBoundingClientRect();
         const popupRect = popup.getBoundingClientRect();
-
-        // Check for overflows
+      
+        // Only force left if the card's right edge is close to the viewport's right edge 
+        // AND the card is not near the left edge (i.e. not in the first column)
+        if (window.innerWidth - cardRect.right < 550 && cardRect.left > 550) {
+          popup.classList.remove('popup-right');
+          popup.classList.add('popup-left');
+          return;
+        }
+      
+        // Existing logic for overflow handling:
         const isOverflowingRight = cardRect.right + popupRect.width > window.innerWidth;
         const isOverflowingLeft = cardRect.left - popupRect.width < 0;
-
-        // Reset classes
         popup.classList.remove('popup-left', 'popup-right');
-
         if (isOverflowingRight) {
-            popup.classList.add('popup-left'); // Align popup to the left
+          popup.classList.add('popup-left');
         } else if (isOverflowingLeft) {
-            popup.classList.add('popup-right'); // Align popup to the right
+          popup.classList.add('popup-right');
         } else {
-            popup.classList.add('popup-right'); // Default to right alignment
+          popup.classList.add('popup-right'); // default alignment
         }
-    };
+      };
+      
 
     useEffect(() => {
         adjustPopupPosition();
@@ -1209,8 +1213,8 @@ const HeadshotCard = ({
                                 {bigBrother.name.includes(' ')
                                     ? `${bigBrother.name.split(' ')[0]} ${bigBrother.name.split(' ')[1][0]}.`
                                     : bigBrother.name}
+                                's Little
                             </button>
-                            <h5>'s Little</h5>
                         </div>
                     )}
 
@@ -1235,7 +1239,7 @@ const HeadshotCard = ({
                                                     e.stopPropagation();
                                                     handleLinkClick(little.id);
                                                 }}
-                                                className="related-link"
+                                                className="related-link-littles"
                                             >
                                                 {displayName}
                                             </button>
@@ -1248,7 +1252,7 @@ const HeadshotCard = ({
 
 
                     {/* New "View Positions" Button */}
-                    <div className="view-positions-container">
+                    {/* <div className="view-positions-container">
                         <button
                             className="view-positions-button"
                             onClick={(e) => {
@@ -1260,7 +1264,7 @@ const HeadshotCard = ({
                         >
                             <h2>View Service Record</h2>
                         </button>
-                    </div>
+                    </div> */}
 
 
                     {/* Course of study/Major label */}
@@ -1300,7 +1304,7 @@ const HeadshotCard = ({
                     )}
 
                     {/* Graduation status (Alumni, Active, Associate) label. */}
-                    <p>Status: <b>{person.status}</b></p>
+                    <p className='status'>Status: <b>{person.status}</b></p>
                 </div>
 
 
