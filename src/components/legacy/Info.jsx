@@ -33,6 +33,8 @@ const infoData = [
     },
 ];
 
+
+
 function Info() {
     const [activeId, setActiveId] = useState(infoData[0].id);
     const activeInfo = infoData.find((item) => item.id === activeId);
