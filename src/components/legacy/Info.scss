@@ -158,6 +158,9 @@ $transition-speed: 0.3s;
                 .info-button {
                     padding: 15px 0;
                     font-size: 0.9rem;
+                    -webkit-appearance: none; /* Remove iOS default button styles */
+                    appearance: none;
+                    background: transparent;  /* Force transparent background */
 
                     h4 {
                         font-size: 14px;
@@ -174,6 +177,11 @@ $transition-speed: 0.3s;
                 background-color: rgba(158, 158, 158, 0.349);
 
                 .info-details {
+
+                    max-height: 40vh;
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+                    touch-action: pan-y;
                     h2 {
                         font-size: 1.5rem;
                         color: #203c79;

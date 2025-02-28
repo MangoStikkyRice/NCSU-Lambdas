@@ -722,6 +722,8 @@
 
         /* Carousel Buttons */
         .carousel-button {
+            -webkit-appearance: none;
+            appearance: none;
             background: rgba(255, 255, 255, 0.7);
             border: none;
             border-radius: 50%;
