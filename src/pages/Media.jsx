@@ -2,89 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Media.scss';
 import NavBarNew from '../components/navbar/NavBarNew';
 import Footer from '../components/Footer';
+import { youtubeVideos } from '../data/mediaCarouselData';
 
 // Behind-the-scenes gallery removed per request
 
-// YouTube video data
-const youtubeVideos = [
-    {
-        title: 'Charter Conquest',
-        url: 'https://youtu.be/RUQTrrlLkx8',
-        thumbnail: 'https://i.ytimg.com/vi/RUQTrrlLkx8/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2016,
-    },
-    {
-        title: 'Alpha Ascension',
-        url: 'https://youtu.be/9zngWsr6LE4',
-        thumbnail: 'https://i.ytimg.com/vi/9zngWsr6LE4/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2017,
-    },
-    {
-        title: 'Beta Battalion',
-        url: 'https://youtu.be/DGXhEBjH81E',
-        thumbnail: 'https://i.ytimg.com/vi/DGXhEBjH81E/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2017,
-    },
-    {
-        title: 'Gamma Guardians',
-        url: 'https://youtu.be/OrSyEHm372o',
-        thumbnail: 'https://i.ytimg.com/vi/OrSyEHm372o/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2018,
-    },
-    {
-        title: 'Delta Dimension',
-        url: 'https://youtu.be/Wx1MEwTpfEo',
-        thumbnail: 'https://i.ytimg.com/vi/Wx1MEwTpfEo/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2018,
-    },
-    {
-        title: 'Epsilon Eclipse',
-        url: 'https://youtu.be/SBTsNR2__e4',
-        thumbnail: 'https://i.ytimg.com/vi/SBTsNR2__e4/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2019,
-    },
-    {
-        title: 'Zeta Zaibatsu',
-        url: 'https://youtu.be/VAUJxBy--yc',
-        thumbnail: 'https://i.ytimg.com/vi/VAUJxBy--yc/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2019,
-    },
-    {
-        title: 'Iota Immortals',
-        url: 'https://www.youtube.com/watch?v=TBdsb6LB-tg',
-        thumbnail: 'https://i.ytimg.com/vi/TBdsb6LB-tg/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2020,
-    },
-    {
-        title: 'Mu Monarchs',
-        url: 'https://youtu.be/ttDvgZ6D9NE',
-        thumbnail: 'https://i.ytimg.com/vi/ttDvgZ6D9NE/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2020,
-    },
-    {
-        title: 'Nu Nen',
-        url: 'https://youtu.be/VAHC-5UoZPY',
-        thumbnail: 'https://i.ytimg.com/vi/VAHC-5UoZPY/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2021,
-    },
-    {
-        title: 'Xi Xin',
-        url: 'https://youtu.be/6cm_sYJfTB8',
-        thumbnail: 'https://i.ytimg.com/vi/6cm_sYJfTB8/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2021,
-    },
-];
+// YouTube video data imported from separate file
 
 const Media = () => {
     // Refs and state
@@ -175,8 +97,8 @@ const Media = () => {
     // Hero background style based on screen size
     const heroBackgroundStyle = {
         backgroundImage: isMobile
-            ? `radial-gradient(circle at left center, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.53) 70%, rgba(0, 212, 255, 0) 80%), url(${getHighResThumbnail(latestVideo.thumbnail)})`
-            : `radial-gradient(circle at left center, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.53) 50%, rgba(0, 212, 255, 0) 70%), url(${getHighResThumbnail(latestVideo.thumbnail)})`,
+            ? `radial-gradient(circle at left center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 212, 255, 0) 80%), url(${getHighResThumbnail(latestVideo.thumbnail)})`
+            : `radial-gradient(circle at left center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 212, 255, 0) 70%), url(${getHighResThumbnail(latestVideo.thumbnail)})`,
         backgroundSize: 'cover',
         backgroundPosition: isMobile ? 'center' : 'top',
         backgroundRepeat: 'no-repeat',
@@ -193,7 +115,7 @@ const Media = () => {
                     <div className="hero-text">
                         <h1 className="hero-title">{latestVideo.title} Class Reveal</h1>
                         <p className="hero-description">
-                            Centennial Campus sets the stage. The wait is over. Months of work, loyalty, and brotherhood come down to this. No frills, no filters—just the reveal.
+                            Centennial Campus sets the stage. The wait is over. Months of work, loyalty, and brotherhood come down to this. No frills, no filters. Just the reveal.
                         </p>
                     </div>
                     <button

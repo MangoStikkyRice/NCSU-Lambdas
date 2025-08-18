@@ -125,17 +125,10 @@ const infoData = [
 // Background images for info section
 const backgroundImages = [NATIONAL_HISTORY, MISSION, THE_VISION, CORE_VALUES];
 
-// Animation variants for philanthropy
-const philanthropyVariants = {
-    collapsed: { height: '4.4em', overflow: 'hidden' },
-    expanded: { height: 'auto' }
-};
+// Animation variants for philanthropy - removed since using scrollable content
 
 function Legacy() {
     const navigate = useNavigate();
-    
-    // Philanthropy state
-    const [expandedId, setExpandedId] = useState(null);
     
     // Info state
     const [activeId, setActiveId] = useState(infoData[0].id);
@@ -153,10 +146,6 @@ function Legacy() {
 
     const handleButtonClick = (path) => {
         navigate(path);
-    };
-
-    const toggleExpand = (id) => {
-        setExpandedId(expandedId === id ? null : id);
     };
 
     const activeInfo = infoData.find((item) => item.id === activeId);
@@ -181,7 +170,7 @@ function Legacy() {
                             </motion.a>
                             <motion.a
                                 variants={textVariants} 
-                                href={`https://lambdaphiepsilon.com/giving-tuesday-2023/`}
+                                href={`https://lambdaphiepsilon.com/category/fraternity-announcement/`}
                                 target="_blank" rel="noopener noreferrer"
                                 aria-label="International News"
                             >
@@ -231,8 +220,8 @@ function Legacy() {
                                         key={item.id}
                                         className={`info-button ${activeId === item.id ? 'active' : ''}`}
                                         onClick={() => setActiveId(item.id)}
-                                        whileHover={{ scale: 1.05, backgroundColor: '#fff' }}
-                                        whileTap={{ scale: 0.95 }}
+                                        whileHover={activeId === item.id ? {} : { scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
                                         aria-pressed={activeId === item.id}
                                     >
                                         <h4>{item.title}</h4>
@@ -267,9 +256,6 @@ function Legacy() {
                     <h1>National Philanthropy</h1>
                     <div className="phil-wrapper">
                         {philanthropyItems.map(item => {
-                            const shortText = item.desc.slice(0, 150);
-                            const isExpanded = expandedId === item.id;
-
                             return (
                                 <div className="phil-card" key={item.id}>
                                     <div className="imageContainer">
@@ -277,18 +263,12 @@ function Legacy() {
                                     </div>
                                     <div className="textContainer">
                                         <h2>{item.title}</h2>
-                                        <motion.div
-                                            animate={isExpanded ? "expanded" : "collapsed"}
-                                            variants={philanthropyVariants}
-                                            className="desc"
-                                        >
-                                            <p>
-                                                {isExpanded ? item.desc : shortText + '...'}
-                                            </p>
-                                        </motion.div>
+                                        <div className="desc">
+                                            <p>{item.desc}</p>
+                                        </div>
                                         <div className="readMoreContainer">
                                             <button onClick={() => toggleExpand(item.id)}>
-                                                {isExpanded ? 'Collapse' : 'Read More'}
+                                                Read More
                                             </button>
                                         </div>
                                         <a 

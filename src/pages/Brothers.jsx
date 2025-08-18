@@ -8,6 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Positions overlay removed for demo; layout preserved without it
 import Footer from '../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
+import { YEAR_GRID_DATA } from '../constants/yearGridData';
+import YearOverlay from '../components/brothers/YearOverlay';
 
 // We'll use static yearbook pics for now. Add to DB later.
 import class2016BImage from '../backend/media/class/charters.png';
@@ -25,6 +27,7 @@ import class2022BImage from '../backend/media/class/mus.png';
 import class2023BImage from '../backend/media/class/nus.png';
 import class2024AImage from '../backend/media/class/xis.png';
 import class2024BImage from '../backend/media/class/omicrons.jpg';
+import dataBrothers from '../data/brothers.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,19 +44,6 @@ const Brothers = () => {
         },
     });
 
-    // // States for statistics overlay data
-    // const [showStatistics, setShowStatistics] = useState(false);
-
-    // // Open statistics overlay
-    // const openStatistics = () => {
-    //     setShowStatistics(true);
-    // };
-
-    // // Close statistics overlay
-    // const closeStatistics = () => {
-    //     setShowStatistics(false);
-    // };
-
     // States to hold brothers data
     const [brothers, setBrothers] = useState([]);
     const [selectedBrotherId, setSelectedBrotherId] = useState(null);
@@ -61,21 +51,10 @@ const Brothers = () => {
     // Refs for each brother's headshot to enable scrolling
     const headshotRefs = useRef({});
 
-    // Fetch brothers data from static JSON on component mount
+    // Load brothers statically from bundled JSON
     useEffect(() => {
-        fetchBrothers();
+        setBrothers(Array.isArray(dataBrothers) ? dataBrothers : []);
     }, []);
-
-    const fetchBrothers = async () => {
-        try {
-            const response = await axios.get('/brothers.json', { timeout: 10000 });
-            const data = response.data;
-            setBrothers(Array.isArray(data) ? data : []);
-        } catch (error) {
-            console.error('Error loading brothers.json:', error?.message || error);
-            setBrothers([]);
-        }
-    };
 
     // Function to handle link clicks within popups
     const handleLinkClick = (targetId) => {
@@ -201,144 +180,7 @@ const Brothers = () => {
         return [];
     };
 
-    const yearGridData = [
-        {
-            year: '2016',
-            classes: [
-
-                {
-                    className: 'Charter Conquest',
-                    PM: 'Tim Wu',
-                    PD: 'Henry Lieu',
-                    image: class2016BImage,
-                },
-            ],
-        },
-        {
-            year: '2017',
-            classes: [
-                {
-                    className: 'Alpha Ascension',
-                    PM: 'David Chang',
-                    PD: 'Terrance Touch',
-                    image: class2017AImage,
-                },
-                {
-                    className: 'Beta Battalion',
-                    PM: 'RJ Javier',
-                    PD: '[Term Void]',
-                    image: class2017BImage,
-                }
-            ]
-        },
-        {
-            year: '2018',
-            classes: [
-                {
-                    className: 'Gamma Guardians',
-                    PM: 'Timothy Wu',
-                    PD: 'Brody Zhao',
-                    image: class2018AImage,
-                },
-                {
-                    className: 'Delta Dimension',
-                    PM: 'Matthew Wright',
-                    PD: 'Tarun Salian',
-                    image: class2018BImage,
-                },
-            ],
-        },
-        {
-            year: '2019',
-            classes: [
-                {
-                    className: 'Epsilon Eclipse',
-                    PM: 'Tye Rojanasoonthon',
-                    PD: 'Ye Htet',
-                    image: class2019AImage,
-                },
-                {
-                    className: 'Zeta Zaibatsu',
-                    PM: 'Alex Phan',
-                    PD: '[Term Void]',
-                    image: class2019BImage,
-                },
-            ],
-        },
-        {
-            year: '2020',
-            classes: [
-                {
-                    className: 'Eta Evolution',
-                    PM: 'Tarun Salian',
-                    PD: 'Benjamin Adams',
-                    image: class2020AImage,
-                },
-            ],
-        },
-        {
-            year: '2021',
-            classes: [
-                {
-                    className: 'Theta Trinity',
-                    PM: 'Jeremy Dela Paz',
-                    PD: 'Miller Kahihu',
-                    image: class2021AImage,
-                },
-                {
-                    className: 'Iota Immortals',
-                    PM: 'Michael Tran',
-                    PD: '[Term Void]',
-                    image: class2021BImage,
-                },
-            ],
-        },
-        {
-            year: '2022',
-            classes: [
-                {
-                    className: 'Kappa Kazoku',
-                    PM: 'Charles Villazor',
-                    PD: 'Jared Javier',
-                    image: class2022AImage,
-                },
-                {
-                    className: 'Mu Monarchs',
-                    PM: 'Richard Ngo',
-                    PD: 'Kunwoo Lee',
-                    image: class2022BImage,
-                },
-            ],
-        },
-        {
-            year: '2023',
-            classes: [
-                {
-                    className: 'Nu Nen',
-                    PM: 'Maaz Khan',
-                    PD: 'Dylan Murray',
-                    image: class2023BImage,
-                },
-            ],
-        },
-        {
-            year: '2024',
-            classes: [
-                {
-                    className: 'Xi Xin',
-                    PM: 'Yucheng',
-                    PD: 'Christoffer Villazor',
-                    image: class2024AImage,
-                },
-                {
-                    className: 'Omicron Okami',
-                    PM: 'Austin Heyward',
-                    PD: 'San Phyo',
-                    image: class2024BImage,
-                },
-            ],
-        },
-    ];
+    const yearGridData = YEAR_GRID_DATA;
 
     // Track which year is selected for overlay
     const [selectedYearData, setSelectedYearData] = useState(null);
@@ -454,9 +296,6 @@ const Brothers = () => {
                                         getLittles={getLittles}
                                         hobbyFilter={hobbyFilter}
                                         setHobbyFilter={setHobbyFilter}
-                                        openOverlay={() =>
-                                            openOverlay(person.positions, person.name, person.image_url)
-                                        }
                                     />
                                 ))}
                             </div>
@@ -505,17 +344,6 @@ const Brothers = () => {
                         )}
                     </AnimatePresence>
 
-                    {/* Positions Overlay */}
-                    <AnimatePresence>
-                        {overlayData && (
-                            <PositionsOverlay
-                                positions={overlayData.positions}
-                                onClose={closeOverlay}
-                                name={overlayData.name}
-                                imageUrl={overlayData.imageUrl} // Pass imageUrl to PositionsOverlay
-                            />
-                        )}
-                    </AnimatePresence>
                 </>
 
 
@@ -540,7 +368,6 @@ const HeadshotCard = ({
     getLittles,
     hobbyFilter,
     setHobbyFilter,
-    openOverlay,
 }) => {
 
     // Ref for the container wrapping the line name
@@ -712,37 +539,18 @@ const HeadshotCard = ({
         });
     };
 
-    // Ref for the flags container
-    const flagsContainerRef = useRef(null);
-
     // Ref for the card content to apply tilt
     const cardContentRef = useRef(null);
 
     // Function to handle headshot hover (mouse enter)
     const handleCardMouseEnter = () => {
         setHovered(true);
-        if (!isSelected(person.id) && flagsContainerRef.current) {
+        if (!isSelected(person.id)) {
 
             let fromX = -50;
             if (popupRef.current.classList.contains('popup-left')) {
                 fromX = 50;
             }
-            // Animate flags to scale up
-            gsap.fromTo(
-                flagsContainerRef.current.children,
-                { x: fromX, opacity: 0, scale: 0.1, },
-                {
-                    x: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1,
-                    stagger: 0.1,
-                    ease: "expo",
-                    onComplete: () => {
-                        flagsContainerRef.current.dataset.hasAnimated = true;
-                    },
-                }
-            );
         }
         startLineNameScroll();
     };
@@ -750,14 +558,7 @@ const HeadshotCard = ({
     // Function to handle headshot hover leave (mouse leave)
     const handleCardMouseLeave = () => {
         setHovered(false);
-        if (!isSelected(person.id) && flagsContainerRef.current) {
-            // Animate flags back to original scale
-            gsap.to(flagsContainerRef.current.children, {
-                scale: 1,
-                duration: 0.3,
-                stagger: 0.05,
-                ease: 'power2.in',
-            });
+        if (!isSelected(person.id)) {
             resetLineNameScroll();
         }
     };
@@ -771,200 +572,6 @@ const HeadshotCard = ({
     const littles = getLittles(person);
 
     const { nationalities } = person;
-    {/* Country Map */ }
-    const countryMap = {
-        AF: { name: "Afghanistan", code: "af" },
-        AL: { name: "Albania", code: "al" },
-        DZ: { name: "Algeria", code: "dz" },
-        AS: { name: "American Samoa", code: "as" },
-        AD: { name: "Andorra", code: "ad" },
-        AO: { name: "Angola", code: "ao" },
-        AI: { name: "Anguilla", code: "ai" },
-        AG: { name: "Antigua and Barbuda", code: "ag" },
-        AR: { name: "Argentina", code: "ar" },
-        AM: { name: "Armenia", code: "am" },
-        AU: { name: "Australia", code: "au" },
-        AT: { name: "Austria", code: "at" },
-        AZ: { name: "Azerbaijan", code: "az" },
-        BS: { name: "Bahamas", code: "bs" },
-        BH: { name: "Bahrain", code: "bh" },
-        BD: { name: "Bangladesh", code: "bd" },
-        BB: { name: "Barbados", code: "bb" },
-        BY: { name: "Belarus", code: "by" },
-        BE: { name: "Belgium", code: "be" },
-        BZ: { name: "Belize", code: "bz" },
-        BJ: { name: "Benin", code: "bj" },
-        BM: { name: "Bermuda", code: "bm" },
-        BT: { name: "Bhutan", code: "bt" },
-        BO: { name: "Bolivia", code: "bo" },
-        BA: { name: "Bosnia and Herzegovina", code: "ba" },
-        BW: { name: "Botswana", code: "bw" },
-        BR: { name: "Brazil", code: "br" },
-        BN: { name: "Brunei", code: "bn" },
-        BG: { name: "Bulgaria", code: "bg" },
-        BF: { name: "Burkina Faso", code: "bf" },
-        BI: { name: "Burundi", code: "bi" },
-        CV: { name: "Cabo Verde", code: "cv" },
-        KH: { name: "Cambodia", code: "kh" },
-        CM: { name: "Cameroon", code: "cm" },
-        CA: { name: "Canada", code: "ca" },
-        KY: { name: "Cayman Islands", code: "ky" },
-        CF: { name: "Central African Republic", code: "cf" },
-        TD: { name: "Chad", code: "td" },
-        CL: { name: "Chile", code: "cl" },
-        CN: { name: "China", code: "cn" },
-        CO: { name: "Colombia", code: "co" },
-        KM: { name: "Comoros", code: "km" },
-        CG: { name: "Congo (Brazzaville)", code: "cg" },
-        CD: { name: "Congo (Kinshasa)", code: "cd" },
-        CR: { name: "Costa Rica", code: "cr" },
-        HR: { name: "Croatia", code: "hr" },
-        CU: { name: "Cuba", code: "cu" },
-        CY: { name: "Cyprus", code: "cy" },
-        CZ: { name: "Czech Republic", code: "cz" },
-        DK: { name: "Denmark", code: "dk" },
-        DJ: { name: "Djibouti", code: "dj" },
-        DM: { name: "Dominica", code: "dm" },
-        DO: { name: "Dominican Republic", code: "do" },
-        EC: { name: "Ecuador", code: "ec" },
-        EG: { name: "Egypt", code: "eg" },
-        SV: { name: "El Salvador", code: "sv" },
-        GQ: { name: "Equatorial Guinea", code: "gq" },
-        ER: { name: "Eritrea", code: "er" },
-        EE: { name: "Estonia", code: "ee" },
-        SZ: { name: "Eswatini", code: "sz" },
-        ET: { name: "Ethiopia", code: "et" },
-        FJ: { name: "Fiji", code: "fj" },
-        FI: { name: "Finland", code: "fi" },
-        FR: { name: "France", code: "fr" },
-        GA: { name: "Gabon", code: "ga" },
-        GM: { name: "Gambia", code: "gm" },
-        GE: { name: "Georgia", code: "ge" },
-        DE: { name: "Germany", code: "de" },
-        GH: { name: "Ghana", code: "gh" },
-        GR: { name: "Greece", code: "gr" },
-        GD: { name: "Grenada", code: "gd" },
-        GT: { name: "Guatemala", code: "gt" },
-        GN: { name: "Guinea", code: "gn" },
-        GW: { name: "Guinea-Bissau", code: "gw" },
-        GY: { name: "Guyana", code: "gy" },
-        HT: { name: "Haiti", code: "ht" },
-        HN: { name: "Honduras", code: "hn" },
-        HU: { name: "Hungary", code: "hu" },
-        IS: { name: "Iceland", code: "is" },
-        IN: { name: "India", code: "in" },
-        ID: { name: "Indonesia", code: "id" },
-        IR: { name: "Iran", code: "ir" },
-        IQ: { name: "Iraq", code: "iq" },
-        IE: { name: "Ireland", code: "ie" },
-        IL: { name: "Israel", code: "il" },
-        IT: { name: "Italy", code: "it" },
-        JM: { name: "Jamaica", code: "jm" },
-        JP: { name: "Japan", code: "jp" },
-        JO: { name: "Jordan", code: "jo" },
-        KZ: { name: "Kazakhstan", code: "kz" },
-        KE: { name: "Kenya", code: "ke" },
-        KI: { name: "Kiribati", code: "ki" },
-        KR: { name: "Korea, South", code: "kr" },
-        KW: { name: "Kuwait", code: "kw" },
-        KG: { name: "Kyrgyzstan", code: "kg" },
-        LA: { name: "Laos", code: "la" },
-        LV: { name: "Latvia", code: "lv" },
-        LB: { name: "Lebanon", code: "lb" },
-        LS: { name: "Lesotho", code: "ls" },
-        LR: { name: "Liberia", code: "lr" },
-        LY: { name: "Libya", code: "ly" },
-        LI: { name: "Liechtenstein", code: "li" },
-        LT: { name: "Lithuania", code: "lt" },
-        LU: { name: "Luxembourg", code: "lu" },
-        MG: { name: "Madagascar", code: "mg" },
-        MW: { name: "Malawi", code: "mw" },
-        MY: { name: "Malaysia", code: "my" },
-        MV: { name: "Maldives", code: "mv" },
-        ML: { name: "Mali", code: "ml" },
-        MT: { name: "Malta", code: "mt" },
-        MH: { name: "Marshall Islands", code: "mh" },
-        MR: { name: "Mauritania", code: "mr" },
-        MU: { name: "Mauritius", code: "mu" },
-        MX: { name: "Mexico", code: "mx" },
-        FM: { name: "Micronesia", code: "fm" },
-        MD: { name: "Moldova", code: "md" },
-        MC: { name: "Monaco", code: "mc" },
-        MN: { name: "Mongolia", code: "mn" },
-        ME: { name: "Montenegro", code: "me" },
-        MA: { name: "Morocco", code: "ma" },
-        MZ: { name: "Mozambique", code: "mz" },
-        MM: { name: "Myanmar", code: "mm" },
-        NA: { name: "Namibia", code: "na" },
-        NR: { name: "Nauru", code: "nr" },
-        NP: { name: "Nepal", code: "np" },
-        NL: { name: "Netherlands", code: "nl" },
-        NZ: { name: "New Zealand", code: "nz" },
-        NI: { name: "Nicaragua", code: "ni" },
-        NE: { name: "Niger", code: "ne" },
-        NG: { name: "Nigeria", code: "ng" },
-        MK: { name: "North Macedonia", code: "mk" },
-        NO: { name: "Norway", code: "no" },
-        OM: { name: "Oman", code: "om" },
-        PK: { name: "Pakistan", code: "pk" },
-        PW: { name: "Palau", code: "pw" },
-        PS: { name: "Palestine", code: "ps" },
-        PA: { name: "Panama", code: "pa" },
-        PG: { name: "Papua New Guinea", code: "pg" },
-        PY: { name: "Paraguay", code: "py" },
-        PE: { name: "Peru", code: "pe" },
-        PH: { name: "Philippines", code: "ph" },
-        PL: { name: "Poland", code: "pl" },
-        PT: { name: "Portugal", code: "pt" },
-        QA: { name: "Qatar", code: "qa" },
-        RO: { name: "Romania", code: "ro" },
-        RU: { name: "Russia", code: "ru" },
-        RW: { name: "Rwanda", code: "rw" },
-        WS: { name: "Samoa", code: "ws" },
-        SA: { name: "Saudi Arabia", code: "sa" },
-        SN: { name: "Senegal", code: "sn" },
-        RS: { name: "Serbia", code: "rs" },
-        SC: { name: "Seychelles", code: "sc" },
-        SL: { name: "Sierra Leone", code: "sl" },
-        SG: { name: "Singapore", code: "sg" },
-        SK: { name: "Slovakia", code: "sk" },
-        SI: { name: "Slovenia", code: "si" },
-        SB: { name: "Solomon Islands", code: "sb" },
-        SO: { name: "Somalia", code: "so" },
-        ZA: { name: "South Africa", code: "za" },
-        ES: { name: "Spain", code: "es" },
-        LK: { name: "Sri Lanka", code: "lk" },
-        SD: { name: "Sudan", code: "sd" },
-        SR: { name: "Suriname", code: "sr" },
-        SE: { name: "Sweden", code: "se" },
-        CH: { name: "Switzerland", code: "ch" },
-        SY: { name: "Syria", code: "sy" },
-        TW: { name: "Taiwan", code: "tw" },
-        TJ: { name: "Tajikistan", code: "tj" },
-        TZ: { name: "Tanzania", code: "tz" },
-        TH: { name: "Thailand", code: "th" },
-        TL: { name: "Timor-Leste", code: "tl" },
-        TG: { name: "Togo", code: "tg" },
-        TO: { name: "Tonga", code: "to" },
-        TT: { name: "Trinidad and Tobago", code: "tt" },
-        TN: { name: "Tunisia", code: "tn" },
-        TR: { name: "Turkey", code: "tr" },
-        TM: { name: "Turkmenistan", code: "tm" },
-        TV: { name: "Tuvalu", code: "tv" },
-        UG: { name: "Uganda", code: "ug" },
-        UA: { name: "Ukraine", code: "ua" },
-        AE: { name: "United Arab Emirates", code: "ae" },
-        GB: { name: "United Kingdom", code: "gb" },
-        US: { name: "United States", code: "us" },
-        UY: { name: "Uruguay", code: "uy" },
-        UZ: { name: "Uzbekistan", code: "uz" },
-        VU: { name: "Vanuatu", code: "vu" },
-        VE: { name: "Venezuela", code: "ve" },
-        VN: { name: "Vietnam", code: "vn" },
-        YE: { name: "Yemen", code: "ye" },
-        ZM: { name: "Zambia", code: "zm" },
-        ZW: { name: "Zimbabwe", code: "zw" }
-    };
 
     // State to track hover status
     const [hovered, setHovered] = useState(false);
@@ -1025,31 +632,31 @@ const HeadshotCard = ({
         const popup = popupRef.current;
         const card = cardRef.current;
         if (!popup || !card) return;
-      
+
         const cardRect = card.getBoundingClientRect();
         const popupRect = popup.getBoundingClientRect();
-      
+
         // Only force left if the card's right edge is close to the viewport's right edge 
         // AND the card is not near the left edge (i.e. not in the first column)
         if (window.innerWidth - cardRect.right < 550 && cardRect.left > 550) {
-          popup.classList.remove('popup-right');
-          popup.classList.add('popup-left');
-          return;
+            popup.classList.remove('popup-right');
+            popup.classList.add('popup-left');
+            return;
         }
-      
+
         // Existing logic for overflow handling:
         const isOverflowingRight = cardRect.right + popupRect.width > window.innerWidth;
         const isOverflowingLeft = cardRect.left - popupRect.width < 0;
         popup.classList.remove('popup-left', 'popup-right');
         if (isOverflowingRight) {
-          popup.classList.add('popup-left');
+            popup.classList.add('popup-left');
         } else if (isOverflowingLeft) {
-          popup.classList.add('popup-right');
+            popup.classList.add('popup-right');
         } else {
-          popup.classList.add('popup-right'); // default alignment
+            popup.classList.add('popup-right'); // default alignment
         }
-      };
-      
+    };
+
 
     useEffect(() => {
         adjustPopupPosition();
@@ -1060,16 +667,24 @@ const HeadshotCard = ({
         };
     }, []);
 
-
+    // Also adjust popup position when filters change or when card is selected
     useEffect(() => {
-        // Adjust popup on mount and resize
-        adjustPopupPosition();
-        window.addEventListener('resize', adjustPopupPosition);
+        // Use a timeout to ensure the DOM has updated after filter changes
+        const timeoutId = setTimeout(() => {
+            adjustPopupPosition();
+        }, 50);
 
-        return () => {
-            window.removeEventListener('resize', adjustPopupPosition);
-        };
-    }, []);
+        return () => clearTimeout(timeoutId);
+    }, [hobbyFilter, isSelected(person.id)]); // Re-run when hobby filter changes or selection changes
+
+    // Additional position adjustment when the component updates (grid layout changes)
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            adjustPopupPosition();
+        }, 100);
+
+        return () => clearTimeout(timeoutId);
+    }, [index]); // Re-run when the card's position in the grid changes
 
     // Setup the individual headshot card.
     return (
@@ -1228,23 +843,6 @@ const HeadshotCard = ({
                         </div>
                     )}
 
-
-                    {/* New "View Positions" Button */}
-                    {/* <div className="view-positions-container">
-                        <button
-                            className="view-positions-button"
-                            onClick={(e) => {
-                                e.stopPropagation(); // Prevent triggering card click
-                                openOverlay(person.positions, person.name, person.image_url); // Pass image_url
-                                handleHeadshotClick(person.id);
-                            }}
-                            aria-label={`View positions for ${person.name}`}
-                        >
-                            <h2>View Service Record</h2>
-                        </button>
-                    </div> */}
-
-
                     {/* Course of study/Major label */}
                     <p>
                         {person.status === 'Alumni'
@@ -1284,29 +882,6 @@ const HeadshotCard = ({
                     {/* Graduation status (Alumni, Active, Associate) label. */}
                     <p className='status'>Status: <b>{person.status}</b></p>
                 </div>
-
-
-                {/* Nationality Flags */}
-                <div className="flags-container" ref={flagsContainerRef}>
-                    {Array.isArray(person.nationalities) && person.nationalities.length > 0 ? (
-                        person.nationalities.map((code) => (
-                            countryMap[code] ? (
-                                <span
-                                    key={countryMap[code].code}
-                                    className={`fi fi-${countryMap[code].code.toLowerCase()} flag-icon`}
-                                    aria-label={`${countryMap[code].name} flag`}
-                                    title={countryMap[code].name}
-                                ></span>
-                            ) : null
-                        ))
-                    ) : (
-                        <span
-                            className="fi fi-un flag-icon"
-                            aria-label="No nationality specified"
-                            title="Unknown"
-                        ></span>
-                    )}
-                </div>
             </div>
 
             {/* Content Layer */}
@@ -1329,74 +904,6 @@ const HeadshotCard = ({
     );
 };
 
-/*-------------------------------------
-  YearOverlay for the new color grid
---------------------------------------*/
-const YearOverlay = ({ yearData, onClose }) => {
-    return (
-        <motion.div
-            className="overlay-backdrop"
-            onClick={onClose}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-                position: 'fixed',
-                top: 0, left: 0, right: 0, bottom: 0,
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                zIndex: 9999
-            }}
-        >
-            <motion.div
-                className="overlay-content"
-                onClick={(e) => e.stopPropagation()}
-                initial={{ y: '-50px', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 50, opacity: 0 }}
-                style={{
-                    backgroundColor: '#fff',
-                    borderRadius: '8px',
-                    width: '80%',
-                    maxWidth: '800px',
-                    margin: '100px auto',
-                    padding: '20px',
-                    position: 'relative'
-                }}
-            >
-                <button
-                    onClick={onClose}
-                    style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '20px',
-                        background: 'transparent',
-                        border: 'none',
-                        fontSize: '1.4rem',
-                        cursor: 'pointer'
-                    }}
-                    aria-label="Close Year Overlay"
-                >
-                    &times;
-                </button>
-                <h2 style={{ marginBottom: '20px' }}>Year: {yearData.year}</h2>
-                {yearData.classes.map((cls, idx) => (
-                    <div key={idx} style={{ marginBottom: '30px' }}>
-                        <h3>{cls.className}</h3>
-                        <h4>New Member Educators</h4>
-                        <p><strong>PM:</strong> {cls.PM}</p>
-                        <p><strong>PD:</strong> {cls.PD}</p>
-                        {cls.image && (
-                            <img
-                                src={cls.image}
-                                alt={`${cls.className} class`}
-                                style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '4px' }}
-                            />
-                        )}
-                    </div>
-                ))}
-            </motion.div>
-        </motion.div>
-    );
-};
+
 
 export default Brothers;

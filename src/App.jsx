@@ -6,19 +6,26 @@ import Recruitment from './pages/Recruitment/Recruitment';
 import Brothers from './pages/Brothers';
 import Media from './pages/Media';
 import LegacyChooser from './pages/Legacy/LegacyChooser';
+import MemberManagement from './pages/MemberManagement';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
   return (
     <Router>
       <div>
         {/* Sets a blue theme for iPhone islands. */}
-        <meta name="theme-color" content="#203c79" />
+        <meta name="theme-color" content="#ffffff" />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/legacy" element={<LegacyChooser />} />
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/brothers" element={<Brothers />} />
           <Route path="/media" element={<Media />} />
+          <Route path="/management" element={
+            <ProtectedRoute>
+              <MemberManagement />
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
     </Router>

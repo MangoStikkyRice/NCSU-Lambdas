@@ -277,7 +277,7 @@
   
   .hero {
     margin: 10px auto;
-    height: auto;      // let the hero section adjust naturally
+    height: 40vh;      // let the hero section adjust naturally
     min-height: auto;
   }
   
@@ -297,7 +297,13 @@
   }
 
   .arrow {
-    visibility: hidden;
+    visibility: visible;
+    font-size: 28px;
+    color: rgba(51, 51, 51, 0.8);
+    
+    &:hover {
+      color: #555;
+    }
   }
 }
 

@@ -5,8 +5,8 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-content">
-                <p>&copy; 2024 NC State Lambda Phi Epsilon. All rights reserved.</p>
-                <p>Designed, Built, Tested by Jordan <strong>'InterstellHer'</strong> Miller.</p>
+                <p>&copy; 2025 NC State Lambda Phi Epsilon. All rights reserved.</p>
+                <p>Designed by InterstellHer</p>
                 <nav className="footer-nav">
                     <ul>
                         <li><a href="/about">About Us</a></li>
