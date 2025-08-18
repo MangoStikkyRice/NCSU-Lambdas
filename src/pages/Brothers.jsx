@@ -71,18 +71,21 @@ const Brothers = () => {
     // Refs for each brother's headshot to enable scrolling
     const headshotRefs = useRef({});
 
-    // Fetch brothers data from API on component mount
+    // Fetch brothers data from static JSON on component mount
     useEffect(() => {
         fetchBrothers();
     }, []);
 
     const fetchBrothers = async () => {
         try {
-            const response = await axios.get('/.netlify/functions/get_brothers');
-            console.log('API Response:', response.data);
-            setBrothers(response.data);
+            const response = await axios.get('/brothers.json', { timeout: 10000 });
+            if (Array.isArray(response.data)) {
+                setBrothers(response.data);
+            } else {
+                setBrothers([]);
+            }
         } catch (error) {
-            console.error('Error fetching brothers data:', error);
+            console.error('Error loading brothers.json:', error);
             setBrothers([]);
         }
     };
