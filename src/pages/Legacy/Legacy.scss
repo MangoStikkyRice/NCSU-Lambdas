@@ -1,0 +1,481 @@
+/* Legacy.scss - Consolidated Styles */
+
+/* ==========================================================================
+   MAIN PAGE LAYOUT
+   ========================================================================== */
+.legacy-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #203c79;
+    overflow-x: hidden;
+
+    > :nth-child(1),
+    > :nth-child(2) {
+        background-color: white;
+    }
+
+    section {
+        width: 100%;
+        max-width: 1366px;
+        margin: 0 auto;
+        padding: 20px 20px;
+        background-color: #203c79;
+        box-sizing: border-box;
+    }
+
+    #Contact {
+        padding-top: 40px;
+    }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.legacy-hero {
+    height: calc(100vh - 100px);
+    overflow: hidden;
+    position: relative;
+
+    .legacy-hero-wrapper {
+        max-width: 1366px;
+        height: 100%;
+        margin: auto;
+
+        .textContainer {
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            padding: 130px 0 0 60px;
+
+            h2 {
+                font-size: 28px;
+                color: #203c79;
+                letter-spacing: 10px;
+            }
+
+            h1 {
+                font-size: 40px;
+                color: #515156;
+                z-index: 1;
+            }
+
+            .buttons {
+                display: flex;
+
+                a {
+                    font-size: 12px;
+                    position: relative;
+                    z-index: 3;
+                    padding: 15px;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    background-color: transparent;
+                    color: black;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    font-weight: 300;
+                    transition: border 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+                    text-decoration: none;
+
+                    &:hover {
+                        border: 1px solid #203c797c;
+                        background-color: #203c797c;
+                        color: white;
+                    }
+                }
+            }
+
+            img {
+                width: 50px;
+            }
+        }
+    }
+
+    .imageContainer {
+        height: 500px;
+        position: absolute;
+        right: -100px;
+        bottom: 0;
+        display: flex;
+        overflow: hidden;
+
+        img {
+            width: auto;
+            transition: opacity 0.5s ease;
+            opacity: 50%;
+        }
+    }
+
+    .slidingTextContainer {
+        position: absolute;
+        font-size: 40vh;
+        bottom: -120px;
+        white-space: nowrap;
+        color: rgba(0, 0, 0, 0.075);
+        width: 50%;
+        font-weight: bold;
+        z-index: 2;
+        cursor: default;
+    }
+}
+
+/* ==========================================================================
+   INFO SECTION
+   ========================================================================== */
+.info-title {
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0 0 4px white;
+        font-size: 2rem;
+    }
+}
+
+.info-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+    border-radius: 6px;
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.295);
+        z-index: 1;
+    }
+
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        max-width: 1200px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(6px);
+        padding: 20px;
+        gap: 20px;
+
+        .buttons-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 25%;
+            min-width: 200px;
+
+            .info-button {
+                background: transparent;
+                color: #ffffff;
+                border: 2px solid #203c79;
+                border-radius: 8px;
+                padding: 0px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.3s, color 0.3s, transform 0.3s;
+                backdrop-filter: blur(5px);
+
+                &.active {
+                    background: #203c79;
+                    color: #f0f4f8;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+
+        .info-content {
+            flex: 1;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+
+            .info-details {
+                h2 {
+                    font-size: 2rem;
+                    margin-bottom: 15px;
+                    color: #f0f4f8;
+                }
+
+                p {
+                    font-size: 1.1rem;
+                    line-height: 1.8;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+   PHILANTHROPY SECTION
+   ========================================================================== */
+.philanthropy {
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0 0 4px white;
+        font-size: 2rem;
+    }
+
+    .phil-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .phil-card {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+        .imageContainer {
+            width: 40%;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 5px;
+            }
+        }
+
+        .textContainer {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            h2 {
+                font-size: 1.4rem;
+                margin-bottom: 10px;
+                color: #203c79;
+            }
+
+            .desc {
+                p {
+                    margin: 0;
+                    color: #555;
+                    line-height: 1.5;
+                }
+            }
+
+            .readMoreContainer {
+                margin-top: 10px;
+
+                button {
+                    background: none;
+                    border: none;
+                    color: #ffee00;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    padding: 0;
+                    font-weight: bold;
+                    text-shadow: 0 0 4px rgb(0, 0, 0);
+                }
+            }
+
+            .cta-button {
+                margin-top: 20px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #203c79;
+                color: #fff;
+                padding: 12px 20px;
+                text-decoration: none;
+                border-radius: 6px;
+                border: none;
+                font-size: 1rem;
+                transition: background-color 0.3s ease;
+
+                .button-logo {
+                    width: auto;
+                    height: 24px;
+                    margin-left: 8px;
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+   CONSTITUTION SECTION
+   ========================================================================== */
+.Constitution-page {
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0 0 4px white;
+        font-size: 2rem;
+    }
+
+    .Constitution-body {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        width: 100%;
+        border-radius: 6px;
+        padding: 20px;
+
+        img {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .Constitution-button {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #203c79;
+            color: #fff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .legacy-hero {
+        .imageContainer img {
+            opacity: 40%;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .info-container {
+        .content-wrapper {
+            flex-direction: column;
+
+            .buttons-column {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+
+                .info-button {
+                    flex: 1;
+                    padding: 15px;
+
+                    h4 {
+                        margin: 0;
+                        line-height: 1;
+                        transform: translateY(2px);
+                    }
+                }
+            }
+
+            .info-content {
+                width: 100%;
+
+                p {
+                    max-height: 600px;
+                    overflow-y: scroll;
+                    text-wrap: balance;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .philanthropy {
+        .phil-card {
+            flex-direction: column;
+
+            .imageContainer,
+            .textContainer {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .info-container {
+        .content-wrapper {
+            padding: 15px;
+
+            .buttons-column {
+                gap: 5px;
+
+                .info-button {
+                    padding: 15px 0;
+                    font-size: 0.9rem;
+                    -webkit-appearance: none;
+                    appearance: none;
+                    background: transparent;
+
+                    h4 {
+                        font-size: 14px;
+                        margin: 0;
+                        text-align: center;
+                        line-height: 1;
+                    }
+                }
+            }
+
+            .info-content {
+                padding: 15px;
+                height: auto;
+                background-color: rgba(158, 158, 158, 0.349);
+
+                .info-details {
+                    max-height: 40vh;
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch;
+                    touch-action: pan-y;
+
+                    h2 {
+                        font-size: 1.5rem;
+                        color: #203c79;
+                        font-weight: bold;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                        max-height: 40vh;
+                        overflow-y: auto;
+                        padding-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

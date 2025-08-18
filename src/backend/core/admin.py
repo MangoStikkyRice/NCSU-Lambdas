@@ -2,10 +2,10 @@
 
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import React, Country, Position
+from .models import Brother, Country, Position
 
-@admin.register(React)
-class ReactAdmin(admin.ModelAdmin):
+@admin.register(Brother)
+class BrotherAdmin(admin.ModelAdmin):
     list_display = (
         'id', 
         'name', 
@@ -13,15 +13,39 @@ class ReactAdmin(admin.ModelAdmin):
         'status', 
         'major', 
         'positions_display', 
-        'crossing_semester_display',  # Display crossing semester
-        'graduating_semester_display',  # Display graduating semester
+        'crossing_semester_display',
+        'graduating_semester_display', 
         'image_tag', 
         'casual_images_tag'
     )
     search_fields = ('name', 'line_name', 'major')
-    list_filter = ('status', 'major', 'positions', 'crossing_year', 'graduating_year')  # Added filters
+    list_filter = ('status', 'major', 'positions', 'crossing_year', 'graduating_year')
     readonly_fields = ('id', 'image_tag', 'casual_images_tag', 'crossing_semester_display', 'graduating_semester_display')
-    filter_horizontal = ('nationalities', 'positions',)  # Enhances ManyToManyField UI
+    filter_horizontal = ('nationalities', 'positions')
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'line_name', 'status', 'class_field')
+        }),
+        ('Academic Information', {
+            'fields': ('major',)
+        }),
+        ('Family Tree', {
+            'fields': ('big_id', 'little_ids')
+        }),
+        ('Personal Information', {
+            'fields': ('hobbies', 'nationalities')
+        }),
+        ('Timeline', {
+            'fields': ('crossing_month', 'crossing_year', 'graduating_month', 'graduating_year')
+        }),
+        ('Images', {
+            'fields': ('image', 'casual_image1', 'casual_image2', 'casual_image3')
+        }),
+        ('Positions', {
+            'fields': ('positions',)
+        })
+    )
 
     def crossing_semester_display(self, obj):
         """Display the crossing semester as 'Month Year'."""
@@ -80,8 +104,8 @@ class ReactAdmin(admin.ModelAdmin):
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = ('code', 'name')
-    search_fields = ('code', 'name')  # Adds a search bar for easier navigation
-    ordering = ('name',)  # Ensures alphabetical ordering in the admin list
+    search_fields = ('code', 'name')
+    ordering = ('name',)
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
@@ -89,6 +113,18 @@ class PositionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
     list_filter = ('title', 'start_year', 'end_year')
     ordering = ('id', 'title', 'start_year', 'end_year')
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'description')
+        }),
+        ('Timeline', {
+            'fields': ('start_month', 'start_year', 'end_month', 'end_year')
+        }),
+        ('Brothers', {
+            'fields': ('brothers',)
+        })
+    )
     
     def start_display(self, obj):
         """Display start date in a 'Month Year' format."""
@@ -104,12 +140,12 @@ class PositionAdmin(admin.ModelAdmin):
             return f"{obj.end_month} {obj.end_year}"
         elif obj.end_year:
             return f"{obj.end_year}"
-        return "Present"  # Assume "Present" if end date is missing
+        return "Present"
 
     start_display.short_description = 'Start Date'
     end_display.short_description = 'End Date'
 
     def brothers_display(self, obj):
-        """Display a comma-separated list of brothers by name and their React IDs."""
+        """Display a comma-separated list of brothers by name and their IDs."""
         return ", ".join([f"{brother.name} (ID: {brother.id})" for brother in obj.brothers.all()])
     brothers_display.short_description = 'Brothers'

@@ -9,13 +9,14 @@ import StartupOverlay from '../components/startupoverlay/StartupOverlay';
 import NavBarNew from '../components/navbar/NavBarNew';
 
 function Home() {
+    // State management
     const [overlayVisible, setOverlayVisible] = useState(false);
     const [isFading, setIsFading] = useState(false);
-    const [loading, setLoading] = useState(true); // New state for loading
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    // Set viewport height CSS variable for mobile compatibility
     useEffect(() => {
-        // Set the --vh custom property to the viewport height
         const setVh = () => {
             const vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -24,69 +25,108 @@ function Home() {
         setVh();
         window.addEventListener('resize', setVh);
 
-        // Cleanup the event listener on component unmount
-        return () => {
-            window.removeEventListener('resize', setVh);
-        };
+        return () => window.removeEventListener('resize', setVh);
     }, []);
 
+    // Handle startup overlay display logic
     useEffect(() => {
-        // Check if the overlay has been shown in this session
         const overlayShown = sessionStorage.getItem('overlayShown');
         if (!overlayShown) {
-            // Show overlay if it hasn't been shown in this session
             setOverlayVisible(true);
-            sessionStorage.setItem('overlayShown', 'true'); // Mark overlay as shown
+            sessionStorage.setItem('overlayShown', 'true');
         } else {
-            setLoading(false); // Directly show content if the overlay has already been shown
+            setLoading(false);
         }
     }, []);
 
+    // Event handlers
     const handleOverlayComplete = () => {
         setOverlayVisible(false);
-        setLoading(false); // Show the content when overlay completes
+        setLoading(false);
     };
 
-    // Function to handle fade out and navigation
     const handlePanelClick = (path) => {
-        setIsFading(true); // Trigger fade-out effect
+        setIsFading(true);
         setTimeout(() => {
-            navigate(path); // Navigate to the new page after fade-out
-        }, 500); // Match timeout with the duration of the fade-out animation
+            navigate(path);
+        }, 500);
     };
 
-    // Helper function to add the 'loaded' class after the image loads
     const handleImageLoad = (event) => {
         event.target.classList.add('loaded');
     };
 
+    // Navigation panel data
+    const navigationPanels = [
+        {
+            image: panel1,
+            title: 'Recruitment',
+            path: '/recruitment',
+            className: 'large-card'
+        },
+        {
+            image: panel3,
+            title: 'Brothers',
+            path: '/brothers',
+            className: 'small-card'
+        },
+        {
+            image: panel4,
+            title: 'Legacy',
+            path: '/legacy',
+            className: 'small-card'
+        },
+        {
+            image: panel2,
+            title: 'Media',
+            path: '/media',
+            className: 'large-card'
+        }
+    ];
+
     return (
         <div id="home" className={isFading ? 'fade-out' : ''}>
             {overlayVisible && <StartupOverlay onComplete={handleOverlayComplete} />}
-            {!loading && ( // Hide content while the overlay is active
+            
+            {!loading && (
                 <div>
                     <NavBarNew />
                     <div className="custom-container">
                         <div className="image-grid">
+                            {/* Left column: Recruitment (large) and Brothers (small) */}
                             <div className="left-column">
-                                <div className="image-card large-card" onClick={() => handlePanelClick('/recruitment')}>
-                                    <img src={panel1} alt="Recruitment" onLoad={handleImageLoad} />
-                                    <div className="card-title">Recruitment</div>
-                                </div>
-                                <div className="image-card small-card" onClick={() => handlePanelClick('/brothers')}>
-                                    <img src={panel3} alt="Brothers" onLoad={handleImageLoad} />
-                                    <div className="card-title">Brothers</div>
-                                </div>
+                                {navigationPanels.slice(0, 2).map((panel, index) => (
+                                    <div 
+                                        key={panel.title}
+                                        className={`image-card ${panel.className}`} 
+                                        onClick={() => handlePanelClick(panel.path)}
+                                    >
+                                        <img 
+                                            src={panel.image} 
+                                            alt={panel.title} 
+                                            onLoad={handleImageLoad} 
+                                        />
+                                        <div className="card-title">{panel.title}</div>
+                                    </div>
+                                ))}
                             </div>
+                            
+                            {/* Right column: Legacy (small) and Media (large) */}
                             <div className="right-column">
-                                <div className="image-card small-card" onClick={() => handlePanelClick('/legacy')}>
-                                    <img src={panel4} alt="Legacy" onLoad={handleImageLoad} />
-                                    <div className="card-title">Legacy</div>
-                                </div>
-                                <div className="image-card large-card" onClick={() => handlePanelClick('/media')}>
-                                    <img src={panel2} alt="Media" onLoad={handleImageLoad} />
-                                    <div className="card-title">Media</div>
-                                </div>
+                                {navigationPanels.slice(2).map((panel, index) => (
+                                    <div 
+                                        key={panel.title}
+                                        className={`image-card ${panel.className}`} 
+                                        onClick={() => handlePanelClick(panel.path)}
+                                    >
+                                        <img 
+                                            src={panel.image} 
+                                            alt={panel.title} 
+                                            onLoad={handleImageLoad} 
+                                        />
+                                        <div className="card-title">{panel.title}</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

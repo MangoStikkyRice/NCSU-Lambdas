@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from core.views import ReactViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
-router = routers.DefaultRouter()
-router.register(r'brothers', ReactViewSet)
-
 urlpatterns = [
+    # Admin interface
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    
+    # API routes
+    path('api/', include('api.urls')),
+    
+    # Django REST framework browsable API
     path('api-auth/', include('rest_framework.urls')),
 ]
 

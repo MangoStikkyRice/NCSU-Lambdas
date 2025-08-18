@@ -5,7 +5,8 @@ import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import PositionsOverlay from './../components/PositionsOverlay';
+// Positions overlay removed for demo; layout preserved without it
+import Footer from '../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // We'll use static yearbook pics for now. Add to DB later.
@@ -56,17 +57,6 @@ const Brothers = () => {
     // States to hold brothers data
     const [brothers, setBrothers] = useState([]);
     const [selectedBrotherId, setSelectedBrotherId] = useState(null);
-    const [overlayData, setOverlayData] = useState(null);
-
-    // Function to handle opening the overlay
-    const openOverlay = (positions, name, imageUrl) => {
-        setOverlayData({ positions, name, imageUrl }); // Store imageUrl
-    };
-
-    // Function to handle closing the overlay
-    const closeOverlay = () => {
-        setOverlayData(null);
-    };
 
     // Refs for each brother's headshot to enable scrolling
     const headshotRefs = useRef({});
@@ -79,13 +69,10 @@ const Brothers = () => {
     const fetchBrothers = async () => {
         try {
             const response = await axios.get('/brothers.json', { timeout: 10000 });
-            if (Array.isArray(response.data)) {
-                setBrothers(response.data);
-            } else {
-                setBrothers([]);
-            }
+            const data = response.data;
+            setBrothers(Array.isArray(data) ? data : []);
         } catch (error) {
-            console.error('Error loading brothers.json:', error);
+            console.error('Error loading brothers.json:', error?.message || error);
             setBrothers([]);
         }
     };
@@ -147,7 +134,7 @@ const Brothers = () => {
     const [hobbyFilter, setHobbyFilter] = useState(null);
 
     // Filter brothers based on selected filter and hobby
-    const filteredBrothers = brothers.filter(person => {
+    const filteredBrothers = (Array.isArray(brothers) ? brothers : []).filter(person => {
 
         // Status/Class Filter
         const statusMatch = filter === 'all brothers' ||
@@ -533,19 +520,7 @@ const Brothers = () => {
 
 
                 {/* Container to make space for the footer. */}
-                <footer className="footer">
-                    <div className="footer-content">
-                        <p>&copy; 2024 NC State Lambda Phi Epsilon. All rights reserved.</p>
-                        <p>Designed, Built, Tested by Jordan <strong>'InterstellHer'</strong> Miller.</p>
-                        <nav className="footer-nav">
-                            <ul>
-                                <li><a href="/about">About Us</a></li>
-                                <li><a href="/contact">Contact</a></li>
-                                <li><a href="/privacy">Privacy Policy</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </footer>
+                <Footer />
             </div>
         </div>
     );

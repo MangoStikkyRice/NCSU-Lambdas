@@ -1,0 +1,78 @@
+/* Footer Component Styles */
+
+/* ==========================================================================
+   FOOTER COMPONENT
+   ========================================================================== */
+.footer {
+    width: 100%;
+    background-color: #172b56;
+    color: white;
+    padding: 35px 0;
+    position: relative;
+    box-sizing: border-box;
+    font-family: 'Dotum', sans-serif;
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        letter-spacing: 0.15rem;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        text-align: left;
+
+        p {
+            margin: 10px 0;
+        }
+
+        .footer-nav {
+            ul {
+                display: flex;
+                justify-content: center;
+                gap: 40px;
+                list-style: none;
+                padding: 0;
+                margin: 20px 0 0 0;
+
+                li {
+                    a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 1.4rem;
+
+                        &:hover {
+                            color: #a8c5e0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+    .footer-content {
+        p {
+            font-size: 14px;
+        }
+
+        .footer-nav ul {
+            gap: 20px;
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .footer-content {
+        .footer-nav ul {
+            gap: 40px !important;
+
+            li a {
+                font-size: .8rem;
+            }
+        }
+    }
+} 

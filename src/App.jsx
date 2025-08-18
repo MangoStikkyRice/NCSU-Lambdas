@@ -2,10 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Recruitment from './pages/Recruitment';
+import Recruitment from './pages/Recruitment/Recruitment';
 import Brothers from './pages/Brothers';
 import Media from './pages/Media';
-import LegacyChooser from './pages/LegacyChooser';
+import LegacyChooser from './pages/Legacy/LegacyChooser';
 
 function App() {
   return (

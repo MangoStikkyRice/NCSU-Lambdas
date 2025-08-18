@@ -1,0 +1,171 @@
+/* HERO SECTION */
+.hero-image-recruitment {
+    width: 100vw;
+    height: 35vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+
+    .hero-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-text-recruitment {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        background: radial-gradient(ellipse 50% 50%, rgba(168, 168, 168, 0.6) 0%, rgba(107, 107, 107, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
+        text-shadow: 4px 4px 6px rgba(0, 0, 0, 1), 2px 2px 6px rgba(0, 0, 0, 1);
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: -10px;
+            font-family: 'EdoSZ', sans-serif;
+        }
+
+        p {
+            font-size: 1.8rem;
+            font-family: 'Dotum', sans-serif;
+            letter-spacing: 0.08rem;
+        }
+    }
+}
+
+/* FAQ SECTION */
+.recruitment-faqs {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 30px;
+    color: rgb(0, 0, 0);
+    font-family: 'Dotum', sans-serif;
+
+    h2 {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 40px;
+        font-family: 'EdoSZ', sans-serif;
+        color: rgb(0, 0, 0);
+    }
+
+    p {
+        padding-top: 25px;
+        font-size: 1.1rem;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 15px;
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 10px 0;
+            position: relative;
+
+            &:hover {
+                color: #172b56;
+            }
+
+            &.active {
+                color: #172b56;
+            }
+
+            .faq-icon {
+                font-size: 2rem;
+                margin-left: 10px;
+            }
+        }
+
+        .faq-answer {
+            overflow: hidden;
+            height: 0;
+            opacity: 0;
+
+            p {
+                padding: 10px 0;
+                font-size: 1.4rem;
+                line-height: 1.6;
+                color: #555;
+            }
+        }
+    }
+
+    .contact-info {
+        margin-top: 30px;
+        font-size: 1.4rem;
+        text-align: center;
+        color: #555;
+    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .hero-text-recruitment {
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-size: .8rem;
+        }
+    }
+
+    .recruitment-faqs {
+        h2 {
+            font-size: 2.2rem;
+            margin-top: -35px;
+        }
+
+        .faq-item {
+            .faq-question {
+                font-size: 1.4rem;
+            }
+
+            .faq-answer {
+                p {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .recruitment-faqs {
+        p {
+            font-size: 14px;
+        }
+
+        .faq-item {
+            .faq-question {
+                font-size: 18px;
+                padding: 0;
+            }
+
+            .faq-answer {
+                p {
+                    font-size: 14px;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

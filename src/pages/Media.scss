@@ -1,13 +1,6 @@
-.media-title {
-  height: auto;
-  width: auto;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  font-size: 48px;
-  color: white;
-  text-shadow: 2px 2px 3px black, 0px 0px 4px black;
+// Media page root wrapper
+.media-page {
+  background: #ffffff;
 }
 
 // Center the carousel containers and constrain their width
@@ -17,17 +10,24 @@
   max-width: 1200px;
   margin: 0 auto 10px;
   height: 200px;
+  overflow: hidden; // keep arrows and content in-bounds
+  // Constant gutters so first and last items don't snap or overlap
+  padding: 0 48px;
 }
 
 .arrow {
   position: absolute;
-  top: 40%;
+  top: 45%; // slightly higher to better align with video boxes
   transform: translateY(-50%);
-  font-size: 48px;
-  color: #ffffff;
-  text-shadow: 0px 0px 4px rgb(255, 255, 255);
+  font-size: 36px;
+  color: #333333;
+  text-shadow: none;
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent; // prevent tap highlight on rapid clicks
   z-index: 10;
 
   &:hover {
@@ -36,60 +36,28 @@
 }
 
 .left-arrow {
-  left: -42px;
+  left: 12px;
 }
 
 .right-arrow {
-  right: -42px;
+  right: 12px;
 }
 
 // Adjust row titles to match margins
-.video-row-title,
-.gallery-wrapper {
+.video-row-title {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.video-row-title h2,
-.gallery-wrapper h2 {
+.video-row-title h2 {
   margin: 0 auto 10px 20px;
   white-space: nowrap;
-  text-shadow: 0px 0px 4px rgb(255, 255, 255);
+  text-shadow: none;
   font-size: 24px;
-  color: #ffffff;
+  color: #000000;
 }
 
-// Photo gallery carousel
-.infinite-gallery {
-  width: 100%;
-  height: 200px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 0 20px;
-}
-
-.image-card-media {
-  display: inline-block;
-  width: 200px;
-  height: 150px;
-  margin-right: 16px;
-  vertical-align: middle;
-  border: 1px solid #fdfdfd;
-  cursor: pointer;
-  will-change: opacity;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    box-shadow: 0px 1px 6px 3px #000000;
-  }
-
-  // Initial state: hidden
-  opacity: 0;
-  transition: opacity 1s ease-out;
-}
+// Behind-the-scenes gallery removed
 
 // Video row carousel
 .video-row {
@@ -97,7 +65,8 @@
   height: 200px;
   overflow-x: auto;
   white-space: nowrap;
-  padding: 0 20px;
+  // Inner spacing to keep content balanced inside gutters
+  padding: 0 24px;
 }
 
 .video-card {
@@ -121,9 +90,9 @@
     margin-top: -35px;
     padding-bottom: 10px;
     font-size: 18px;
-    color: #ffffff;
-    text-shadow: 0px 0px 4px rgb(255, 255, 255);
-    background: radial-gradient(ellipse, rgba(114, 114, 114, 0.493) 5%, rgba(78, 78, 78, 0.61) 7%, rgba(0, 0, 0, 0) 60%);
+    color: #ffffff; // ensure visible on thumbnails
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55) 5%, rgba(0, 0, 0, 0.35) 30%, rgba(0, 0, 0, 0) 60%);
     background-position: 0px -4px;
     text-align: center;
   }
@@ -169,13 +138,11 @@
 }
 
 // Hide native scrollbars
-.video-row::-webkit-scrollbar,
-.infinite-gallery::-webkit-scrollbar {
+.video-row::-webkit-scrollbar {
   display: none;
 }
 
-.video-row,
-.infinite-gallery {
+.video-row {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -262,14 +229,7 @@
   }
 }
 
-.webgl-container {
-  opacity: 0;
-  transition: opacity 1s ease; // Adjust duration and easing as needed
-}
-
-.webgl-container.fade {
-  opacity: 1;
-}
+// WebGL container removed (background disabled)
 
 /* Existing CSS above remains unchanged */
 
