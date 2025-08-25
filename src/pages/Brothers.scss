@@ -1464,6 +1464,12 @@ body {
     margin-bottom: -15px;
 }
 
+@media (max-width: 650px) {
+    .related-brothers.littles {
+        margin-bottom: 5px;
+    }
+}
+
 .related-brothers h5 {
     white-space: normal;
     /* Allow wrapping */
