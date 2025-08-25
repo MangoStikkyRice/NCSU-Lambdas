@@ -1,80 +1,94 @@
 // YouTube carousel data for the Media page
 export const youtubeVideos = [
-    {
-        title: 'Charter Conquest',
-        url: 'https://youtu.be/RUQTrrlLkx8',
-        thumbnail: 'https://i.ytimg.com/vi/RUQTrrlLkx8/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2016,
-    },
-    {
-        title: 'Alpha Ascension',
-        url: 'https://youtu.be/9zngWsr6LE4',
-        thumbnail: 'https://i.ytimg.com/vi/9zngWsr6LE4/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2017,
-    },
-    {
-        title: 'Beta Battalion',
-        url: 'https://youtu.be/DGXhEBjH81E',
-        thumbnail: 'https://i.ytimg.com/vi/DGXhEBjH81E/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2017,
-    },
-    {
-        title: 'Gamma Guardians',
-        url: 'https://youtu.be/OrSyEHm372o',
-        thumbnail: 'https://i.ytimg.com/vi/OrSyEHm372o/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2018,
-    },
-    {
-        title: 'Delta Dimension',
-        url: 'https://youtu.be/Wx1MEwTpfEo',
-        thumbnail: 'https://i.ytimg.com/vi/Wx1MEwTpfEo/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2018,
-    },
-    {
-        title: 'Epsilon Eclipse',
-        url: 'https://youtu.be/SBTsNR2__e4',
-        thumbnail: 'https://i.ytimg.com/vi/SBTsNR2__e4/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2019,
-    },
-    {
-        title: 'Zeta Zaibatsu',
-        url: 'https://youtu.be/VAUJxBy--yc',
-        thumbnail: 'https://i.ytimg.com/vi/VAUJxBy--yc/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2019,
-    },
-    {
-        title: 'Iota Immortals',
-        url: 'https://www.youtube.com/watch?v=TBdsb6LB-tg',
-        thumbnail: 'https://i.ytimg.com/vi/TBdsb6LB-tg/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2020,
-    },
-    {
-        title: 'Mu Monarchs',
-        url: 'https://youtu.be/ttDvgZ6D9NE',
-        thumbnail: 'https://i.ytimg.com/vi/ttDvgZ6D9NE/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2020,
-    },
-    {
-        title: 'Nu Nen',
-        url: 'https://youtu.be/VAHC-5UoZPY',
-        thumbnail: 'https://i.ytimg.com/vi/VAHC-5UoZPY/hqdefault.jpg',
-        semester: 'Spring',
-        year: 2021,
-    },
-    {
-        title: 'Xi Xin',
-        url: 'https://youtu.be/6cm_sYJfTB8',
-        thumbnail: 'https://i.ytimg.com/vi/6cm_sYJfTB8/hqdefault.jpg',
-        semester: 'Fall',
-        year: 2021,
-    },
+  {
+    "title": "Charter Conquest",
+    "url": "https://youtu.be/RUQTrrlLkx8",
+    "thumbnail": "https://i.ytimg.com/vi/RUQTrrlLkx8/hqdefault.jpg",
+    "semester": "Fall",
+    "year": 2016
+  },
+  {
+    "title": "Alpha Ascension",
+    "url": "https://youtu.be/9zngWsr6LE4",
+    "thumbnail": "https://i.ytimg.com/vi/9zngWsr6LE4/hqdefault.jpg",
+    "semester": "Spring",
+    "year": 2017
+  },
+  {
+    "title": "Beta Battalion",
+    "url": "https://youtu.be/DGXhEBjH81E",
+    "thumbnail": "https://i.ytimg.com/vi/DGXhEBjH81E/hqdefault.jpg",
+    "semester": "Fall",
+    "year": 2017
+  },
+  {
+    "title": "Gamma Guardians",
+    "url": "https://youtu.be/OrSyEHm372o",
+    "thumbnail": "https://i.ytimg.com/vi/OrSyEHm372o/hqdefault.jpg",
+    "semester": "Spring",
+    "year": 2018
+  },
+  {
+    "title": "Delta Dimension",
+    "url": "https://youtu.be/Wx1MEwTpfEo",
+    "thumbnail": "https://i.ytimg.com/vi/Wx1MEwTpfEo/hqdefault.jpg",
+    "semester": "Fall",
+    "year": 2018
+  },
+  {
+    "title": "Epsilon Eclipse",
+    "url": "https://youtu.be/SBTsNR2__e4",
+    "thumbnail": "https://i.ytimg.com/vi/SBTsNR2__e4/hqdefault.jpg",
+    "semester": "Spring",
+    "year": 2019
+  },
+  {
+    "title": "Zeta Zaibatsu",
+    "url": "https://youtu.be/VAUJxBy--yc",
+    "thumbnail": "https://i.ytimg.com/vi/VAUJxBy--yc/hqdefault.jpg",
+    "semester": "Fall",
+    "year": 2019
+  },
+  {
+    "title": "Iota Immortals",
+    "url": "https://www.youtube.com/watch?v=TBdsb6LB-tg",
+    "thumbnail": "https://i.ytimg.com/vi/TBdsb6LB-tg/hqdefault.jpg",
+    "semester": "Fall",
+    "year": "2021"
+  },
+  {
+    "title": "Mu Monarchs",
+    "url": "https://youtu.be/ttDvgZ6D9NE",
+    "thumbnail": "https://i.ytimg.com/vi/ttDvgZ6D9NE/hqdefault.jpg",
+    "semester": "Fall",
+    "year": "2022"
+  },
+  {
+    "title": "Nu Nen",
+    "url": "https://youtu.be/VAHC-5UoZPY",
+    "thumbnail": "https://i.ytimg.com/vi/VAHC-5UoZPY/hqdefault.jpg",
+    "semester": "Fall",
+    "year": "2023"
+  },
+  {
+    "title": "Xi Xin",
+    "url": "https://youtu.be/6cm_sYJfTB8",
+    "thumbnail": "https://i.ytimg.com/vi/6cm_sYJfTB8/hqdefault.jpg",
+    "semester": "Spring",
+    "year": "2024"
+  },
+  {
+    "title": "Omicron Okami",
+    "url": "https://youtu.be/2PCPE5Axm4Q?si=3RPB84BgIdyafg5b",
+    "thumbnail": "https://i.ytimg.com/vi/2PCPE5Axm4Q/hqdefault.jpg",
+    "semester": "Fall",
+    "year": "2024"
+  },
+  {
+    "title": "Pi Paragons",
+    "url": "https://youtu.be/vmC-dD5BLso?si=uYInAZCkuHepelsw",
+    "thumbnail": "https://i.ytimg.com/vi/vmC-dD5BLso/hqdefault.jpg",
+    "semester": "Spring",
+    "year": "2025"
+  }
 ];

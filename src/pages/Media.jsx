@@ -136,7 +136,19 @@ const Media = () => {
                     </div>
                     <div className="video-row" ref={scrollRowRef} onWheel={handleVideoWheel}>
                         {otherVideos.map((video, index) => (
-                            <div key={index} className={`video-card ${animate ? 'animate' : ''}`}>
+                            <div
+                                key={index}
+                                className={`video-card ${animate ? 'animate' : ''}`}
+                                onClick={() => window.open(video.url, '_blank')}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        window.open(video.url, '_blank');
+                                    }
+                                }}
+                            >
                                 <img src={video.thumbnail} alt={video.title} />
                                 <div className="video-card-title">{video.title}</div>
                             </div>

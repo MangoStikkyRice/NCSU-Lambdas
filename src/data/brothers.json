@@ -14,10 +14,11 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381248/davechang2.png",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381248/davechang3.png",
     "casual_image3": null,
-    "bigId": null,
+    "bigId": "",
     "littleIds": [
-      17
-    ]
+      "17"
+    ],
+    "bigExternalName": "John Tuong"
   },
   {
     "id": 2,
@@ -38,8 +39,12 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381260/rjjavier2.png",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381262/rjjavier3.png",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381264/rjjavier4.png",
-    "bigId": null,
-    "littleIds": []
+    "bigId": "",
+    "littleIds": [
+      "18",
+      "20"
+    ],
+    "bigExternalName": "Jacky Man"
   },
   {
     "id": 4,
@@ -57,8 +62,11 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381271/yehtet2.png",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": null,
-    "littleIds": []
+    "bigId": "",
+    "littleIds": [
+      "27"
+    ],
+    "bigExternalName": "Duc Doan"
   },
   {
     "id": 7,
@@ -75,8 +83,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381296/dylanstein2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381249/dylanstein3.png",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381251/dylanstein4.png",
-    "bigId": null,
-    "littleIds": []
+    "bigId": "",
+    "littleIds": [],
+    "bigExternalName": "Joe Vo"
   },
   {
     "id": 8,
@@ -92,8 +101,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381267/terrancetouch2.png",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381268/terrancetouch3.png",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381269/terrancetouch4.png",
-    "bigId": null,
-    "littleIds": []
+    "bigId": "",
+    "littleIds": [],
+    "bigExternalName": "Justin Lau"
   },
   {
     "id": 9,
@@ -109,10 +119,11 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381257/kevinto2.png",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381384/kevinto1.jpg",
     "casual_image3": null,
-    "bigId": null,
+    "bigId": "",
     "littleIds": [
       35
-    ]
+    ],
+    "bigExternalName": "Wesley Shang"
   },
   {
     "id": 10,
@@ -128,17 +139,18 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381256/justinshu2.png",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": null,
+    "bigId": "",
     "littleIds": [
       14
-    ]
+    ],
+    "bigExternalName": "Joe Baldock"
   },
   {
     "id": 12,
     "name": "Matthew Wright",
     "line_name": "What's the Sitch",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Graphic Design",
     "hobbies": [
       "Music",
@@ -151,14 +163,18 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381259/matthewwright3.png",
     "casual_image3": null,
     "bigId": null,
-    "littleIds": []
+    "littleIds": [
+      "31",
+      "48"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 13,
     "name": "Timothy Wu",
     "line_name": "OkamY",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Communications: Media",
     "hobbies": [
       "Soccer",
@@ -168,17 +184,18 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381270/timothywu2.png",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381340/timothyng2.jpg",
     "casual_image3": null,
-    "bigId": null,
+    "bigId": "",
     "littleIds": [
-      21
-    ]
+      "21"
+    ],
+    "bigExternalName": "Tim Wu"
   },
   {
     "id": 14,
     "name": "David Cho",
     "line_name": "A.L.chemist",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Chemical EngineeringConcentration:Nanoscience",
     "hobbies": [
       "Basketball",
@@ -190,15 +207,16 @@
     "casual_image3": null,
     "bigId": 10,
     "littleIds": [
-      34
-    ]
+      "34"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 15,
     "name": "Jonathan Nguyen",
     "line_name": "Stitch the 626",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Civil Engineering",
     "hobbies": [
       "Weight Lifting"
@@ -208,14 +226,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": null,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 17,
     "name": "Joel Caruthers",
     "line_name": "Hanzō",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Civil Engineering",
     "hobbies": [
       "Running",
@@ -230,15 +249,16 @@
     "casual_image3": null,
     "bigId": 1,
     "littleIds": [
-      42
-    ]
+      "42"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 18,
     "name": "Brody Zhao",
     "line_name": "Helios",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Mechanical Engineering",
     "hobbies": [
       "Soccer"
@@ -248,14 +268,18 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 2,
-    "littleIds": []
+    "littleIds": [
+      "24",
+      "26"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 19,
     "name": "Tarun Salian",
     "line_name": "FORTIFIED",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Accounting",
     "hobbies": [
       "Fashion",
@@ -266,14 +290,17 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381338/tarunsalian3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381339/tarunsalian4.jpg",
     "bigId": null,
-    "littleIds": []
+    "littleIds": [
+      "33"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 20,
     "name": "Rick Zhuo",
     "line_name": "Hypnos",
     "status": "Alumni",
-    "class_field": "Charter Conquest",
+    "class_field": "Alpha Ascension",
     "major": "Computer Science",
     "hobbies": [
       "Basketball"
@@ -283,14 +310,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 2,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 21,
     "name": "Alex Ung",
     "line_name": "BaltO",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "FinanceMinor:Accounting",
     "hobbies": [
       "Cars",
@@ -303,14 +331,17 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381287/alexung3.jpg",
     "casual_image3": null,
     "bigId": 13,
-    "littleIds": []
+    "littleIds": [
+      "39"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 24,
     "name": "Julien Bottari",
     "line_name": "Hermès",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "Marketing",
     "hobbies": [
       "Fashion",
@@ -322,14 +353,15 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381309/julienbottari3.jpg",
     "casual_image3": null,
     "bigId": 18,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 26,
     "name": "Dom Rivero",
     "line_name": "Hikaru",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "Computer Engineering",
     "hobbies": [
       "Smash Ultimate",
@@ -344,15 +376,16 @@
     "casual_image3": null,
     "bigId": 18,
     "littleIds": [
-      32
-    ]
+      "32"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 27,
-    "name": "Tye “ExcalibHer” Rojanasoonthon",
-    "line_name": "",
+    "name": "Tye Rojanasoonthon",
+    "line_name": "ExcalibHer",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "Industrial Engineering",
     "hobbies": [
       "Tennis",
@@ -365,14 +398,15 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381343/tyerojanasoonthan3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381343/tyerojanasoonthan4.jpg",
     "bigId": 4,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 29,
     "name": "TaeJoon Kim",
     "line_name": "Gunma",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "Computer Science",
     "hobbies": [
       "Cooking",
@@ -384,14 +418,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": null,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 30,
     "name": "Benjamin Adams",
     "line_name": "Concerto",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Beta Batallion",
     "major": "Material Science",
     "hobbies": [
       "Guitar",
@@ -404,15 +439,16 @@
     "casual_image3": null,
     "bigId": null,
     "littleIds": [
-      37
-    ]
+      "37"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 31,
     "name": "Aaron Le",
     "line_name": "Po the Dragon Warrior",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Chemical Engineering",
     "hobbies": [
       "Tennis",
@@ -424,14 +460,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 12,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 32,
     "name": "Eden Cabrera",
     "line_name": "Hiro",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Textile Technology",
     "hobbies": [
       "Running"
@@ -440,15 +477,16 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381297/edencabrera2.jpg",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": null,
-    "littleIds": []
+    "bigId": "26",
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 33,
     "name": "Alex Phan",
     "line_name": "PERSONIFIED",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Computer Engineering",
     "hobbies": [
       "K-Pop",
@@ -462,15 +500,16 @@
     "casual_image3": null,
     "bigId": 19,
     "littleIds": [
-      40
-    ]
+      "40"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 34,
     "name": "Brandon Wu",
     "line_name": "Last~Airbender",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Biology",
     "hobbies": [
       "Being a cutie"
@@ -480,14 +519,17 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 14,
-    "littleIds": []
+    "littleIds": [
+      "65"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 35,
     "name": "Jared Smith",
     "line_name": "5YMPHONIA",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Plant Biology",
     "hobbies": [
       "Drawing",
@@ -499,14 +541,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 9,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 36,
     "name": "Miller Kahihu",
     "line_name": "Fog of War",
     "status": "Alumni",
-    "class_field": "Beta Battalion",
+    "class_field": "Gamma Guardians",
     "major": "Computer Science",
     "hobbies": [
       "Dancing",
@@ -521,8 +564,9 @@
     "casual_image3": null,
     "bigId": null,
     "littleIds": [
-      49
-    ]
+      "49"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 37,
@@ -530,7 +574,7 @@
     "line_name": "Sutol",
     "status": "Alumni",
     "class_field": "Delta Dimension",
-    "major": "Human BiologyMinor:Sports Science",
+    "major": "Human Biology",
     "hobbies": [
       "Powerlifting",
       "Camping",
@@ -543,8 +587,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381315/michaelcummings2.jpg",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": null,
-    "littleIds": []
+    "bigId": "30",
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 38,
@@ -563,14 +608,15 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381279/adrianmaraan3.jpg",
     "casual_image3": null,
     "bigId": null,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 39,
     "name": "James Xu",
     "line_name": "AkelA",
     "status": "Alumni",
-    "class_field": "Delta Dimension",
+    "class_field": "Delta Dynasty",
     "major": "Bachelor Degree Marketing et Relations InternationalesMaster of Sciences International Marketing and Business Development",
     "hobbies": [
       "Lion Dance",
@@ -599,14 +645,18 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381329/ryanmiceli4.jpg",
     "casual_image3": null,
     "bigId": 33,
-    "littleIds": []
+    "littleIds": [
+      "45",
+      "46"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 42,
     "name": "Maaz Khan",
     "line_name": "I Am LEGEND",
     "status": "Alumni",
-    "class_field": "Delta Dimension",
+    "class_field": "Epsilon Eclipse",
     "major": "Mechanical Engineering",
     "hobbies": [
       "Racquetball",
@@ -621,7 +671,11 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381314/maazkhan3.jpg",
     "casual_image3": null,
     "bigId": 17,
-    "littleIds": []
+    "littleIds": [
+      "59",
+      "60"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 43,
@@ -641,8 +695,9 @@
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381291/charlesvillazor4.jpg",
     "bigId": null,
     "littleIds": [
-      57
-    ]
+      "57"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 45,
@@ -661,7 +716,10 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381322/raymonddong3.jpg",
     "casual_image3": null,
     "bigId": 40,
-    "littleIds": []
+    "littleIds": [
+      "73"
+    ],
+    "bigExternalName": ""
   },
   {
     "id": 46,
@@ -679,14 +737,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 40,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 48,
     "name": "Michael Tran",
     "line_name": "Carry the Titans",
     "status": "Alumni",
-    "class_field": "Zeta Zaibatsu",
+    "class_field": "Eta Evolution",
     "major": "Electrical Engineering",
     "hobbies": [
       "Dancing",
@@ -697,14 +756,15 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381317/michaeltran3.jpg",
     "casual_image3": null,
     "bigId": 12,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 49,
     "name": "Alex Kyu",
     "line_name": "Gears of Time",
     "status": "Alumni",
-    "class_field": "Zeta Zaibatsu",
+    "class_field": "Eta Evolution",
     "major": "Biomedical Engineering",
     "hobbies": [
       "Guitar",
@@ -719,7 +779,7 @@
     "casual_image3": null,
     "bigId": 36,
     "littleIds": [
-      56
+      "56"
     ]
   },
   {
@@ -727,7 +787,7 @@
     "name": "Kunwoo Lee",
     "line_name": "Knightmare",
     "status": "Alumni",
-    "class_field": "Zeta Zaibatsu",
+    "class_field": "Eta Evolution",
     "major": "Biology",
     "hobbies": [
       "Reading",
@@ -739,14 +799,15 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": null,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 51,
     "name": "Alex Singleton",
     "line_name": "Neon Future",
     "status": "Alumni",
-    "class_field": "Zeta Zaibatsu",
+    "class_field": "Eta Evolution",
     "major": "Accounting (Information Systems)",
     "hobbies": [
       "Boba",
@@ -767,7 +828,7 @@
     "line_name": "H.A.L.F",
     "status": "Alumni",
     "class_field": "Theta Trinity",
-    "major": null,
+    "major": "Film",
     "hobbies": [],
     "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381394/richardngo1.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381323/richardngo2.jpg",
@@ -800,7 +861,7 @@
     "name": "Austin Heyward",
     "line_name": "Dragon of Resonance",
     "status": "Alumni",
-    "class_field": "Theta Trinity",
+    "class_field": "Iota Immortals",
     "major": "Computer ScienceMinor:Music",
     "hobbies": [
       "Singing",
@@ -820,7 +881,7 @@
     "name": "Yucheng",
     "line_name": "Radiant",
     "status": "Alumni",
-    "class_field": "Theta Trinity",
+    "class_field": "Iota Immortals",
     "major": "Computer Science and Statistics",
     "hobbies": [
       "Simping for DPR",
@@ -918,7 +979,7 @@
     "name": "Cristian Mendoza",
     "line_name": "The Blue SPIRIT",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Mu Monarchs",
     "major": "Civil Engineering",
     "hobbies": [
       "Singing",
@@ -938,7 +999,7 @@
     "name": "Kenny Nguyen",
     "line_name": "Seraph of Courage",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Mu Monarchs",
     "major": "Electrical and Computer Engineering",
     "hobbies": [
       "Singing",
@@ -958,7 +1019,7 @@
     "name": "San Phyo",
     "line_name": "Leo",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Nu Nen",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -978,7 +1039,7 @@
     "name": "Jack Liu",
     "line_name": "The SailHer",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Nu Nen",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -998,7 +1059,7 @@
     "name": "Jordan Miller",
     "line_name": "InterstellHer",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Nu Nen",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1018,7 +1079,7 @@
     "name": "Lex Chaffee",
     "line_name": "SubmarinHer",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Nu Nen",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1038,7 +1099,7 @@
     "name": "Jaycee Wang",
     "line_name": "A Silent VOICE",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Nu Nen",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1058,7 +1119,7 @@
     "name": "Chris Kha",
     "line_name": "StarGazeHer",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Xi Xin",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1078,7 +1139,7 @@
     "name": "Lam Nguyen",
     "line_name": "Humanity's Strongest Soldier",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Xi Xin",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1097,7 +1158,7 @@
     "name": "Alonso Nolasco",
     "line_name": "TRAILBLAZER",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Xi Xin",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1117,7 +1178,7 @@
     "name": "Langston Sit",
     "line_name": "RIPTIDE",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Xi Xin",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1136,7 +1197,7 @@
     "name": "Bryan Phillips",
     "line_name": "Tanjiro the Sun Breather",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Omicron Odyssey",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1156,7 +1217,7 @@
     "name": "Giuliano Giove",
     "line_name": "The Black DREAD",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Omicron Odyssey",
     "major": "Finance",
     "hobbies": [
       "Singing",
@@ -1176,7 +1237,7 @@
     "name": "Justin Pak",
     "line_name": "HELL/HEAVEN",
     "status": "Alumni",
-    "class_field": "Kappa Kazoku",
+    "class_field": "Omicron Odyssey",
     "major": "Finance",
     "hobbies": [
       "Singing",

@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// Map all class images under src/backend/media/class so string paths can resolve at runtime
+const yearbookImageMap = import.meta.glob('../../backend/media/class/*.{png,jpg,jpeg,webp}', {
+    eager: true,
+    import: 'default'
+});
+
+const resolveImageUrl = (src) => {
+    if (!src) return '';
+    if (/^https?:\/\//i.test(src) || src.startsWith('/')) return src;
+    // Try to match by filename against our imported map
+    const filename = src.split('/').pop();
+    const matchKey = Object.keys(yearbookImageMap).find((k) => k.endsWith(`/${filename}`));
+    return matchKey ? yearbookImageMap[matchKey] : src;
+};
+
 const YearOverlay = ({ yearData, onClose }) => {
     const [currentClassIndex, setCurrentClassIndex] = useState(0);
     
@@ -74,13 +89,13 @@ const YearOverlay = ({ yearData, onClose }) => {
                     )}
                     {currentClass ? (
                         <img 
-                            src={currentClass.image} 
+                            src={resolveImageUrl(currentClass.image)} 
                             alt={`${currentClass.className} class of ${yearData.year}`}
                             className="yearbook-image"
                         />
                     ) : yearData.image ? (
                         <img 
-                            src={yearData.image} 
+                            src={resolveImageUrl(yearData.image)} 
                             alt={`Class of ${yearData.year}`}
                             className="yearbook-image"
                         />
@@ -91,6 +106,9 @@ const YearOverlay = ({ yearData, onClose }) => {
                     {yearData.classes && yearData.classes.length > 0 ? (
                         <>
                             <p><strong>Class:</strong> {currentClass.className}</p>
+                            {currentClass.semester && (
+                                <p><strong>Semester:</strong> {currentClass.semester}</p>
+                            )}
                             <p><strong>PM:</strong> {currentClass.PM}</p>
                             <p><strong>PD:</strong> {currentClass.PD}</p>
                         </>

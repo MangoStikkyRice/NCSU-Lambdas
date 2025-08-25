@@ -1,53 +1,48 @@
 /* Footer Component Styles */
-
+@import '../styles/variables.scss';
 /* ==========================================================================
    FOOTER COMPONENT
    ========================================================================== */
-.footer {
+   .footer {
     width: 100%;
     background-color: #172b56;
     color: white;
     padding: 35px 0;
     position: relative;
     box-sizing: border-box;
-    font-family: 'Dotum', sans-serif;
+    font-family: $font-stack;
+    letter-spacing: normal;
 
     .footer-content {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
-        letter-spacing: 0.15rem;
         line-height: 1.5;
         text-align: left;
 
         p {
-            margin: 10px 0;
-            font-size: 1rem;
-
+            margin: 5px 0;
+            font-size: 1.1rem;
+            letter-spacing: normal;
         }
 
-        .footer-nav {
-            ul {
-                display: flex;
-                justify-content: center;
-                gap: 40px;
-                list-style: none;
-                padding: 0;
-                margin: 20px 0 0 0;
-
-                li {
-                    a {
-                        color: white;
-                        text-decoration: none;
-                        font-size: 1.4rem;
-
-                        &:hover {
-                            color: #a8c5e0;
-                        }
-                    }
-                }
-            }
+        .footer-contact {
+            margin-top: 40px;
         }
+
+        /* footer link styles */
+        .footer-link {
+            color: #a9d4ff; /* light blue */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: #5a9df5; /* darker blue on hover */
+            text-decoration: underline;
+        }
+
+        // Footer navigation removed per request; keeping left-aligned text only
     }
 }
 
@@ -55,25 +50,32 @@
    RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 768px) {
-    .footer-content {
-        p {
-            font-size: 14px;
-        }
+    .footer {
+        .footer-content {
+            padding: 0 16px;
 
-        .footer-nav ul {
-            gap: 20px;
+            p {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            .footer-contact {
+                margin-top: 24px;
+            }
+
+            .footer-link {
+                word-break: break-word;
+            }
         }
     }
 }
 
-@media (max-width: 420px) {
-    .footer-content {
-        .footer-nav ul {
-            gap: 40px !important;
-
-            li a {
-                font-size: .8rem;
+@media (max-width: 532px) {
+    .footer {
+        .footer-content {
+            p {
+                font-size: 13px;
             }
         }
     }
-} 
+}

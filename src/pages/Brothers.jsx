@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { YEAR_GRID_DATA } from '../constants/yearGridData';
+import { loadClasses } from '../constants/classes';
 import YearOverlay from '../components/brothers/YearOverlay';
 
 // We'll use static yearbook pics for now. Add to DB later.
@@ -110,59 +111,37 @@ const Brothers = () => {
 
     // Default filter values on page load
     const [filter, setFilter] = useState('all brothers');
+    const classesCatalog = loadClasses();
+    const classFilterLabel = (name) => `${name.split(' ')[0]}s`;
+    const findClassByFilter = (f) => classesCatalog.find((c) => classFilterLabel(c.name) === f);
     const [hobbyFilter, setHobbyFilter] = useState(null);
 
     // Filter brothers based on selected filter and hobby
     const filteredBrothers = (Array.isArray(brothers) ? brothers : []).filter(person => {
-
-        // Status/Class Filter
-        const statusMatch = filter === 'all brothers' ||
-            (filter === 'Etas' && person.class_field === 'Eta Evolution') ||
-            (filter === 'Thetas' && person.class_field === 'Theta Trinity') ||
-            (filter === 'Iotas' && person.class_field === 'Iota Immortals') ||
-            (filter === 'Kappas' && person.class_field === 'Kappa Kazoku') ||
-            (filter === 'Mus' && person.class_field === 'Mu Monarchs') ||
-            (filter === 'Nus' && person.class_field === 'Nu Nen') ||
-            (filter === 'Xis' && person.class_field === 'Xi Xin') ||
-            (person.status === filter);
-
-        // Hobby Filter
+        const classMatch = (() => {
+            const cls = findClassByFilter(filter);
+            return cls ? person.class_field === cls.name : false;
+        })();
+        const statusMatch = filter === 'all brothers'
+            || ['Actives','Alumni','Associates'].includes(filter) && person.status === filter
+            || classMatch;
         const hobbyMatch = !hobbyFilter || (person.hobbies && person.hobbies.includes(hobbyFilter));
-
         return statusMatch && hobbyMatch;
     });
 
 
     // Gets the title for the banner based on active filter
     const getTitle = () => {
-        switch (filter) {
-            case 'Actives':
-                return 'Active House';
-            case 'Alumni':
-                return 'Alumni';
-            case 'Associates':
-                return 'Associate Members';
-            case 'Etas':
-                return 'Eta Evolution';
-            case 'Thetas':
-                return 'Theta Trinity';
-            case 'Iotas':
-                return 'Iota Immortals';
-            case 'Kappas':
-                return 'Kappa Kazoku';
-            case 'Mus':
-                return 'Mu Monarchs';
-            case 'Nus':
-                return 'Nu Nen';
-            case 'Xis':
-                return 'Xi Xin';
-            default:
-                return 'All Brothers';
-        }
+        const cls = findClassByFilter(filter);
+        if (cls) return cls.name;
+        if (filter === 'Actives') return 'Active House';
+        if (filter === 'Alumni') return 'Alumni';
+        if (filter === 'Associates') return 'Associate Members';
+        return 'All Brothers';
     };
 
     // Function to get a member by ID
-    const getMemberById = (id) => brothers.find(member => member.id === id);
+    const getMemberById = (id) => brothers.find(member => String(member.id) === String(id));
 
     // Function to get a member's big
     const getBig = (member) => {
@@ -175,7 +154,8 @@ const Brothers = () => {
     // Function to get a member's littles
     const getLittles = (member) => {
         if (member.littleIds && member.littleIds.length > 0) {
-            return brothers.filter(brother => member.littleIds.includes(brother.id));
+            const littleIdSet = new Set((member.littleIds || []).map(String));
+            return brothers.filter(brother => littleIdSet.has(String(brother.id)));
         }
         return [];
     };
@@ -242,13 +222,11 @@ const Brothers = () => {
                                     <option value="Actives">Actives</option>
                                     <option value="Alumni">Alumni</option>
                                     <option value="Associates">Associates</option>
-                                    <option value="Etas">Etas</option>
-                                    <option value="Thetas">Thetas</option>
-                                    <option value="Iotas">Iotas</option>
-                                    <option value="Kappas">Kappas</option>
-                                    <option value="Mus">Mus</option>
-                                    <option value="Nus">Nus</option>
-                                    <option value="Xis">Xis</option>
+                                    {classesCatalog.map((c) => (
+                                        <option key={c.id} value={classFilterLabel(c.name)}>
+                                            {classFilterLabel(c.name)}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         )}
@@ -794,20 +772,31 @@ const HeadshotCard = ({
                 <div className="popup-info">
 
                     {/* Big */}
-                    {bigBrother && (
+                    {(bigBrother || person.bigExternalName) && (
                         <div className="related-brothers big-brother">
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleLinkClick(person.bigId);
-                                }}
-                                className="related-link"
-                            >
-                                {bigBrother.name.includes(' ')
-                                    ? `${bigBrother.name.split(' ')[0]} ${bigBrother.name.split(' ')[1][0]}.`
-                                    : bigBrother.name}
-                                's Little
-                            </button>
+                            {bigBrother ? (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleLinkClick(person.bigId);
+                                    }}
+                                    className="related-link"
+                                >
+                                    {bigBrother.name.includes(' ')
+                                        ? `${bigBrother.name.split(' ')[0]} ${bigBrother.name.split(' ')[1][0]}.`
+                                        : bigBrother.name}
+                                    's Little
+                                </button>
+                            ) : (
+                                <button
+                                    className="related-link"
+                                    onClick={(e) => e.stopPropagation()}
+                                    disabled
+                                    style={{ opacity: 0.9, cursor: 'default' }}
+                                >
+                                    {person.bigExternalName}'s Little
+                                </button>
+                            )}
                         </div>
                     )}
 

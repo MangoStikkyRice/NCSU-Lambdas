@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './MemberManagement.scss';
 import dataBrothers from '../data/brothers.json';
 import { YEAR_GRID_DATA } from '../constants/yearGridData';
+import { loadClasses, saveClasses } from '../constants/classes';
 import { youtubeVideos } from '../data/mediaCarouselData';
 
 const MemberManagement = () => {
@@ -12,6 +13,7 @@ const MemberManagement = () => {
     const [editingYearbook, setEditingYearbook] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [showYearbookForm, setShowYearbookForm] = useState(false);
+    const [classesCatalog, setClassesCatalog] = useState(loadClasses());
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('all');
     
@@ -22,27 +24,19 @@ const MemberManagement = () => {
 
     // Initialize members, yearbooks, and media from JSON/data files
     useEffect(() => {
-        setMembers(Array.isArray(dataBrothers) ? dataBrothers : []);
-        setYearbooks(YEAR_GRID_DATA || []);
-        
-        // Convert YouTube videos to media format with proper IDs and embed IDs
-        const mediaData = youtubeVideos.map((video, index) => {
-            const extractVideoId = (url) => {
-                const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-                return match ? match[1] : '';
-            };
+            setMembers(Array.isArray(dataBrothers) ? dataBrothers : []);
+            setYearbooks(YEAR_GRID_DATA || []);
             
-            return {
-                id: index + 1,
-                title: video.title,
-                youtubeUrl: video.url,
-                embedId: extractVideoId(video.url),
-                semester: video.semester,
-                year: video.year
-            };
-        });
-        
-        setMediaItems(mediaData);
+        // Initialize media from data file in a generic format (url + thumbnail)
+        const mediaData = youtubeVideos.map((video, index) => ({
+                    id: index + 1,
+                    title: video.title,
+            url: video.url,
+            thumbnail: video.thumbnail,
+                    semester: video.semester,
+                    year: video.year
+        }));
+            setMediaItems(mediaData);
     }, []);
 
     // Empty member template
@@ -133,30 +127,125 @@ const MemberManagement = () => {
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
         } else if (activeTab === 'yearbooks') {
-            // Export yearbooks as JS file
-            const jsContent = `// Yearbook grid data used on Brothers page
-// Images are kept under src/backend/media/class as requested
-import class2016BImage from '../backend/media/class/charters.png';
-// Add other imports as needed...
+            // Export yearbooks with top-level imports for local images (no comments)
+            const imageVarByPath = new Map();
+            const importLines = [];
 
-export const YEAR_GRID_DATA = ${JSON.stringify(yearbooks, null, 2)};
-`;
-            const dataUri = 'data:text/javascript;charset=utf-8,'+ encodeURIComponent(jsContent);
-            
+            const normalizePath = (p) => {
+                if (!p) return '';
+                // Normalize to path relative to constants: '../backend/media/class/...'
+                const cleaned = p.replace(/^\/*src\//, '../')
+                                 .replace(/^\/*/, '')
+                                 .replace(/^backend\//, '../backend/');
+                if (cleaned.startsWith('../')) return cleaned;
+                return `../${cleaned}`;
+            };
+
+            const getVarName = (year, idx) => {
+                const letter = String.fromCharCode(65 + idx); // A, B, C...
+                return `class${year}${letter}Image`;
+            };
+
+            // Build import statements
+            yearbooks.forEach((yb) => {
+                (yb.classes || []).forEach((cls, idx) => {
+                    const img = cls.image;
+                    if (img && !/^https?:\/\//i.test(img)) {
+                        const norm = normalizePath(img);
+                        if (!imageVarByPath.has(norm)) {
+                            const varName = getVarName(yb.year, idx);
+                            imageVarByPath.set(norm, varName);
+                            importLines.push(`import ${varName} from '${norm}';`);
+                        }
+                    }
+                });
+            });
+
+            // Build YEAR_GRID_DATA with image fields referencing vars when local
+            const serialize = () => {
+                const parts = [];
+                parts.push('export const YEAR_GRID_DATA = [');
+                yearbooks.forEach((yb, yi) => {
+                    parts.push('  {');
+                    parts.push(`    year: '${yb.year}',`);
+                    parts.push('    classes: [');
+                    (yb.classes || []).forEach((cls, ci) => {
+                        const img = cls.image;
+                        let imageValue;
+                        if (img && !/^https?:\/\//i.test(img)) {
+                            const norm = normalizePath(img);
+                            const varName = imageVarByPath.get(norm) || getVarName(yb.year, ci);
+                            imageValue = varName;
+                        } else if (img) {
+                            imageValue = JSON.stringify(img);
+                        } else {
+                            imageValue = '""';
+                        }
+                        parts.push('      {');
+                        parts.push(`        className: ${JSON.stringify(cls.className || '')},`);
+                        parts.push(`        PM: ${JSON.stringify(cls.PM || '')},`);
+                        parts.push(`        PD: ${JSON.stringify(cls.PD || '')},`);
+                        parts.push(`        image: ${imageValue},`);
+                        parts.push('      }' + (ci < (yb.classes || []).length - 1 ? ',' : ''));
+                    });
+                    parts.push('    ]');
+                    parts.push('  }' + (yi < yearbooks.length - 1 ? ',' : ''));
+                });
+                parts.push('];');
+                return parts.join('\n');
+            };
+
+            const normalizePathDirect = (p) => {
+                if (!p) return '';
+                const cleaned = p.replace(/^\/*src\//, '../')
+                                 .replace(/^\/*/, '')
+                                 .replace(/^backend\//, '../backend/');
+                if (/^https?:\/\//i.test(cleaned)) return cleaned;
+                if (cleaned.startsWith('../')) return cleaned;
+                return `../${cleaned}`;
+            };
+            const directData = yearbooks.map((yb) => ({
+                year: String(yb.year || ''),
+                classes: (yb.classes || []).map((cls) => ({
+                    className: cls.className || '',
+                    PM: cls.PM || '',
+                    PD: cls.PD || '',
+                    semester: cls.semester || '',
+                    image: normalizePathDirect(cls.image || '')
+                }))
+            }));
+            const jsContent = `export const YEAR_GRID_DATA = ${JSON.stringify(directData, null, 2)};\n`;
+
+            const dataUri = 'data:text/javascript;charset=utf-8,' + encodeURIComponent(jsContent);
             const exportFileDefaultName = 'yearGridData.js';
-            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        } else if (activeTab === 'classes') {
+            // Export classes config as JS module
+            const jsContent = `// Central class catalog used by Management and Brothers page\nexport const DEFAULT_CLASSES = ${JSON.stringify(classesCatalog, null, 2)};\n\nconst STORAGE_KEY = 'classesCatalog';\n\nexport const loadClasses = () => {\n  try {\n    const saved = localStorage.getItem(STORAGE_KEY);\n    const classes = saved ? JSON.parse(saved) : DEFAULT_CLASSES;\n    return Array.isArray(classes) ? classes : DEFAULT_CLASSES;\n  } catch {\n    return DEFAULT_CLASSES;\n  }\n};\n\nexport const saveClasses = (classes) => {\n  try {\n    localStorage.setItem(STORAGE_KEY, JSON.stringify(classes));\n    return true;\n  } catch {\n    return false;\n  }\n};\n`;
+            const dataUri = 'data:text/javascript;charset=utf-8,' + encodeURIComponent(jsContent);
+            const exportFileDefaultName = 'classes.js';
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
         } else {
-            // Export media carousel as JS file
-            const jsContent = `// Media carousel data for YouTube videos
-export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
+            // Export media carousel as JS file (matches app import contract)
+            const sanitized = mediaItems.map(({ title, url, thumbnail, semester, year }) => ({
+                title,
+                url,
+                thumbnail,
+                semester,
+                year
+            }));
+            const jsContent = `// YouTube carousel data for the Media page
+export const youtubeVideos = ${JSON.stringify(sanitized, null, 2)};
 `;
             const dataUri = 'data:text/javascript;charset=utf-8,'+ encodeURIComponent(jsContent);
             
-            const exportFileDefaultName = 'mediaData.js';
+            const exportFileDefaultName = 'mediaCarouselData.js';
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
@@ -173,6 +262,17 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
         };
         setEditingYearbook(newYear);
         setShowYearbookForm(true);
+    };
+
+    // Classes management
+    const handleAddClassName = () => {
+        const name = prompt('Enter new class name');
+        if (!name) return;
+        const id = name.toLowerCase().split(/\s+/).shift();
+        const updated = [...classesCatalog, { id, name }];
+        setClassesCatalog(updated);
+        saveClasses(updated);
+        alert('Class added to catalog. It is now available in dropdowns.');
     };
 
     const handleEditYearbook = (yearbook) => {
@@ -213,8 +313,10 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
         setEditingMedia({
             id: Date.now(),
             title: '',
-            youtubeUrl: '',
-            embedId: ''
+            url: '',
+            thumbnail: '',
+            semester: '',
+            year: new Date().getFullYear()
         });
         setShowMediaForm(true);
     };
@@ -231,25 +333,23 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
     };
 
     const handleSaveMedia = (mediaData) => {
-        // Extract YouTube video ID from URL
-        const extractVideoId = (url) => {
-            const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+        // Normalize payload: ensure thumbnail present if YouTube
+        const extractYouTubeId = (link) => {
+            const match = (link || '').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
             return match ? match[1] : '';
         };
+        const ytId = extractYouTubeId(mediaData.url);
+        const normalizedThumbnail = mediaData.thumbnail && mediaData.thumbnail.trim() !== ''
+            ? mediaData.thumbnail
+            : (ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : '');
 
-        const embedId = extractVideoId(mediaData.youtubeUrl);
-        const mediaWithEmbed = { ...mediaData, embedId };
+        const normalized = { ...mediaData, thumbnail: normalizedThumbnail };
 
         if (editingMedia && mediaItems.find(m => m.id === editingMedia.id)) {
-            // Update existing
-            setMediaItems(prev => prev.map(item => 
-                item.id === editingMedia.id ? mediaWithEmbed : item
-            ));
+            setMediaItems(prev => prev.map(item => item.id === editingMedia.id ? normalized : item));
         } else {
-            // Add new
-            setMediaItems(prev => [...prev, mediaWithEmbed]);
+            setMediaItems(prev => [...prev, normalized]);
         }
-        
         setShowMediaForm(false);
         setEditingMedia(null);
     };
@@ -267,12 +367,32 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
                 <div className="header-actions">
                     <button 
                         className="btn-primary" 
-                        onClick={activeTab === 'members' ? handleAddMember : activeTab === 'yearbooks' ? handleAddYearbook : handleAddMedia}
+                        onClick={
+                            activeTab === 'members'
+                                ? handleAddMember
+                                : activeTab === 'yearbooks'
+                                    ? handleAddYearbook
+                                    : activeTab === 'classes'
+                                        ? handleAddClassName
+                                        : handleAddMedia
+                        }
                     >
-                        {activeTab === 'members' ? 'Add New Member' : activeTab === 'yearbooks' ? 'Add New Year' : 'Add YouTube Video'}
+                        {activeTab === 'members'
+                            ? 'Add New Member'
+                            : activeTab === 'yearbooks'
+                                ? 'Add New Year'
+                                : activeTab === 'classes'
+                                    ? 'Add Class'
+                                    : 'Add Media Link'}
                     </button>
                     <button className="btn-secondary" onClick={handleExportJSON}>
-                        {activeTab === 'members' ? 'Export Members' : activeTab === 'yearbooks' ? 'Export Yearbooks' : 'Export Media'}
+                        {activeTab === 'members'
+                            ? 'Export Members'
+                            : activeTab === 'yearbooks'
+                                ? 'Export Yearbooks'
+                                : activeTab === 'classes'
+                                    ? 'Export Classes'
+                                    : 'Export Media'}
                     </button>
                 </div>
             </div>
@@ -295,6 +415,12 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
                     onClick={() => setActiveTab('media')}
                 >
                     Media Carousel ({mediaItems.length})
+                </button>
+                <button 
+                    className={`tab ${activeTab === 'classes' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('classes')}
+                >
+                    Classes ({classesCatalog.length})
                 </button>
             </div>
 
@@ -399,6 +525,38 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
                 />
             )}
 
+            {activeTab === 'classes' && (
+                <div className="yearbooks-list">
+                    <div className="list-header">
+                        <span>Name</span>
+                        <span>Actions</span>
+                    </div>
+                    {classesCatalog.map((c, i) => (
+                        <div key={c.id + i} className="yearbook-row">
+                            <span className="year">{c.name}</span>
+                            <div className="actions">
+                                <button className="btn-edit" onClick={() => {
+                                    const newName = prompt('Rename class', c.name);
+                                    if (!newName || newName === c.name) return;
+                                    const updated = classesCatalog.map((x) => x === c ? { ...x, name: newName } : x);
+                                    setClassesCatalog(updated);
+                                    saveClasses(updated);
+                                }}>Rename</button>
+                                <button className="btn-delete" onClick={() => {
+                                    if (!confirm('Remove this class from catalog?')) return;
+                                    const updated = classesCatalog.filter((x) => x !== c);
+                                    setClassesCatalog(updated);
+                                    saveClasses(updated);
+                                }}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="actions" style={{ padding: '10px 20px' }}>
+                        <button className="btn-secondary" onClick={handleAddClassName}>Add Class</button>
+                    </div>
+                </div>
+            )}
+
             {showForm && (
                 <MemberForm
                     member={editingMember}
@@ -431,7 +589,10 @@ export const MEDIA_CAROUSEL_DATA = ${JSON.stringify(mediaItems, null, 2)};
 const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
     const [formData, setFormData] = useState(member);
     const [hobbiesInput, setHobbiesInput] = useState(member.hobbies?.join(', ') || '');
-    const [littleIdsInput, setLittleIdsInput] = useState(member.littleIds?.join(', ') || '');
+    const [classesOptions] = useState(loadClasses());
+    const [useExternalBig, setUseExternalBig] = useState(!member.bigId && !!member.bigExternalName);
+    const [externalBigName, setExternalBigName] = useState(member.bigExternalName || '');
+    const [selectedLittleIds, setSelectedLittleIds] = useState(Array.isArray(member.littleIds) ? member.littleIds : []);
 
     const handleChange = (field, value) => {
         setFormData(prev => ({
@@ -446,7 +607,9 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
         const processedData = {
             ...formData,
             hobbies: hobbiesInput.split(',').map(h => h.trim()).filter(h => h),
-            littleIds: littleIdsInput.split(',').map(id => id.trim()).filter(id => id),
+            littleIds: selectedLittleIds,
+            bigId: useExternalBig ? '' : formData.bigId,
+            bigExternalName: useExternalBig ? externalBigName : ''
         };
 
         onSave(processedData);
@@ -499,21 +662,9 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
                                 required
                             >
                                 <option value="">Select Class</option>
-                                <option value="Charter Conquest">Charter Conquest</option>
-                                <option value="Alpha Ascension">Alpha Ascension</option>
-                                <option value="Beta Breakthrough">Beta Breakthrough</option>
-                                <option value="Gamma Greatness">Gamma Greatness</option>
-                                <option value="Delta Dynasty">Delta Dynasty</option>
-                                <option value="Epsilon Excellence">Epsilon Excellence</option>
-                                <option value="Zeta Zenith">Zeta Zenith</option>
-                                <option value="Eta Evolution">Eta Evolution</option>
-                                <option value="Theta Trinity">Theta Trinity</option>
-                                <option value="Iota Immortals">Iota Immortals</option>
-                                <option value="Kappa Kazoku">Kappa Kazoku</option>
-                                <option value="Mu Monarchs">Mu Monarchs</option>
-                                <option value="Nu Nen">Nu Nen</option>
-                                <option value="Xi Xin">Xi Xin</option>
-                                <option value="Omicron Odyssey">Omicron Odyssey</option>
+                                {classesOptions.map((c) => (
+                                    <option key={c.id} value={c.name}>{c.name}</option>
+                                ))}
                             </select>
                         </div>
 
@@ -542,26 +693,46 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
 
                         <div className="form-group">
                             <label>Big Brother</label>
-                            <select
-                                value={formData.bigId || ''}
-                                onChange={(e) => handleChange('bigId', e.target.value)}
-                            >
-                                <option value="">No Big</option>
-                                {availableBigs.map(big => (
-                                    <option key={big.id} value={big.id}>
-                                        {big.name} ({big.id})
-                                    </option>
-                                ))}
-                            </select>
+                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={useExternalBig}
+                                        onChange={(e) => setUseExternalBig(e.target.checked)}
+                                    />
+                                    Big not at NCSU (external)
+                                </label>
+                            </div>
+                            {!useExternalBig && (
+                                <select
+                                    value={formData.bigId || ''}
+                                    onChange={(e) => handleChange('bigId', e.target.value)}
+                                >
+                                    <option value="">No Big</option>
+                                    {availableBigs.map(big => (
+                                        <option key={big.id} value={big.id}>
+                                            {big.name} ({big.id})
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                            {useExternalBig && (
+                                <input
+                                    type="text"
+                                    value={externalBigName}
+                                    onChange={(e) => setExternalBigName(e.target.value)}
+                                    placeholder="External big's name"
+                                />
+                            )}
                         </div>
 
                         <div className="form-group full-width">
-                            <label>Main Image URL</label>
+                            <label>Main Image URL or local path</label>
                             <input
-                                type="url"
+                                type="text"
                                 value={formData.image}
                                 onChange={(e) => handleChange('image', e.target.value)}
-                                placeholder="https://..."
+                                placeholder="https://... or /assets/..."
                             />
                             {formData.image && (
                                 <div className="image-preview">
@@ -571,12 +742,12 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Casual Image 1 URL</label>
+                            <label>Casual Image 1 URL or local path</label>
                             <input
-                                type="url"
+                                type="text"
                                 value={formData.casual_image1}
                                 onChange={(e) => handleChange('casual_image1', e.target.value)}
-                                placeholder="https://..."
+                                placeholder="https://... or /assets/..."
                             />
                             {formData.casual_image1 && (
                                 <div className="image-preview small">
@@ -586,12 +757,12 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Casual Image 2 URL</label>
+                            <label>Casual Image 2 URL or local path</label>
                             <input
-                                type="url"
+                                type="text"
                                 value={formData.casual_image2}
                                 onChange={(e) => handleChange('casual_image2', e.target.value)}
-                                placeholder="https://..."
+                                placeholder="https://... or /assets/..."
                             />
                             {formData.casual_image2 && (
                                 <div className="image-preview small">
@@ -601,12 +772,12 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Casual Image 3 URL</label>
+                            <label>Casual Image 3 URL or local path</label>
                             <input
-                                type="url"
+                                type="text"
                                 value={formData.casual_image3}
                                 onChange={(e) => handleChange('casual_image3', e.target.value)}
-                                placeholder="https://..."
+                                placeholder="https://... or /assets/..."
                             />
                             {formData.casual_image3 && (
                                 <div className="image-preview small">
@@ -626,13 +797,38 @@ const MemberForm = ({ member, onSave, onCancel, existingMembers }) => {
                         </div>
 
                         <div className="form-group full-width">
-                            <label>Little IDs (comma separated)</label>
-                            <input
-                                type="text"
-                                value={littleIdsInput}
-                                onChange={(e) => setLittleIdsInput(e.target.value)}
-                                placeholder="25, 26, 27..."
-                            />
+                            <label>Littles</label>
+                            <div style={{
+                                maxHeight: '200px',
+                                overflowY: 'auto',
+                                border: '1px solid #eee',
+                                borderRadius: '6px',
+                                padding: '8px'
+                            }}>
+                                {existingMembers
+                                    .filter(m => m.id !== formData.id)
+                                    .map(m => {
+                                        const checked = selectedLittleIds.map(String).includes(String(m.id));
+                                        return (
+                                            <label key={m.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={checked}
+                                                    onChange={(e) => {
+                                                        const idStr = String(m.id);
+                                                        if (e.target.checked) {
+                                                            setSelectedLittleIds(prev => Array.from(new Set([...prev.map(String), idStr])));
+                                                        } else {
+                                                            setSelectedLittleIds(prev => prev.filter(id => String(id) !== idStr));
+                                                        }
+                                                    }}
+                                                />
+                                                {m.name} ({m.id})
+                                            </label>
+                                        );
+                                    })}
+                            </div>
+                            <small>Select one or more littles.</small>
                         </div>
                     </div>
 
@@ -722,7 +918,8 @@ const YearbookForm = ({ yearbook, onSave, onCancel }) => {
                 className: '',
                 PM: '',
                 PD: '',
-                image: ''
+                image: '',
+                semester: ''
             }]
         }));
     };
@@ -801,13 +998,25 @@ const YearbookForm = ({ yearbook, onSave, onCancel }) => {
                                         />
                                     </div>
 
+                                    <div className="form-group">
+                                        <label>Semester</label>
+                                        <select
+                                            value={classItem.semester || ''}
+                                            onChange={(e) => handleClassChange(index, 'semester', e.target.value)}
+                                        >
+                                            <option value="">Select Semester</option>
+                                            <option value="Spring">Spring</option>
+                                            <option value="Fall">Fall</option>
+                                        </select>
+                                    </div>
+
                                     <div className="form-group full-width">
-                                        <label>Image URL</label>
+                                        <label>Image URL or local path</label>
                                         <input
-                                            type="url"
+                                            type="text"
                                             value={classItem.image}
                                             onChange={(e) => handleClassChange(index, 'image', e.target.value)}
-                                            placeholder="https://..."
+                                            placeholder="https://... or /assets/..."
                                         />
                                         {classItem.image && (
                                             <div className="image-preview">
@@ -848,7 +1057,7 @@ const MediaList = ({ mediaItems, onEdit, onDelete }) => {
         <div className="media-list">
             <div className="list-header">
                 <span>Title</span>
-                <span>YouTube URL</span>
+                <span>Link</span>
                 <span>Preview</span>
                 <span>Actions</span>
             </div>
@@ -857,14 +1066,14 @@ const MediaList = ({ mediaItems, onEdit, onDelete }) => {
                 <div key={item.id} className="media-row">
                     <span className="media-title">{item.title}</span>
                     <span className="media-url">
-                        <a href={item.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                            {item.youtubeUrl.substring(0, 50)}...
+                        <a href={item.url} target="_blank" rel="noopener noreferrer">
+                            {item.url.substring(0, 50)}...
                         </a>
                     </span>
                     <div className="media-preview">
-                        {item.embedId && (
+                        {item.thumbnail && (
                             <img 
-                                src={`https://img.youtube.com/vi/${item.embedId}/mqdefault.jpg`}
+                                src={item.thumbnail}
                                 alt={item.title}
                                 className="video-thumbnail"
                             />
@@ -904,7 +1113,7 @@ const MediaForm = ({ media, onSave, onCancel }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        if (!formData.title || !formData.youtubeUrl) {
+        if (!formData.title || !formData.url) {
             alert('Please fill in all required fields.');
             return;
         }
@@ -912,17 +1121,10 @@ const MediaForm = ({ media, onSave, onCancel }) => {
         onSave(formData);
     };
 
-    const extractVideoId = (url) => {
-        const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-        return match ? match[1] : '';
-    };
-
-    const videoId = extractVideoId(formData.youtubeUrl || '');
-
     return (
         <div className="form-overlay">
             <div className="media-form">
-                <h2>{media.id ? 'Edit YouTube Video' : 'Add New YouTube Video'}</h2>
+                <h2>{media.id ? 'Edit Media Link' : 'Add New Media Link'}</h2>
                 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -937,40 +1139,59 @@ const MediaForm = ({ media, onSave, onCancel }) => {
                     </div>
 
                     <div className="form-group">
-                        <label>YouTube URL *</label>
+                        <label>Media URL (YouTube, Instagram, etc.) *</label>
                         <input
                             type="url"
-                            value={formData.youtubeUrl}
-                            onChange={(e) => handleChange('youtubeUrl', e.target.value)}
-                            placeholder="https://www.youtube.com/watch?v=..."
+                            value={formData.url}
+                            onChange={(e) => handleChange('url', e.target.value)}
+                            placeholder="https://www.youtube.com/watch?v=... or https://www.instagram.com/reel/..."
                             required
                         />
-                        <small>Paste the full YouTube video URL</small>
+                        <small>Any public link will work. For Instagram, ensure the post/reel is public.</small>
                     </div>
 
-                    {videoId && (
                         <div className="form-group">
-                            <label>Preview</label>
-                            <div className="video-preview">
-                                <img 
-                                    src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
-                                    alt="Video thumbnail"
-                                    className="preview-thumbnail"
-                                />
-                                <p>Video ID: {videoId}</p>
-                            </div>
+                        <label>Thumbnail URL (optional)</label>
+                                    <input
+                            type="url"
+                            value={formData.thumbnail || ''}
+                            onChange={(e) => handleChange('thumbnail', e.target.value)}
+                            placeholder="https://... (leave empty for YouTube auto)"
+                        />
                         </div>
-                    )}
+                        
+                    <div className="form-grid">
+                        <div className="form-group">
+                            <label>Semester</label>
+                            <select
+                                value={formData.semester || ''}
+                                onChange={(e) => handleChange('semester', e.target.value)}
+                            >
+                                <option value="">Select Semester</option>
+                                <option value="Spring">Spring</option>
+                                <option value="Fall">Fall</option>
+                            </select>
+                                            </div>
+                            <div className="form-group">
+                            <label>Year</label>
+                                <input
+                                    type="number"
+                                value={formData.year || ''}
+                                onChange={(e) => handleChange('year', e.target.value)}
+                                placeholder="2024"
+                                />
+                            </div>
+                                    </div>
 
-                    <div className="form-actions">
-                        <button type="button" className="btn-cancel" onClick={onCancel}>
-                            Cancel
-                        </button>
-                        <button type="submit" className="btn-save">
+                        <div className="form-actions">
+                            <button type="button" className="btn-cancel" onClick={onCancel}>
+                                Cancel
+                            </button>
+                            <button type="submit" className="btn-save">
                             Save Video
-                        </button>
-                    </div>
-                </form>
+                            </button>
+                        </div>
+                    </form>
             </div>
         </div>
     );

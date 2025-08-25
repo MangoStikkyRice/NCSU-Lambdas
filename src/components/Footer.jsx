@@ -5,15 +5,15 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-content">
-                <p>&copy; 2025 NC State Lambda Phi Epsilon. All rights reserved.</p>
+                <p>&copy; 2025 Lambda Phi Epsilon, Beta Eta Chapter. All rights reserved.</p>
                 <p>Designed by InterstellHer</p>
-                <nav className="footer-nav">
-                    <ul>
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                    </ul>
-                </nav>
+                <p className="footer-contact">
+                    Questions or feedback? Reach us at{" "}
+                    <a href="mailto:dev.ncsulphie@gmail.com" className="footer-link">
+                        dev.ncsulphie@gmail.com
+                    </a>.
+                </p>
+
             </div>
         </footer>
     );
