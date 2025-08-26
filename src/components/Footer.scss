@@ -1,81 +1,38 @@
-/* Footer Component Styles */
-@import '../styles/variables.scss';
-/* ==========================================================================
-   FOOTER COMPONENT
-   ========================================================================== */
-   .footer {
-    width: 100%;
+/* FOOTER */
+.footer {
+    inline-size: 100%;
     background-color: #172b56;
-    color: white;
-    padding: 35px 0;
-    position: relative;
+    color: #fff;
+    padding-block: clamp(1.25rem, 3.5vw, 2.25rem);
     box-sizing: border-box;
-    font-family: $font-stack;
-    letter-spacing: normal;
 
-    .footer-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
+    &__content {
+        margin-inline: auto;
+        padding-inline: clamp(1rem, 4vw, 1.25rem);
         line-height: 1.5;
-        text-align: left;
+    }
 
-        p {
-            margin: 5px 0;
-            font-size: 1.1rem;
-            letter-spacing: normal;
-        }
+    &__line {
+        margin-block: 0.25rem;
+        font-size: clamp(0.9rem, 1.2vw + 0.6rem, 1.1rem);
+    }
 
-        .footer-contact {
-            margin-top: 40px;
-        }
+    &__contact {
+        margin-block-start: clamp(1rem, 3vw, 2rem);
+    }
 
-        /* footer link styles */
-        .footer-link {
-            color: #a9d4ff; /* light blue */
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
+    &__link {
+        color: #a9d4ff;
+        text-decoration: none;
+        transition: color 0.2s ease;
 
-        .footer-link:hover {
-            color: #5a9df5; /* darker blue on hover */
+        &:hover,
+        &:focus-visible {
+            color: #5a9df5;
             text-decoration: underline;
+            outline: none;
         }
 
-        // Footer navigation removed per request; keeping left-aligned text only
-    }
-}
-
-/* ==========================================================================
-   RESPONSIVE DESIGN
-   ========================================================================== */
-@media (max-width: 768px) {
-    .footer {
-        .footer-content {
-            padding: 0 16px;
-
-            p {
-                font-size: 16px;
-                line-height: 1.4;
-            }
-
-            .footer-contact {
-                margin-top: 24px;
-            }
-
-            .footer-link {
-                word-break: break-word;
-            }
-        }
-    }
-}
-
-@media (max-width: 532px) {
-    .footer {
-        .footer-content {
-            p {
-                font-size: 13px;
-            }
-        }
+        word-break: break-word;
     }
 }

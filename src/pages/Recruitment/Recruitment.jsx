@@ -1,18 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Recruitment.scss';
-import heroImage1 from '../../assets/images/rec.jpg';
-import NavBarNew from '../../components/navbar/NavBarNew';
-import Footer from '../../components/Footer';
 import { gsap } from 'gsap';
 import { recruitmentFAQs } from './recruitmentFAQs';
+import NavBarNew from '../../components/navbar/NavBarNew';
+import Footer from '../../components/Footer';
 
+import heroImage1 from '../../assets/images/rec.jpg';
+
+/**
+ * Definitions and setup for the Recruitment page.
+ * 
+ * Objectives:
+ * - The recruitment page shall feature FAQs and a
+ * contact statement.
+ * - The recruitment page shall feature a Hero image
+ * of brothers, preferably during reveal/installs.
+ * 
+ * @returns JSX Element
+ * @author Jordan Miller
+ */
 function Recruitment() {
-    // Refs and state
+
+    /* -------------------------------------------------------------------------- */
+    /*                               Refs and state                               */
+    /* -------------------------------------------------------------------------- */
+
+    // Scopes GSAP animations
     const containerRef = useRef(null);
+
+    // Handles to DOM nodes so GSAP can animate them
     const faqRefs = useRef([]);
+
+    // Tracks which questions are opened
     const [openIndices, setOpenIndices] = useState([]);
 
-    // Initial page fade-in animation
+    /* -------------------------------------------------------------------------- */
+    /*                                 Animations                                 */
+    /* -------------------------------------------------------------------------- */
+
+    // Page fade-in
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from(containerRef.current.children, {
@@ -26,16 +52,7 @@ function Recruitment() {
         return () => ctx.revert();
     }, []);
 
-    // FAQ toggle functionality
-    const toggleFAQ = (index) => {
-        setOpenIndices((prevIndices) =>
-            prevIndices.includes(index)
-                ? prevIndices.filter((i) => i !== index)
-                : [...prevIndices, index]
-        );
-    };
-
-    // Animate FAQ dropdowns
+    // FAQ dropdown
     useEffect(() => {
         faqRefs.current.forEach((ref, index) => {
             if (ref) {
@@ -48,53 +65,74 @@ function Recruitment() {
         });
     }, [openIndices]);
 
+    /* -------------------------------------------------------------------------- */
+    /*                                   Toggles                                  */
+    /* -------------------------------------------------------------------------- */
+
+    // FAQ dropdown
+    const toggleFAQ = (index) => {
+        setOpenIndices((prevIndices) =>
+            prevIndices.includes(index)
+                ? prevIndices.filter((i) => i !== index)
+                : [...prevIndices, index]
+        );
+    };
+
+    /* -------------------------------------------------------------------------- */
+    /*                              JSX Element Setup                             */
+    /* -------------------------------------------------------------------------- */
+
     return (
-        <div ref={containerRef}>
+        <div ref={containerRef} className="recruitment">
+
+            {/* Navigation bar */}
             <NavBarNew />
-            
+
             {/* Hero section with single image */}
-            <div className="hero-image-recruitment">
+            <div className="recruitment__hero">
                 <img
                     src={heroImage1}
                     alt="Recruitment Hero"
-                    className="hero-img"
-                    style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover' }}
+                    className="recruitment__hero-img"
                 />
-                <div className="hero-text-recruitment">
+                <div className="recruitment__hero-text">
                     <h1>RUSH LPhiE</h1>
                     <p>Discover Brotherhood, Leadership, and Legacy</p>
                 </div>
             </div>
 
             {/* FAQ section */}
-            <div className="recruitment-faqs">
+            <div className="recruitment__faqs">
                 <h2>Recruitment FAQs</h2>
 
                 {recruitmentFAQs.map((faq, index) => (
-                    <div key={index} className="faq-item">
+                    <div key={index} className="recruitment__faq">
                         <h3
                             onClick={() => toggleFAQ(index)}
-                            className={`faq-question ${openIndices.includes(index) ? 'active' : ''}`}
+                            className={`recruitment__faq-question ${openIndices.includes(index) ? 'recruitment__faq-question--active' : ''}`}
                         >
                             {faq.question}
-                            <span className="faq-icon">
+                            <span className="recruitment__faq-icon">
                                 {openIndices.includes(index) ? '-' : '+'}
                             </span>
                         </h3>
                         <div
                             ref={el => faqRefs.current[index] = el}
-                            className="faq-answer"
+                            className="recruitment__faq-answer"
                             style={{ height: 0, overflow: 'hidden', opacity: 0 }}
                         >
                             <p>{faq.answer}</p>
                         </div>
                     </div>
                 ))}
+            </div>
 
+            {/* Contact statement */}
+            <div className="recruitment__contact">
                 <p>For any other further questions about recruitment, feel free to contact us on our Instagram!</p>
             </div>
 
-            {/* Footer component */}
+            {/* Footer */}
             <Footer />
         </div>
     );

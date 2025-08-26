@@ -1,349 +1,218 @@
-// Media page root wrapper
-.media-page {
-  background: #ffffff;
+/* BLOCK */
+.media {
+  background: #fff;
 }
 
-// Center the carousel containers and constrain their width
-.carousel-container {
+/* Sections */
+.media__section {
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 30px);
+  margin-block-start: 0;                         /* was > 0 */
+  margin-block-end: clamp(1rem, 4vw, 2.5rem);
+}
+
+.media__section-head {
+  margin-block-end: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+.media__section-title {
+  margin: 0 0 0 0.5rem;
+  color: #000;
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem); /* ~20px → 32px */
+  line-height: 1.2;
+}
+
+/* HERO */
+.media__hero {
   position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 10px;
-  height: 200px;
-  overflow: hidden; // keep arrows and content in-bounds
-  // Constant gutters so first and last items don't snap or overlap
-  padding: 0 48px;
-}
+  inline-size: 100%;
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  margin-block: clamp(0.5rem, 2vw, 2.5rem);
+  margin-block-end: clamp(1rem, 3vw, 3rem);
+  block-size: clamp(35dvh, 15rem + 20vh, 75dvh);
+  color: #e7e7e7;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  box-shadow: 0 0 20px 5px #000;
+  overflow: hidden;
 
-.arrow {
-  position: absolute;
-  top: 45%; // slightly higher to better align with video boxes
-  transform: translateY(-50%);
-  font-size: 36px;
-  color: #333333;
-  text-shadow: none;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-tap-highlight-color: transparent; // prevent tap highlight on rapid clicks
-  z-index: 10;
+  /* fade-in */
+  opacity: 0;
+  transition: opacity 1s ease-out;
 
-  &:hover {
-    color: #555;
+  &.is-animate {
+    opacity: 1;
   }
 }
 
-.left-arrow {
-  left: 12px;
+.media__hero-bg {
+  position: absolute;   /* ← give it a box */
+  inset: 0;             /* ← fill the hero */
+  z-index: 0;           /* behind the content */
+  background-image:
+    radial-gradient(
+      circle at left center,
+      rgba(0,0,0,0.65) 0%,
+      rgba(0,0,0,0.50) 55%,
+      rgba(0,0,0,0.35) 70%,
+      rgba(0,0,0,0.18) 82%,
+      rgba(0,0,0,0.00) 92%
+    ),
+    var(--hero-img);
+  background-size: cover;
+  background-position: var(--hero-pos, center);
+  background-repeat: no-repeat;
 }
 
-.right-arrow {
-  right: 12px;
+.media__hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 70%,
+    rgba(0,0,0,0.7) 100%
+  );
 }
 
-// Adjust row titles to match margins
-.video-row-title {
-  max-width: 1200px;
-  margin: 0 auto;
+.media__hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  padding-block-end: calc(clamp(1rem, 3vw, 2rem) + env(safe-area-inset-bottom));
+
 }
 
-.video-row-title h2 {
-  margin: 0 auto 10px 20px;
-  white-space: nowrap;
-  text-shadow: none;
-  font-size: 24px;
-  color: #000000;
+.media__hero-text {
+  max-inline-size: 600px;
 }
 
-// Behind-the-scenes gallery removed
+.media__hero-title {
+  margin: 0 0 0 1.25rem;
+  text-shadow: 4px 4px 6px #000;
+  font-size: clamp(2rem, 3.5vw, 2.2rem);
+  line-height: 1.1;
+}
 
-// Video row carousel
-.video-row {
-  width: 100%;
-  height: 200px;
+.media__hero-desc {
+  margin: 0 0 0 1.25rem;
+  color: #dbdbdb;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-size: clamp(.8rem, 1.5vw, .9rem);
+  max-inline-size: 40ch;
+  text-wrap: balance;
+}
+
+.media__btn {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  padding: 0.75rem 1.5rem;
+  margin-block-start: clamp(1rem, 2vh, 1.5rem);
+  margin-block-end: clamp(0.75rem, 2.5vw, 1.5rem); /* lifts button off the bottom */
+  margin-inline-start: 1.25rem;
+  border-radius: 4px;
+  background: #203c79;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: #92aed8;
+    outline: none;
+  }
+}
+
+/* CAROUSEL */
+.media__carousel {
+  display: grid;
+  grid-template-columns: minmax(44px, auto) 1fr minmax(44px, auto); /* stable columns */
+  align-items: stretch;   /* let arrow cells take full height */
+}
+
+.media__arrow {
+  /* it's a grid item now */
+  display: grid;          /* perfect centering of the glyph */
+  place-items: center;
+  line-height: 1;         /* remove extra baseline slack */
+  height: 100%;           /* fill the track’s height */
+  padding-inline: 8px;    /* tappable area without squishing row */
+  background: transparent;
+  border: 0;
+  color: #333;
+  cursor: pointer;
+
+  &:hover { color: #555; }
+}
+
+
+/* row sits in the middle column and still scrolls */
+.media__row {
+  inline-size: 100%;
+  block-size: 100%;
   overflow-x: auto;
   white-space: nowrap;
-  // Inner spacing to keep content balanced inside gutters
-  padding: 0 24px;
-  touch-action: pan-x; // prefer horizontal gestures, reduce vertical scroll interference
-  overscroll-behavior: contain; // avoid bounce/scroll chaining at edges
+  padding-inline: clamp(8px, 1.5vw, 24px); /* small inner gutter */
+  touch-action: pan-x;
+  overscroll-behavior: contain;
+
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.video-card {
+
+.media__card {
   display: inline-block;
-  width: 200px;
-  height: 150px;
-  margin-right: 16px;
+  inline-size: clamp(150px, 16vw, 200px);
+  block-size: clamp(100px, 12vw, 150px);
+  margin-inline-end: clamp(8px, 1.2vw, 16px);
   vertical-align: top;
   border: 1px solid #fdfdfd;
   cursor: pointer;
   will-change: opacity;
 
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    box-shadow: 0px 1px 6px 3px #000000;
-  }
-
-  .video-card-title {
-    margin-top: -35px;
-    padding-bottom: 10px;
-    font-size: 18px;
-    color: #ffffff; // ensure visible on thumbnails
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55) 5%, rgba(0, 0, 0, 0.35) 30%, rgba(0, 0, 0, 0) 60%);
-    background-position: 0px -4px;
-    text-align: center;
-  }
-
-  // Initial state: hidden
+  /* fade-in */
   opacity: 0;
   transition: opacity 1s ease-out;
-}
 
-// Fade-in animation class
-.animate {
-  opacity: 1;
-}
-
-// Lightbox overlay
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  cursor: pointer;
-}
-
-.overlay-content {
-  max-width: 90%;
-  max-height: 90%;
-  cursor: auto;
-
-  img {
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
+  &.is-animate {
+    opacity: 1;
   }
 }
 
-// Hide native scrollbars
-.video-row::-webkit-scrollbar {
-  display: none;
+.media__card-img {
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+  box-shadow: 0 1px 6px 3px #000;
 }
 
-.video-row {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.media__card-title {
+  margin-block-start: -35px;
+  padding-block-end: 10px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  background:
+    radial-gradient(ellipse, rgba(0, 0, 0, 0.55) 5%, rgba(0, 0, 0, 0.35) 30%, rgba(0, 0, 0, 0) 60%);
+  background-position: 0 -4px;
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
 }
 
-// HERO section
-.hero {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 10px auto 40px auto;
-  height: 40vh;
-  min-height: 500px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: left;
-  color: #e7e7e7;
-  box-shadow: 0px 0px 20px 5px #000000;
-  overflow: hidden;
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
 
-  // Initial state: hidden
-  opacity: 0;
-  transition: opacity 1s ease-out;
-}
-
-.hero.animate {
-  opacity: 1;
-}
-
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  text-align: left;
-  padding: 20px;
-
-  .hero-title {
-    font-size: 64px;
-    margin: 0 0 0 25px;
-    text-shadow: 4px 4px 6px rgb(0, 0, 0);
-  }
-
-  .hero-text {
-    max-width: 600px;
-  }
-
-  .hero-description {
-    font-size: 20px;
-    color: #dbdbdb;
-    margin: 10px 0 0 25px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    text-wrap: balance;
-  }
-
-  .watch-now-button {
-    font-size: 18px;
-    padding: 10px 15px;
-    background-color: #203c79;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin: 40px 0 0 25px;
-
-    &:hover {
-      background-color: #92aed8;
-    }
-  }
-}
-
-// WebGL container removed (background disabled)
-
-/* Existing CSS above remains unchanged */
-
-/* Mobile adjustments for tablets and phones */
-@media (max-width: 768px) {
-  .carousel-container {
-    height: 120px; // slightly lower carousel height
-  }
-  
-  .video-row,
-  .infinite-gallery {
-    height: 150px;
-    padding: 0 10px;
-  }
-  
-  .arrow {
-    font-size: 32px;  // smaller arrows for mobile
-    top: 50%;
-  }
-  
-  .left-arrow {
-    left: 5px;  // bring arrow inside the container
-  }
-  
-  .right-arrow {
-    right: 5px;
-  }
-  
-  .image-card-media {
-    width: 150px;   // scale down image cards
-    height: 100px;
-    margin-right: 8px;
-  }
-  
-  .video-card {
-    width: 150px;   // scale down video cards
-    height: 100px;
-    margin-right: 8px;
-
-    .video-card-title {
-      margin-top: -25px;
-      font-size: 14px;
-    }
-  }
-  
-  .hero {
-    margin: 10px auto;
-    height: 40vh;      // let the hero section adjust naturally
-    min-height: auto;
-  }
-  
-  .hero-content {
-    padding: 10px;
-    .watch-now-button {
-      padding: 10px 20px;
-      margin: 20px 0 10px 10px;
-      font-size: 14px;
-    }
-  }
-  
-  .hero-content .hero-title {
-    font-size: 48px;      // adjust title size for mobile
-    margin: 0 0 10px 10px;
-  }
-  
-  .hero-content .hero-description {
-    font-size: 12px;
-    margin: 0 0 10px 10px;
-    max-width: 260px;
-  }
-
-  .arrow {
-    visibility: visible;
-    font-size: 28px;
-    color: rgba(51, 51, 51, 0.8);
-    
-    &:hover {
-      color: #555;
-    }
-  }
-}
-
-/* Existing adjustments for very small screens */
-@media (max-width: 630px) {
-  .hero {
-    min-height: auto;
-  }
-  
-  .hero-content {
-    .hero-title {
-      margin-top: 30px;
-      font-size: 26px;
-    }
-  
-    .watch-now-button {
-      padding: 10px 20px;
-      margin: 20px 0 10px 10px;
-      font-size: 14px;
-    }
-  }
-  
-  .video-row-title h2 {
-    font-size: 20px;
-    margin-left: 10px;
-  }
-
-  .gallery-wrapper h2 {
-    font-size: 20px;
-    margin-left: 10px;
-  }
-  
-  .carousel-container .arrow {
-    font-size: 36px;
+  .media__hero,
+  .media__card {
+    transition: none;
   }
 }

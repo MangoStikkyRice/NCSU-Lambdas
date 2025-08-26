@@ -4,204 +4,192 @@ import NavBarNew from '../components/navbar/NavBarNew';
 import Footer from '../components/Footer';
 import { youtubeVideos } from '../data/mediaCarouselData';
 
-// Behind-the-scenes gallery removed per request
-
-// YouTube video data imported from separate file
-
-const Media = () => {
-    // Refs and state
-    const scrollRowRef = useRef(null);
-    const [animate, setAnimate] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-
-    // Behind-the-scenes gallery removed
-
-    // Video data
-    const latestVideo = youtubeVideos[youtubeVideos.length - 1];
-    const otherVideos = youtubeVideos.slice(0, youtubeVideos.length - 1);
-
-    // Helper functions
-    const getHighResThumbnail = (thumbnailUrl) => {
-        if (thumbnailUrl.includes('hqdefault')) {
-            return thumbnailUrl.replace('hqdefault', 'maxresdefault');
-        }
-        return thumbnailUrl;
-    };
-
-    const scrollAmount = 300;
-
-    // Throttle function for scroll events (must be defined before use)
-    const throttle = (func, limit) => {
-        let inThrottle;
-        return function (...args) {
-            if (!inThrottle) {
-                func(...args);
-                inThrottle = true;
-                setTimeout(() => (inThrottle = false), limit);
-            }
-        };
-    };
-
-    // Carousel navigation handlers
-    const handleVideoLeftClick = () => {
-        const el = scrollRowRef.current;
-        if (!el) return;
-        const next = Math.max(0, el.scrollLeft - scrollAmount);
-        el.scrollTo({ left: next, behavior: 'smooth' });
-    };
-
-    const handleVideoRightClick = () => {
-        const el = scrollRowRef.current;
-        if (!el) return;
-        const max = el.scrollWidth - el.clientWidth;
-        const next = Math.min(max, el.scrollLeft + scrollAmount);
-        el.scrollTo({ left: next, behavior: 'smooth' });
-    };
-
-    // Only scroll the carousel when wheel events occur over the carousel itself
-    const handleVideoWheel = throttle((e) => {
-        const el = scrollRowRef.current;
-        if (!el) return;
-        // Only intercept when horizontal intent is clear or over the row
-        const deltaX = Math.abs(e.deltaX);
-        const deltaY = Math.abs(e.deltaY);
-        if (deltaX > deltaY) {
-            e.preventDefault();
-            e.stopPropagation();
-            const max = el.scrollWidth - el.clientWidth;
-            const next = Math.min(max, Math.max(0, el.scrollLeft + (e.deltaX || e.deltaY)));
-            el.scrollLeft = next;
-        }
-    }, 50);
-
-    // Touch drag for mobile with bounds
-    useEffect(() => {
-        const el = scrollRowRef.current;
-        if (!el) return;
-        let startX = 0;
-        let scrollStart = 0;
-
-        const onTouchStart = (e) => {
-            if (!e.touches || !e.touches.length) return;
-            startX = e.touches[0].clientX;
-            scrollStart = el.scrollLeft;
-        };
-        const onTouchMove = (e) => {
-            if (!e.touches || !e.touches.length) return;
-            const dx = e.touches[0].clientX - startX;
-            const max = el.scrollWidth - el.clientWidth;
-            const next = Math.min(max, Math.max(0, scrollStart - dx));
-            if (Math.abs(dx) > 4) {
-                e.preventDefault(); // reduce vertical scroll interception while dragging horizontally
-            }
-            el.scrollLeft = next;
-        };
-        el.addEventListener('touchstart', onTouchStart, { passive: true });
-        el.addEventListener('touchmove', onTouchMove, { passive: false });
-        return () => {
-            el.removeEventListener('touchstart', onTouchStart);
-            el.removeEventListener('touchmove', onTouchMove);
-        };
-    }, []);
-
-
-    // Behind-the-scenes gallery controls removed
-
-    // Wheel-to-horizontal scroll handled inline on the carousel element
-
-    // Trigger animations after mount
-    useEffect(() => {
-        const timer = setTimeout(() => setAnimate(true), 100);
-        return () => clearTimeout(timer);
-    }, []);
-
-    // No edge tracking required; spacing is constant to avoid snapping
-
-    // Note: Space/WebGL background intentionally removed per design update.
-
-    // Mobile detection
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-
-    // Hero background style based on screen size
-    const heroBackgroundStyle = {
-        backgroundImage: isMobile
-            ? `radial-gradient(circle at left center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 212, 255, 0) 80%), url(${getHighResThumbnail(latestVideo.thumbnail)})`
-            : `radial-gradient(circle at left center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 212, 255, 0) 70%), url(${getHighResThumbnail(latestVideo.thumbnail)})`,
-        backgroundSize: 'cover',
-        backgroundPosition: isMobile ? 'center' : 'top',
-        backgroundRepeat: 'no-repeat',
-    };
-
-    return (
-        <div className="media-page">
-            <NavBarNew />
-
-            {/* Hero section with latest video */}
-            <div className={`hero ${animate ? 'animate' : ''}`}>
-                <div className="hero-background" style={heroBackgroundStyle}></div>
-                <div className="hero-content">
-                    <div className="hero-text">
-                        <h1 className="hero-title">{latestVideo.title} Reveal</h1>
-                        <p className="hero-description">
-                            Centennial Campus sets the stage. The wait is over. Months of work, loyalty, and brotherhood come down to this. No frills, no filters. Just the reveal.
-                        </p>
-                    </div>
-                    <button
-                        className="watch-now-button"
-                        onClick={() => window.open(latestVideo.url, '_blank')}
-                    >
-                        Watch Now
-                    </button>
-                </div>
-            </div>
-
-            {/* Video carousel section */}
-            <div className="video-row-title">
-                <h2>Previous Reveal Videos</h2>
-                <div className="carousel-container">
-                    <div className="arrow left-arrow" onClick={handleVideoLeftClick}>
-                        &#10094;
-                    </div>
-                    <div className="video-row" ref={scrollRowRef} onWheel={handleVideoWheel}>
-                        {otherVideos.map((video, index) => (
-                            <div
-                                key={index}
-                                className={`video-card ${animate ? 'animate' : ''}`}
-                                onClick={() => window.open(video.url, '_blank')}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                        e.preventDefault();
-                                        window.open(video.url, '_blank');
-                                    }
-                                }}
-                            >
-                                <img src={video.thumbnail} alt={video.title} />
-                                <div className="video-card-title">{video.title}</div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="arrow right-arrow" onClick={handleVideoRightClick}>
-                        &#10095;
-                    </div>
-                </div>
-            </div>
-
-            {/* Behind-the-scenes gallery removed */}
-
-            {/* Footer component */}
-            <Footer />
-        </div>
-    );
+const throttle = (fn, limit) => {
+  let inThrottle = false;
+  return (...args) => {
+    if (inThrottle) return;
+    fn(...args);
+    inThrottle = true;
+    setTimeout(() => (inThrottle = false), limit);
+  };
 };
 
-export default Media;
+const getHighResThumbnail = (url) =>
+  url?.includes('hqdefault') ? url.replace('hqdefault', 'maxresdefault') : url;
+
+export default function Media() {
+  const rowRef = useRef(null);
+  const [animate, setAnimate] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // latest + others
+  const latest = youtubeVideos[youtubeVideos.length - 1];
+  const others = youtubeVideos.slice(0, -1);
+
+  // fade-in after mount
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAnimate(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // responsive flag
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)');
+    const onChange = () => setIsMobile(mql.matches);
+    onChange();
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  const SCROLL_STEP = 300;
+
+  const handleLeft = () => {
+    const el = rowRef.current;
+    if (!el) return;
+    el.scrollTo({ left: Math.max(0, el.scrollLeft - SCROLL_STEP), behavior: 'smooth' });
+  };
+
+  const handleRight = () => {
+    const el = rowRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    el.scrollTo({ left: Math.min(max, el.scrollLeft + SCROLL_STEP), behavior: 'smooth' });
+  };
+
+  // wheel → horizontal scroll (only when horizontal intent is clear)
+  const handleWheel = throttle((e) => {
+    const el = rowRef.current;
+    if (!el) return;
+    const dx = Math.abs(e.deltaX);
+    const dy = Math.abs(e.deltaY);
+    if (dx > dy) {
+      e.preventDefault();
+      const max = el.scrollWidth - el.clientWidth;
+      const next = Math.min(max, Math.max(0, el.scrollLeft + (e.deltaX || e.deltaY)));
+      el.scrollLeft = next;
+    }
+  }, 50);
+
+  // touch drag
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    let startX = 0;
+    let startLeft = 0;
+
+    const onStart = (e) => {
+      const t = e.touches?.[0];
+      if (!t) return;
+      startX = t.clientX;
+      startLeft = el.scrollLeft;
+    };
+    const onMove = (e) => {
+      const t = e.touches?.[0];
+      if (!t) return;
+      const dx = t.clientX - startX;
+      const max = el.scrollWidth - el.clientWidth;
+      const next = Math.min(max, Math.max(0, startLeft - dx));
+      if (Math.abs(dx) > 4) e.preventDefault();
+      el.scrollLeft = next;
+    };
+
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchmove', onMove, { passive: false });
+    return () => {
+      el.removeEventListener('touchstart', onStart);
+      el.removeEventListener('touchmove', onMove);
+    };
+  }, []);
+
+  // hero CSS vars (no font styles here)
+  const heroStyle = {
+    '--hero-img': `url(${getHighResThumbnail(latest.thumbnail)})`,
+    '--mask-stop': isMobile ? '70%' : '80%',
+    '--fade-stop': isMobile ? '80%' : '70%',
+    '--hero-pos': isMobile ? 'center' : 'top',
+  };
+
+  return (
+    <div className="media">
+      <NavBarNew />
+
+      {/* Hero with latest video */}
+      <section className={`media__hero ${animate ? 'is-animate' : ''}`} style={heroStyle}>
+        <div className="media__hero-bg" aria-hidden="true" />
+        <div className="media__hero-content">
+          <div className="media__hero-text">
+            <h1 className="media__hero-title">{latest.title} Reveal</h1>
+            <p className="media__hero-desc">
+              Centennial Campus sets the stage. The wait is over. Months of work, loyalty, and
+              brotherhood come down to this. No frills, no filters. Just the reveal.
+            </p>
+          </div>
+          <button
+            className="media__btn"
+            onClick={() => window.open(latest.url, '_blank')}
+            aria-label={`Watch ${latest.title} on YouTube`}
+          >
+            Watch Now
+          </button>
+        </div>
+      </section>
+
+      {/* Previous videos carousel */}
+      <section className="media__section">
+        <div className="media__section-head">
+          <h2 className="media__section-title">Previous Reveal Videos</h2>
+        </div>
+
+        <div className="media__carousel">
+          <button
+            type="button"
+            className="media__arrow media__arrow--left"
+            onClick={handleLeft}
+            aria-label="Scroll videos left"
+          >
+            &#10094;
+          </button>
+
+          <div
+            className="media__row"
+            ref={rowRef}
+            onWheel={handleWheel}
+            role="list"
+            aria-label="Reveal videos"
+          >
+            {others.map((v, i) => (
+              <div
+                key={i}
+                className={`media__card ${animate ? 'is-animate' : ''}`}
+                onClick={() => window.open(v.url, '_blank')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.open(v.url, '_blank');
+                  }
+                }}
+                aria-label={`Open ${v.title} on YouTube`}
+              >
+                <img className="media__card-img" src={v.thumbnail} alt={v.title} />
+                <div className="media__card-title">{v.title}</div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="media__arrow media__arrow--right"
+            onClick={handleRight}
+            aria-label="Scroll videos right"
+          >
+            &#10095;
+          </button>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

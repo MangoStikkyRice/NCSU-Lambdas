@@ -1,173 +1,140 @@
 /* HERO SECTION */
-.hero-image-recruitment {
-    width: 100vw;
-    height: 50vh;
-    background-size: cover;
-    background-position: center;
+.recruitment__hero {
+    inline-size: 100%;
+    block-size: 50vh;
+    min-block-size: 50svh;
     position: relative;
-    margin-bottom: 70px;
+    margin-block-end: clamp(1.5rem, 6vw, 4.375rem);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #fff;
     overflow: hidden;
 
-    .hero-img {
+    .recruitment__hero-img {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        inline-size: 100%;
+        block-size: 100%;
         object-fit: cover;
     }
 
-    .hero-text-recruitment {
+    .recruitment__hero-text {
         position: relative;
         z-index: 2;
         text-align: center;
-        padding: 20px;
+        padding: clamp(0.75rem, 2.5vw, 1.25rem);
         border-radius: 10px;
-        color: white;
-        background: radial-gradient(ellipse 50% 50%, rgba(168, 168, 168, 0.6) 0%, rgba(107, 107, 107, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
-        text-shadow: 4px 4px 6px rgba(0, 0, 0, 1), 2px 2px 6px rgba(0, 0, 0, 1);
+        background: radial-gradient(ellipse 50% 50%,
+                rgba(168, 168, 168, 0.6) 0%,
+                rgba(107, 107, 107, 0.6) 50%,
+                rgba(0, 0, 0, 0) 100%);
+        text-shadow:
+            4px 4px 6px rgba(0, 0, 0, 1),
+            2px 2px 6px rgba(0, 0, 0, 1);
 
         h1 {
-            font-size: 5rem;
-            margin-bottom: -10px;
-            font-family: 'EdoSZ', sans-serif;
+            font-size: clamp(3rem, 7vw, 5rem);
+            transform: translateY(-0.125rem);
+            line-height: 1;
         }
 
         p {
-            font-size: 1.8rem;
-            font-family: 'Dotum', sans-serif;
             letter-spacing: 0.08rem;
+            font-size: clamp(1rem, 2.6vw, 1.8rem);
+            line-height: 1.25;
         }
     }
 }
 
 /* FAQ SECTION */
-.recruitment-faqs {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 30px;
-    color: rgb(0, 0, 0);
-    font-family: 'Dotum', sans-serif;
+.recruitment__faqs {
+    max-inline-size: 1200px;
+    margin-inline: auto;
+    margin-block: clamp(1.25rem, 4vw, 2.5rem);
+    padding-inline: clamp(1rem, 4vw, 30px);
+    color: #000;
 
     h2 {
         text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 40px;
-        font-family: 'EdoSZ', sans-serif;
-        color: rgb(0, 0, 0);
+        font-size: clamp(2rem, 3.5vw, 2.5rem);
+        margin-block-end: clamp(1rem, 4vw, 2.5rem);
+        line-height: 1.1;
     }
 
     p {
-        padding-top: 25px;
-        font-size: 1.1rem;
+        padding-block-start: clamp(0.75rem, 2vw, 1.5rem);
+        font-size: clamp(0.875rem, 1.6vw, 1.1rem);
+        line-height: 1.6;
     }
 
-    .faq-item {
-        margin-bottom: 20px;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 15px;
+    .recruitment__faq {
+        margin-block-end: clamp(0.75rem, 2vw, 1.25rem);
+        border-block-end: 1px solid #ddd;
+        padding-block-end: clamp(0.5rem, 1.5vw, 0.9375rem);
 
-        .faq-question {
+        .recruitment__faq-question {
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-size: 1.3rem;
             font-weight: bold;
-            padding: 10px 0;
+            font-size: clamp(1.1rem, calc(0.9rem + 1.2vw), 1.3rem);
+            padding-block: clamp(0.5rem, 1.6vw, 0.75rem);
             position: relative;
+            transition: color 120ms ease;
+            outline: none;
+
+            .recruitment__faq-question:focus-visible {
+                outline: 2px solid #172b56;
+                outline-offset: 2px;
+            }
 
             &:hover {
                 color: #172b56;
             }
 
-            &.active {
+            &.recruitment__faq-question--active {
                 color: #172b56;
             }
 
-            .faq-icon {
-                font-size: 2rem;
-                margin-left: 10px;
+            .recruitment__faq-icon {
+                font-size: clamp(1.5rem, 2.5vw, 2rem);
+                margin-inline-start: 10px;
+                line-height: 1;
             }
         }
 
-        .faq-answer {
+        .recruitment__faq-answer {
             overflow: hidden;
+            /* GSAP controls height/opacity */
             height: 0;
             opacity: 0;
 
             p {
-                padding: 10px 0;
-                font-size: 1.1rem;
+                padding-block: clamp(0.5rem, 1.8vw, 0.75rem);
+                font-size: clamp(0.875rem, 1.4vw, 1.1rem);
                 line-height: 1.6;
                 color: #555;
-            }
-        }
-    }
-
-    .contact-info {
-        margin-top: 30px;
-        font-size: 1.4rem;
-        text-align: center;
-        color: #555;
-    }
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 700px) {
-    .hero-image-recruitment {
-        .hero-text-recruitment {
-            h1 {
-                font-size: 3rem;
-                margin-bottom: 0px;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-        }
-    }
-
-    .recruitment-faqs {
-        h2 {
-            font-size: 2rem;
-            margin-top: -35px;
-        }
-
-        .faq-item {
-            .faq-question {
-                font-size: 1.1rem;
-            }
-
-            .faq-answer {
-                p {
-                    font-size: 1rem;
-                }
+                margin: 0;
             }
         }
     }
 }
 
-@media (max-width: 420px) {
-    .recruitment-faqs {
-        p {
-            font-size: 14px;
-        }
+/* Contact */
+.recruitment__contact {
+    max-inline-size: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 30px); /* same as faqs */
+    margin-block-start: clamp(1rem, 3vw, 1.875rem);
+    margin-block-end: 40px;
+    text-align: center;
+    color: #555;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
 
-        .faq-item {
-            .faq-question {
-                font-size: 18px;
-                padding: 0;
-            }
-
-            .faq-answer {
-                p {
-                    font-size: 14px;
-                    margin-bottom: 0;
-                }
-            }
-        }
+@media (prefers-reduced-motion: reduce) {
+    .recruitment__faq-question {
+        transition: none;
     }
 }

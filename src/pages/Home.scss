@@ -1,0 +1,162 @@
+/* src/pages/Home.scss */
+/* BEM + responsive clamps + “true touch-only” labels + wide-screen margins */
+
+:root {
+  --home-gap: clamp(6px, 1.2vw, 16px);
+  --home-border: 2px;
+  --home-radius: clamp(4px, 0.5vw, 10px);
+  --home-title-size: clamp(18px, 3vw, 48px);
+  --home-title-shadow: 0 0 20px rgba(211,211,211,0.95);
+  --home-bottom-gap: clamp(10px, 1.8vh, 28px);
+
+  /* outer gutter that scales with viewport */
+  --home-outer-gutter: clamp(12px, 4vw, 72px);
+
+  /* content cap to create margins on ultra-wide screens */
+  --home-max-width: 1300px; /* adjust if you want more/less margin */
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+
+  /* prefer small viewport units; fallback via --vh JS var */
+  block-size: 100svh;
+  min-block-size: calc(var(--vh, 1vh) * 100);
+
+  /* avoid double scroll; grid fills the page */
+  overflow: hidden;
+
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  &--fade-out { animation: home-fadeOut 0.5s forwards; }
+
+  &__container {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center; /* center the capped grid */
+    min-block-size: 0;       /* allow child to stretch full height */
+  }
+
+  /* Edge-to-edge feel with scalable side margins and a max width cap */
+  &__grid {
+    display: flex;
+    inline-size: 100%;
+    max-inline-size: var(--home-max-width);
+    block-size: 100%;
+    block-size: calc(100% - var(--home-bottom-gap));
+    padding-block-end: var(--home-bottom-gap);
+
+    gap: var(--home-gap);
+
+    /* Always-visible margins: small on laptop, larger on ultrawide */
+    padding-inline: var(--home-outer-gutter);
+    box-sizing: border-box;
+
+    /* Center when viewport exceeds the cap, creating large margins */
+    margin-inline: auto;
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    gap: var(--home-gap);
+
+    &--left {}
+    &--right {}
+  }
+
+  &__card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    inline-size: 100%;
+    flex: 1 1 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+    border: solid var(--home-border) rgb(46, 46, 46);
+    border-radius: var(--home-radius);
+
+    transition:
+      transform 0.3s ease,
+      filter 0.3s ease,
+      border-color 0.5s ease;
+
+    &--large { flex: 3 1 0; }
+    &--small { flex: 2 1 0; }
+
+    &:hover {
+      border-color: #203c79;
+
+      .home__card-image {
+        transform: scale(1.1);
+        filter: brightness(60%) blur(1px);
+      }
+
+      .home__card-title { opacity: 1; }
+    }
+  }
+
+  &__card-image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 1s ease-in;
+    opacity: 0;
+
+    &.is-loaded { opacity: 1; }
+  }
+
+  /* focal tweaks preserved */
+  &__col--left .home__card--small .home__card-image,
+  &__col--right .home__card--small .home__card-image { object-position: center 25%; }
+
+  &__col--right .home__card--large .home__card-image { object-position: center 70%; }
+  &__col--left  .home__card--large .home__card-image { object-position: center 40%; }
+
+  &__card-title {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    font-weight: 700;
+    font-size: var(--home-title-size);
+    color: #fff;
+    text-shadow: var(--home-title-shadow);
+
+    padding-inline: 10px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+}
+
+/* Always show labels on true touch-only devices (phones/tablets with no mouse) */
+html.touch-only .home__card-title {
+  top: auto;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.88 !important;
+  font-size: clamp(18px, 5.5vw, 22px);
+}
+
+html.touch-only .home__card-image {
+  transform: scale(1.06);
+  filter: brightness(80%) blur(0.5px);
+}
+
+/* Page transition */
+@keyframes home-fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
