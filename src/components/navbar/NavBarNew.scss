@@ -29,7 +29,7 @@
   &__logo-link { -webkit-tap-highlight-color: transparent; outline: none; &:focus { outline: none; } }
 
   &__logo-image {
-    width: 100px;
+    width: clamp(80px, 12vw, 100px);
     height: auto;
     filter: invert(0.2) drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
     padding-top: 20px;
@@ -41,7 +41,7 @@
     &:hover { opacity: 50%; transform: scale(1.2); }
 
     &--alt {
-      width: clamp(120px, 14vw, 130px);
+      width: clamp(90px, 14vw, 130px);
       filter: brightness(0%) invert(0.25) drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
       padding-top: 30px;
     }
