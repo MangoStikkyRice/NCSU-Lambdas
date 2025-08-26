@@ -44,29 +44,65 @@ const Media = () => {
 
     // Carousel navigation handlers
     const handleVideoLeftClick = () => {
-        if (scrollRowRef.current) {
-            scrollRowRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        }
+        const el = scrollRowRef.current;
+        if (!el) return;
+        const next = Math.max(0, el.scrollLeft - scrollAmount);
+        el.scrollTo({ left: next, behavior: 'smooth' });
     };
 
     const handleVideoRightClick = () => {
-        if (scrollRowRef.current) {
-            scrollRowRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
+        const el = scrollRowRef.current;
+        if (!el) return;
+        const max = el.scrollWidth - el.clientWidth;
+        const next = Math.min(max, el.scrollLeft + scrollAmount);
+        el.scrollTo({ left: next, behavior: 'smooth' });
     };
 
     // Only scroll the carousel when wheel events occur over the carousel itself
     const handleVideoWheel = throttle((e) => {
-        e.preventDefault();
-        e.stopPropagation();
         const el = scrollRowRef.current;
         if (!el) return;
-        el.scrollLeft += e.deltaY;
-        // Clamp to bounds to prevent over-scroll and snap-back
-        const maxScrollLeft = el.scrollWidth - el.clientWidth;
-        if (el.scrollLeft < 0) el.scrollLeft = 0;
-        if (el.scrollLeft > maxScrollLeft) el.scrollLeft = maxScrollLeft;
+        // Only intercept when horizontal intent is clear or over the row
+        const deltaX = Math.abs(e.deltaX);
+        const deltaY = Math.abs(e.deltaY);
+        if (deltaX > deltaY) {
+            e.preventDefault();
+            e.stopPropagation();
+            const max = el.scrollWidth - el.clientWidth;
+            const next = Math.min(max, Math.max(0, el.scrollLeft + (e.deltaX || e.deltaY)));
+            el.scrollLeft = next;
+        }
     }, 50);
+
+    // Touch drag for mobile with bounds
+    useEffect(() => {
+        const el = scrollRowRef.current;
+        if (!el) return;
+        let startX = 0;
+        let scrollStart = 0;
+
+        const onTouchStart = (e) => {
+            if (!e.touches || !e.touches.length) return;
+            startX = e.touches[0].clientX;
+            scrollStart = el.scrollLeft;
+        };
+        const onTouchMove = (e) => {
+            if (!e.touches || !e.touches.length) return;
+            const dx = e.touches[0].clientX - startX;
+            const max = el.scrollWidth - el.clientWidth;
+            const next = Math.min(max, Math.max(0, scrollStart - dx));
+            if (Math.abs(dx) > 4) {
+                e.preventDefault(); // reduce vertical scroll interception while dragging horizontally
+            }
+            el.scrollLeft = next;
+        };
+        el.addEventListener('touchstart', onTouchStart, { passive: true });
+        el.addEventListener('touchmove', onTouchMove, { passive: false });
+        return () => {
+            el.removeEventListener('touchstart', onTouchStart);
+            el.removeEventListener('touchmove', onTouchMove);
+        };
+    }, []);
 
 
     // Behind-the-scenes gallery controls removed
@@ -113,7 +149,7 @@ const Media = () => {
                 <div className="hero-background" style={heroBackgroundStyle}></div>
                 <div className="hero-content">
                     <div className="hero-text">
-                        <h1 className="hero-title">{latestVideo.title} Class Reveal</h1>
+                        <h1 className="hero-title">{latestVideo.title} Reveal</h1>
                         <p className="hero-description">
                             Centennial Campus sets the stage. The wait is over. Months of work, loyalty, and brotherhood come down to this. No frills, no filters. Just the reveal.
                         </p>

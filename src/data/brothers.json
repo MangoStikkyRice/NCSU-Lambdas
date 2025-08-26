@@ -1127,12 +1127,13 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736406530/chris1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404604/chris2.jpg",
-    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404605/chris3.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404604/chris2.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404605/chris3.jpg",
+    "casual_image2": "",
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 71,
@@ -1265,12 +1266,13 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381352/austin1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381287/austin2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167663/Screenshot_2025-08-25_at_20.20.51_jxijzs.png",
+    "casual_image1": "",
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 78,
@@ -1285,12 +1287,13 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381352/austin1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381287/austin2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167686/1746476643945_vbkgdw.jpg",
+    "casual_image1": "",
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 79,
@@ -1305,12 +1308,13 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381352/austin1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381287/austin2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167705/1712850274055_paxbra.jpg",
+    "casual_image1": "",
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 80,
@@ -1325,11 +1329,12 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381352/austin1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381287/austin2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167754/images_mzcagg.png",
+    "casual_image1": "",
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   }
 ]
