@@ -15,6 +15,7 @@ function NavBarNew() {
   const panelRef = useRef(null);
   const btnRef = useRef(null);
   const tlRef = useRef(null);
+  const shieldRef = useRef(null);
 
   // Close on outside click / Esc
   useEffect(() => {
@@ -84,6 +85,37 @@ function NavBarNew() {
     else tl.reverse();
   }, [open]);
 
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el) return;
+
+    if (open) {
+      el.classList.add("is-interactive");
+      // optional: prevent the trigger itself from stealing clicks
+      btnRef.current?.classList.add("disable-pointer");
+    } else {
+      el.classList.remove("is-interactive");
+      btnRef.current?.classList.remove("disable-pointer");
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    const shield = shieldRef.current;
+    if (!panel || !shield) return;
+
+    if (open) {
+      panel.classList.add('is-interactive');
+      shield.classList.add('is-active');
+      btnRef.current?.classList.add('disable-pointer');
+    } else {
+      panel.classList.remove('is-interactive');
+      shield.classList.remove('is-active');
+      btnRef.current?.classList.remove('disable-pointer');
+    }
+  }, [open]);
+
+
   return (
     <div className="navbar">
       <SideBar />
@@ -139,6 +171,14 @@ function NavBarNew() {
             <span className="navbar__sr-only">{open ? 'Close social menu' : 'Open social menu'}</span>
           </button>
 
+          <div
+            ref={shieldRef}
+            className="navbar__shield"
+            role="presentation"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+          />
+          
           <div
             ref={panelRef}
             id="navbar-social-panel"

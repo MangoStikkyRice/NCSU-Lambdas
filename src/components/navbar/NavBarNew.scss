@@ -5,6 +5,7 @@
   isolation: isolate;
   user-select: none;
   -webkit-user-select: none;
+  z-index: 1000;
 
   &__wrapper {
     max-width: 1366px;
@@ -97,10 +98,32 @@
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    opacity: 0;             /* GSAP controls visibility */
-    pointer-events: none;   /* toggled by timeline play/reverse */
+    opacity: 0;
+    pointer-events: none;        // default: off
+    z-index: 1001;               // ensure above trigger/other UI
     will-change: transform, opacity, filter;
+
+    // when open, let touches/clicks through
+    &.is-interactive {
+      pointer-events: auto;
+    }
   }
+
+  &__shield {
+    position: fixed;
+    inset: 0;                 // full viewport
+    pointer-events: none;     // off by default
+    background: transparent;  // keep it invisible (or use rgba(0,0,0,.1) for a scrim)
+    z-index: 1000;            // below the panel, above the page
+    touch-action: none;       // iOS: prevent weird pass-through/scroll during tap
+    // enable when menu is open
+    &.is-active { pointer-events: auto; }
+  }
+
+  .navbar__social-trigger.disable-pointer {
+    pointer-events: none;
+  }
+  
 
   &__social-item {
     display: flex;
