@@ -49,8 +49,18 @@ const Brothers = () => {
     // DATA INITIALIZATION
     // ============================================
     useEffect(() => {
-        setBrothers(Array.isArray(dataBrothers) ? dataBrothers : []);
-    }, []);
+        if (Array.isArray(dataBrothers)) {
+          const sorted = [...dataBrothers].sort((a, b) => {
+            const idA = parseInt(a.id, 10);
+            const idB = parseInt(b.id, 10);
+            return idA - idB;
+          });
+          setBrothers(sorted);
+        } else {
+          setBrothers([]);
+        }
+      }, []);
+      
 
     // ============================================
     // MEMBER UTILITY FUNCTIONS

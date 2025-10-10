@@ -9,11 +9,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1001; /* Ensure it's on top of all other content */
+  z-index: 1001;
   opacity: 1;
-  transition: opacity 0.5s ease; /* Only opacity transition */
-  animation: backgroundFade 3s ease forwards; /* Background color transition */
-  animation-delay: 2s;
+  transition: opacity 0.5s ease;
+  animation: backgroundFade 2s ease forwards;
+  animation-delay: 1s;
 }
 
 @keyframes backgroundFade {
@@ -30,16 +30,17 @@
   pointer-events: none;
 }
 
+/* Full-page logo background */
 .full-page-logo {
   position: absolute;
-  width: 60%; /* Adjust width as needed */
-  height: 60%; /* Adjust height as needed */
+  width: 60%;
+  height: 60%;
   opacity: 0;
-  background-size: contain; /* Ensure the entire logo is visible */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  background-position: center center; /* Center the image */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
   z-index: -1;
-  animation: fadeInLogo 3s forwards 2s; /* Fade in logo after delay */
+  animation: fadeInLogo 2s forwards 1.5s;
 }
 
 @keyframes fadeInLogo {
@@ -47,10 +48,11 @@
     opacity: 0;
   }
   to {
-    opacity: 0.1; /* Adjust opacity as needed */
+    opacity: 0.1;
   }
 }
 
+/* === LEADERS AMONG MEN === */
 .leaders-text {
   font-family: "Microsoft Sans Serif";
   font-size: 6rem;
@@ -61,58 +63,35 @@
   white-space: nowrap;
 }
 
-@keyframes zoomOut {
-  from {
+.leaders-text span {
+  display: inline-block;
+  opacity: 0;
+  margin: 0 10px;
+  transform: scale(3);
+  animation: fadeZoom 0.5s ease forwards;
+}
+
+@keyframes fadeZoom {
+  0% {
     opacity: 0;
-    transform: scale(4);
+    transform: scale(3);
   }
-  to {
+  100% {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-.leaders-text span.zoom-out {
-  animation: zoomOut 0.2s forwards;
-}
+/* word stagger */
+.leaders-text span:nth-child(1) { animation-delay: 0.1s; }
+.leaders-text span:nth-child(2) { animation-delay: 0.3s; }
+.leaders-text span:nth-child(3) { animation-delay: 0.5s; }
 
-.leaders-text span {
-  display: inline-block;
-  opacity: 0;
-  margin: 0 10px;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.leaders-text span.fade-in {
-  animation: fadeIn 0.5s forwards;
-}
-
-.leaders-text span.delay-1 {
-  animation-delay: 0.1s;
-}
-
-.leaders-text span.delay-2 {
-  animation-delay: 0.5s;
-}
-
-.leaders-text span.delay-3 {
-  animation-delay: 1s;
-}
-
-/* Add more delay classes as needed */
-
+/* === LAMBDA PHI EPSILON === */
 .logo-fade-in {
   opacity: 0;
-  animation: fadeIn 1.5s forwards;
-  animation-delay: 1.33s;
+  animation: fadeRise 1s ease forwards;
+  animation-delay: 1.3s;
 }
 
 .lambda-text {
@@ -121,59 +100,65 @@
   text-shadow: 1px 1px 25px rgb(255, 255, 255);
   font-weight: bold;
   transform: translateY(-30%);
+  color: #d7d7d7;
 }
 
+/* === NC STATE + CHAPTER === */
+.logo-since-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeRise 1s ease forwards;
+  animation-delay: 1.8s;
+}
+
+.logo {
+  font-family: "UniversCnBold";
+  font-size: 4rem;
+  text-shadow: 1px 1px 25px white;
+  color: #d7d7d7;
+}
+
+.chapter-text {
+  font-family: "Microsoft Sans Serif";
+  font-size: 3.5rem;
+  margin-left: 8px;
+  text-shadow: 1px 1px 15px white;
+  color: #d7d7d7;
+}
+
+/* === SINCE 2016 === */
 .since-text {
   font-family: "Microsoft Sans Serif";
   font-size: 2rem;
   color: #d7d7d7;
-  margin-top: 10px; /* Space between Beta Eta Chapter and Since 2016 */
+  margin-top: 10px;
   text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.5);
   opacity: 0;
-  animation: fadeIn 1.5s forwards;
+  animation: fadeRise 1s ease forwards;
   animation-delay: 2.3s;
   text-align: center;
   transform: translateY(-60%);
   font-weight: bold;
 }
 
-/* Beta Eta Chapter in old location */
-.chapter-text {
-  font-family: "Microsoft Sans Serif";
-  font-size: 3.5rem; /* Adjust size if needed */
-  margin-left: 8px;
-  text-shadow: 1px 1px 15px white;
-  opacity: 0;
-  animation: fadeIn 1.5s forwards;
-  animation-delay: 1.8s;
-  color: #d7d7d7;
+/* shared fade + rise */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.logo {
-  font-family: "UniversCnBold";
-  font-size: 4rem; /* Adjust size if needed */
-  text-shadow: 1px 1px 25px white;
-  opacity: 0;
-  animation: fadeIn 1.5s forwards;
-  animation-delay: 1.8s;
-  color: #d7d7d7;
-}
-
-.logo-since-container {
-  display: flex;
-  align-items: flex-end; /* Align items to the bottom */
-  justify-content: center;
-}
-
-/* Existing CSS here... */
-
-/* Add responsiveness for smaller screens */
+/* === RESPONSIVE === */
 @media (max-width: 900px) {
   .leaders-text {
     font-size: 3rem;
-    span {
-      margin: 0 6px;
-    }
   }
 
   .lambda-text {
@@ -198,15 +183,10 @@
   }
 }
 
-/* Even smaller screens, e.g. under 480px */
 @media (max-width: 480px) {
   .leaders-text {
     font-size: 2rem;
     word-spacing: 5px;
-
-    span {
-      margin: 0 5px;
-    }
   }
 
   .lambda-text {

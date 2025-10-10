@@ -6,35 +6,27 @@ import backgroundLogo from '../../assets/images/Crest.png';
 function StartupOverlay({ onComplete }) {
     const [isVisible, setIsVisible] = useState(true);
   
-    // Example: If you really want the overlay to hide after 4s
     useEffect(() => {
       const timer = setTimeout(() => {
         setIsVisible(false);
         onComplete();
-      }, 4000);
-  
+      }, 6500); // total display time to let all text finish animating
       return () => clearTimeout(timer);
     }, [onComplete]);
-  
-    // Word-splitting code
+    
     useEffect(() => {
       const leadersTextDiv = document.querySelector('.leaders-text');
-      // Replace with your actual string
-      const text = 'Leaders Among Men'; 
-      
-      // Clear out anything that’s already rendered
+      if (!leadersTextDiv) return;
+    
+      const text = 'Leaders Among Men';
       leadersTextDiv.innerHTML = '';
-      
-      // Create word-based spans
-      text.split(' ').forEach((word, wIndex) => {
+      text.split(' ').forEach((word) => {
         const wordSpan = document.createElement('span');
         wordSpan.textContent = word + ' ';
-        // e.g. add fadeIn or custom delay classes
-        wordSpan.classList.add(`delay-${wIndex + 1}`);
-        wordSpan.classList.add('fade-in');
         leadersTextDiv.appendChild(wordSpan);
       });
     }, []);
+    
   
     // IntersectionObserver for the word-based spans
     useEffect(() => {

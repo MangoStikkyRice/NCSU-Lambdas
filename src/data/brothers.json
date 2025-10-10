@@ -799,7 +799,10 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": null,
-    "littleIds": [],
+    "littleIds": [
+      "54",
+      "62"
+    ],
     "bigExternalName": ""
   },
   {
@@ -834,8 +837,11 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381323/richardngo2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381323/richardngo3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381324/richardngo4.jpg",
-    "bigId": null,
-    "littleIds": []
+    "bigId": "",
+    "littleIds": [
+      "58"
+    ],
+    "bigExternalName": "Taylor Chayavon"
   },
   {
     "id": 54,
@@ -854,7 +860,8 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 50,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 56,
@@ -893,7 +900,8 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 43,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 58,
@@ -971,8 +979,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381315/michaelashe2.jpg",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": 49,
-    "littleIds": []
+    "bigId": "50",
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 63,
@@ -1011,8 +1020,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381309/kennynguyen2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381310/kennynguyen3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381311/kennynguyen4.jpg",
-    "bigId": 49,
-    "littleIds": []
+    "bigId": "56",
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 65,
@@ -1031,8 +1041,9 @@
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381335/san2.jpg",
     "casual_image2": null,
     "casual_image3": null,
-    "bigId": 49,
-    "littleIds": []
+    "bigId": "34",
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 66,
@@ -1052,7 +1063,8 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": []
+    "littleIds": [],
+    "bigExternalName": ""
   },
   {
     "id": 67,
@@ -1067,7 +1079,7 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381380/jordan1.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1760134743/Jordan1_dfayqs.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381305/jordan2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381306/jordan3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381307/jordan4.jpg",
@@ -1335,6 +1347,91 @@
     "casual_image3": null,
     "bigId": 49,
     "littleIds": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "16",
+    "name": "Jeremy Dela Paz",
+    "line_name": "Visionary",
+    "class_field": "Alpha Ascension",
+    "status": "Alumni",
+    "major": "Communications",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381374/jeremydelapaz.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381252/jeremydelapaz2.png",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381375/jeremydelapaz1.jpg",
+    "casual_image3": "",
+    "bigId": "",
+    "littleIds": [
+      "29",
+      "30",
+      "43"
+    ],
+    "hobbies": [
+      "Anime",
+      "Manga",
+      "2D Girls",
+      "K-pop",
+      "Photography",
+      "Cinematography"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "25",
+    "name": "Eric McAllister",
+    "line_name": "HIGH TIDE",
+    "class_field": "Beta Batallion",
+    "status": "Alumni",
+    "major": "Computer Science",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381371/ericmcallister.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381300/ericmcallister4.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381298/ericmcallister2.jpg",
+    "casual_image3": "",
+    "bigId": "19",
+    "littleIds": [],
+    "hobbies": [],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "44",
+    "name": "Jerod Javier",
+    "line_name": "NightCrawlHer",
+    "class_field": "Zeta Zaibatsu",
+    "status": "Alumni",
+    "major": "Fashion and Textiles Management",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381376/jerodjavier1.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381304/jerodjavier2.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381305/jerodjavier3.jpg",
+    "casual_image3": "",
+    "bigId": "27",
+    "littleIds": [
+      "67"
+    ],
+    "hobbies": [],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "55",
+    "name": "Mico Guevarra",
+    "line_name": "MjolnHer",
+    "class_field": "Theta Trinity",
+    "status": "Alumni",
+    "major": "Computer Science",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381392/micoguevarra1.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381319/micoguevarra3.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381318/micoguevarra2.jpg",
+    "casual_image3": "",
+    "bigId": "27",
+    "littleIds": [],
+    "hobbies": [],
+    "positions": [],
+    "nationalities": [],
     "bigExternalName": ""
   }
 ]
