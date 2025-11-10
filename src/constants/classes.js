@@ -1,72 +1,72 @@
 // Central class catalog used by Management and Brothers page
 export const DEFAULT_CLASSES = [
   {
-    "id": "charter",
-    "name": "Charter Conquest"
+    id: "charter",
+    name: "Charter Conquest",
   },
   {
-    "id": "alpha",
-    "name": "Alpha Ascension"
+    id: "alpha",
+    name: "Alpha Ascension",
   },
   {
-    "id": "beta",
-    "name": "Beta Batallion"
+    id: "beta",
+    name: "Beta Batallion",
   },
   {
-    "id": "gamma",
-    "name": "Gamma Guardians"
+    id: "gamma",
+    name: "Gamma Guardians",
   },
   {
-    "id": "delta",
-    "name": "Delta Dimension"
+    id: "delta",
+    name: "Delta Dimension",
   },
   {
-    "id": "epsilon",
-    "name": "Epsilon Eclipse"
+    id: "epsilon",
+    name: "Epsilon Eclipse",
   },
   {
-    "id": "zeta",
-    "name": "Zeta Zaibatsu"
+    id: "zeta",
+    name: "Zeta Zaibatsu",
   },
   {
-    "id": "eta",
-    "name": "Eta Evolution"
+    id: "eta",
+    name: "Eta Evolution",
   },
   {
-    "id": "theta",
-    "name": "Theta Trinity"
+    id: "theta",
+    name: "Theta Trinity",
   },
   {
-    "id": "iota",
-    "name": "Iota Immortals"
+    id: "iota",
+    name: "Iota Immortals",
   },
   {
-    "id": "kappa",
-    "name": "Kappa Kazoku"
+    id: "kappa",
+    name: "Kappa Kazoku",
   },
   {
-    "id": "mu",
-    "name": "Mu Monarchs"
+    id: "mu",
+    name: "Mu Monarchs",
   },
   {
-    "id": "nu",
-    "name": "Nu Nen"
+    id: "nu",
+    name: "Nu Nen",
   },
   {
-    "id": "xi",
-    "name": "Xi Xin"
+    id: "xi",
+    name: "Xi Xin",
   },
   {
-    "id": "omicron",
-    "name": "Omicron Odyssey"
+    id: "omicron",
+    name: "Omicron Okami",
   },
   {
-    "id": "pi",
-    "name": "Pi Paragons"
-  }
+    id: "pi",
+    name: "Pi Paragons",
+  },
 ];
 
-const STORAGE_KEY = 'classesCatalog';
+const STORAGE_KEY = "classesCatalog";
 
 export const loadClasses = () => {
   try {
