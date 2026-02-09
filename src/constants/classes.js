@@ -64,6 +64,10 @@ export const DEFAULT_CLASSES = [
     id: "pi",
     name: "Pi Paragons",
   },
+  {
+    "id": "rho",
+    "name": "Rho Requiem"
+  },
 ];
 
 const STORAGE_KEY = "classesCatalog";
