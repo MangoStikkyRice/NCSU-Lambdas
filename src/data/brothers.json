@@ -839,7 +839,8 @@
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381324/richardngo4.jpg",
     "bigId": "",
     "littleIds": [
-      "58"
+      "58",
+      "82"
     ],
     "bigExternalName": "Taylor Chayavon"
   },
@@ -1055,7 +1056,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": "34",
-    "littleIds": [],
+    "littleIds": [
+      "89"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1076,7 +1079,10 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": "55",
-    "littleIds": [],
+    "littleIds": [
+      "83",
+      "84"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1160,7 +1166,9 @@
     "casual_image2": "",
     "casual_image3": null,
     "bigId": "67",
-    "littleIds": [],
+    "littleIds": [
+      "88"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1180,7 +1188,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": "64",
-    "littleIds": [],
+    "littleIds": [
+      "86"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1282,7 +1292,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": "58",
-    "littleIds": [],
+    "littleIds": [
+      "87"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1477,6 +1489,185 @@
       "Pickleball",
       "Tennis",
       "Video Games"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "82",
+    "name": "Aiden Rivera",
+    "line_name": "'Hell Above'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Computer Engineering",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770673769/Aiden1_sqyfhb.png",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770673771/Aiden2_x7l29l.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770673770/Aiden3_jryc9z.jpg",
+    "casual_image3": "",
+    "bigId": "53",
+    "littleIds": [],
+    "hobbies": [
+      "Drumming",
+      "Cars",
+      "Computers",
+      "Gaming",
+      "Lifting",
+      "Concerts"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "83",
+    "name": "Phillip Nguyen",
+    "line_name": "'SondHer'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Electrical Engineering",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676505/Phillip3_uo5qjk.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676488/Phillip2_kdlww1.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676543/Phillip1_e4v9iu.jpg",
+    "casual_image3": "",
+    "bigId": "66",
+    "littleIds": [],
+    "hobbies": [
+      "Rock Climbing",
+      "Basketball",
+      "Eating"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "84",
+    "name": "Evan Wang",
+    "line_name": "'Hèrláng'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Nuclear Engineering",
+    "image": "",
+    "casual_image1": "",
+    "casual_image2": "",
+    "casual_image3": "",
+    "bigId": "66",
+    "littleIds": [],
+    "hobbies": [],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "85",
+    "name": "Anthony Garnica",
+    "line_name": "'The Winged SHADOW'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Environmental Science",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770674431/ATK1_efe4zr.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770674431/ATK2_naqlay.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770674431/ATK3_afjurq.jpg",
+    "casual_image3": "",
+    "bigId": "63",
+    "littleIds": [],
+    "hobbies": [
+      "Gaming",
+      "Thrifting",
+      "Karaoke",
+      "Basketball",
+      "Volleyball"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "86",
+    "name": "Zackary Rich Mendoza",
+    "line_name": "'Indomitable Human Spirit'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Computer Science",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770675109/zack1_bx1uuc.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770674771/zack2_enngbg.jpg",
+    "casual_image2": "",
+    "casual_image3": "",
+    "bigId": "71",
+    "littleIds": [],
+    "hobbies": [
+      "Gaming",
+      "Singing",
+      "Drawing",
+      "Manga",
+      "Manhwa"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "87",
+    "name": "Michael Puerto",
+    "line_name": "'Hollow Purple'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Computer Science",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770675974/MichaelP3_vx2qse.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770675968/MichaelP1_tt7rev.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770675969/MichaelP2_zoahdq.jpg",
+    "casual_image3": "",
+    "bigId": "76",
+    "littleIds": [],
+    "hobbies": [
+      "Gaming",
+      "Soccer",
+      "Coding"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "88",
+    "name": "Lochlan McRae",
+    "line_name": "'ZepHer'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Fisheries, Wildlife, Conservation Biology",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676479/Lochlan1_r0yn0t.jpg",
+    "casual_image1": "",
+    "casual_image2": "",
+    "casual_image3": "",
+    "bigId": "70",
+    "littleIds": [],
+    "hobbies": [
+      "Lifting",
+      "Gaming",
+      "Drinking Boba",
+      "Volleyball"
+    ],
+    "positions": [],
+    "nationalities": [],
+    "bigExternalName": ""
+  },
+  {
+    "id": "89",
+    "name": "August Longphre",
+    "line_name": "'Aristotle'",
+    "class_field": "Rho Requiem",
+    "status": "Actives",
+    "major": "Chemical Engineering",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676902/Gus2_bqd7pj.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676900/Gus3_js01cd.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676903/Gus1_un0pls.jpg",
+    "casual_image3": "",
+    "bigId": "65",
+    "littleIds": [],
+    "hobbies": [
+      "Motorcycles",
+      "Eating"
     ],
     "positions": [],
     "nationalities": [],
