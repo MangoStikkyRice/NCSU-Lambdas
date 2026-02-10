@@ -1548,13 +1548,18 @@
     "class_field": "Rho Requiem",
     "status": "Actives",
     "major": "Nuclear Engineering",
-    "image": "",
-    "casual_image1": "",
-    "casual_image2": "",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770686652/ewang1_nu0bpm.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770686647/ewang3_t1yyvi.jpg",
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770686652/ewang1_nu0bpm.jpg",
     "casual_image3": "",
     "bigId": "66",
     "littleIds": [],
-    "hobbies": [],
+    "hobbies": [
+      "Rock Climbing",
+      "Reading",
+      "Sports",
+      "Eating"
+    ],
     "positions": [],
     "nationalities": [],
     "bigExternalName": ""
