@@ -1025,7 +1025,11 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381293/cristianmendoza3.jpg",
     "casual_image3": null,
     "bigId": "59",
-    "littleIds": [],
+    "littleIds": [
+      "75",
+      "78",
+      "85"
+    ],
     "bigExternalName": ""
   },
   {
