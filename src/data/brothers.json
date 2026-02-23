@@ -1030,12 +1030,14 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381383/kennynguyen1.jpg",
-    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381309/kennynguyen2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1771882928/Kenny_Nguyen_Headshot_PFP_cropped_1_fkzai3.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1771882930/Kenny_Cat_PFP_2_cropped_d1n299.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381310/kennynguyen3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381311/kennynguyen4.jpg",
     "bigId": "56",
-    "littleIds": [],
+    "littleIds": [
+      "71"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1261,14 +1263,13 @@
     "class_field": "Omicron Okami",
     "major": "Biological Sciences",
     "hobbies": [
-      "Singing",
-      "Gaming",
-      "Anime",
-      "Manga"
+      "Tennis",
+      "Swimming",
+      "Traveling"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404605/gio1.jpg",
-    "casual_image1": null,
-    "casual_image2": null,
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1771882930/Gio_wbyaey.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404605/gio1.jpg",
+    "casual_image2": "",
     "casual_image3": null,
     "bigId": "63",
     "littleIds": [],
@@ -1660,11 +1661,11 @@
   {
     "id": "89",
     "name": "August Longphre",
-    "line_name": "'Aristotle'",
+    "line_name": "'ARISTOTLE'",
     "class_field": "Rho Requiem",
     "status": "Actives",
     "major": "Chemical Engineering",
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676902/Gus2_bqd7pj.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1771882930/Gus2_bhcrhc.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676900/Gus3_js01cd.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1770676903/Gus1_un0pls.jpg",
     "casual_image3": "",
