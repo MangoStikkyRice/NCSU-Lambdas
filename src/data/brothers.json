@@ -398,7 +398,10 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381343/tyerojanasoonthan3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381343/tyerojanasoonthan4.jpg",
     "bigId": 4,
-    "littleIds": [],
+    "littleIds": [
+      "55",
+      "44"
+    ],
     "bigExternalName": ""
   },
   {
@@ -460,7 +463,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 12,
-    "littleIds": [],
+    "littleIds": [
+      "74"
+    ],
     "bigExternalName": ""
   },
   {
@@ -884,7 +889,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": 49,
-    "littleIds": [],
+    "littleIds": [
+      "64"
+    ],
     "bigExternalName": ""
   },
   {
@@ -917,7 +924,9 @@
     "hobbies": [
       "Simping for DPR",
       "Reading Manga",
-      "Walking Around Nature"
+      "Walking Around Nature",
+      "Gaming",
+      "Yuri"
     ],
     "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381358/christoffer1.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381292/christoffer2.jpg",
@@ -993,7 +1002,9 @@
     "casual_image2": null,
     "casual_image3": null,
     "bigId": "50",
-    "littleIds": [],
+    "littleIds": [
+      "72"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1105,7 +1116,9 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381306/jordan3.jpg",
     "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381307/jordan4.jpg",
     "bigId": "44",
-    "littleIds": [],
+    "littleIds": [
+      "70"
+    ],
     "bigExternalName": ""
   },
   {
@@ -1147,7 +1160,9 @@
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404606/jaycee3.jpg",
     "casual_image3": null,
     "bigId": "60",
-    "littleIds": [],
+    "littleIds": [
+      "81"
+    ],
     "bigExternalName": ""
   },
   {
