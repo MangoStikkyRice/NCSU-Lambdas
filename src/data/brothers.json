@@ -1372,9 +1372,9 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167705/1712850274055_paxbra.jpg",
-    "casual_image1": "",
-    "casual_image2": null,
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1772478397/jhuang_mrgjnf.jpg",
+    "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1756167705/1712850274055_paxbra.jpg",
+    "casual_image2": "",
     "casual_image3": null,
     "bigId": "57",
     "littleIds": [],
@@ -1455,10 +1455,10 @@
     "class_field": "Zeta Zaibatsu",
     "status": "Alumni",
     "major": "Fashion and Textiles Management",
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381376/jerodjavier1.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1772478584/Jello_luodkw.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381304/jerodjavier2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381305/jerodjavier3.jpg",
-    "casual_image3": "",
+    "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736381376/jerodjavier1.jpg",
     "bigId": "27",
     "littleIds": [
       "67"
