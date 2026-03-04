@@ -1150,7 +1150,7 @@
     "id": 69,
     "name": "Jaycee Wang",
     "line_name": "A Silent VOICE",
-    "status": "Alumni",
+    "status": "Actives",
     "class_field": "Nu Nen",
     "major": "Business",
     "hobbies": [
@@ -1159,10 +1159,10 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736405274/jaycee1.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1772638597/jaycee_zdyiko.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404606/jaycee2.jpg",
     "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404606/jaycee3.jpg",
-    "casual_image3": null,
+    "casual_image3": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736405274/jaycee1.jpg",
     "bigId": "60",
     "littleIds": [
       "81"
