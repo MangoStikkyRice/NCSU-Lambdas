@@ -1182,10 +1182,10 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404604/chris2.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1772638124/ckha_hlmagf.png",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404605/chris3.jpg",
-    "casual_image2": "",
-    "casual_image3": null,
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404604/chris2.jpg",
+    "casual_image3": "",
     "bigId": "67",
     "littleIds": [
       "88"
@@ -1227,10 +1227,10 @@
       "Anime",
       "Manga"
     ],
-    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404603/alonso1.jpg",
+    "image": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1772638055/alonso_y4jttk.jpg",
     "casual_image1": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404604/alonso2.jpg",
-    "casual_image2": null,
-    "casual_image3": null,
+    "casual_image2": "https://res.cloudinary.com/dfqvoisnj/image/upload/v1736404603/alonso1.jpg",
+    "casual_image3": "",
     "bigId": "62",
     "littleIds": [],
     "bigExternalName": ""
